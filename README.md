@@ -63,7 +63,7 @@ Use any of these demo wedding access codes:
 ├── types/
 │   └── next-auth.d.ts           # TypeScript type definitions
 ├── styles/
-│   └── globals.css              # Tailwind CSS styles
+│   └── globals.css              # Global CSS styles (no Tailwind)
 └── middleware.ts                # Route protection middleware
 ```
 
@@ -112,7 +112,7 @@ const validateAccessCode = (code: string): boolean => {
 
 ### Styling
 
-The project uses Tailwind CSS with custom component classes in `globals.css`:
+The project uses custom component classes in `globals.css`:
 
 - `.btn-primary` - Primary button styling
 - `.btn-secondary` - Secondary button styling  
@@ -217,4 +217,4 @@ This project is for educational purposes. Customize freely for your needs!
 
 ---
 
-Built with ❤️ using Next.js, NextAuth.js, and Tailwind CSS
+Built with ❤️ using Next.js and NextAuth.js
