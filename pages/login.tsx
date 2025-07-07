@@ -8,16 +8,26 @@ import { useRouter } from 'next/router'
 import { 
   Input, 
   Button, 
-  Text, 
   MessageBar,
-  MessageBarIntent,
   Spinner,
   Card,
   Body1,
   Title2,
-  Field
+  Field,
+  makeStyles,
+  shorthands 
 } from '@fluentui/react-components'
-import { PersonLockRegular } from '@fluentui/react-icons'
+
+const useStyles = makeStyles({
+  input: {
+    '::after': {
+      content: '',
+      width: '99%',
+      justifySelf: 'center',
+      borderBottomColor: '#161616 !important', // Change this to your desired focus color
+    },
+  },
+});
 
 export default function LoginPage() {
   const [accessCode, setAccessCode] = useState('')
@@ -73,6 +83,8 @@ export default function LoginPage() {
     }
   }
 
+  const styles = useStyles();
+
   return (
     <>
       <Head>
@@ -83,27 +95,22 @@ export default function LoginPage() {
             0% {
               opacity: 0;
               transform: scale(0.3) translateY(80px) rotate(-20deg);
-              filter: blur(8px);
             }
             30% {
               opacity: 0.3;
               transform: scale(0.7) translateY(20px) rotate(-8deg);
-              filter: blur(4px);
             }
             60% {
               opacity: 0.8;
               transform: scale(1.02) translateY(-5px) rotate(2deg);
-              filter: blur(1px);
             }
             80% {
               opacity: 0.95;
               transform: scale(1.05) translateY(-2px) rotate(1deg);
-              filter: blur(0.2px);
             }
             100% {
               opacity: 1;
               transform: scale(1) translateY(0px) rotate(0deg);
-              filter: blur(0px);
             }
           }
 
@@ -151,8 +158,7 @@ export default function LoginPage() {
             animation-fill-mode: both !important;
             /* Ensure the animation starts with the correct initial state */
             opacity: 0 !important;
-            transform: scale(0.3) translateY(80px) rotate(-20deg) !important;
-            filter: blur(8px) !important;
+            transform: scale(0.3) translateY(80px) rotate(-20deg) !important;            
           }
 
           .card-entrance {
@@ -193,6 +199,10 @@ export default function LoginPage() {
           .fui-Button:active:not(:disabled) {
             transform: translateY(0);
           }
+          
+          span:has(input)::after {
+            border-bottom: 2px solid #161616 !important;
+          }
         `}</style>
       </Head>
 
@@ -222,7 +232,7 @@ export default function LoginPage() {
             alignItems: 'flex-start',
             paddingTop: animationPhase === 'form' ? '10vh' : '20vh',
             paddingBottom: '2vh',
-            transition: 'all 2s ease-out'
+            transition: 'all 1.8s ease-out'
           }}
         >
           <div 
@@ -270,7 +280,7 @@ export default function LoginPage() {
             visibility: animationPhase === 'form' ? 'visible' : 'hidden',
             transform: animationPhase === 'form' ? 'translateY(0) scale(1)' : 'translateY(2em) scale(0.95)',
             zIndex: animationPhase === 'form' ? 5 : 1,
-            transition: 'all 2s cubic-bezier(0.4, 0, 0.2, 1)',
+            transition: 'all 1.8s cubic-bezier(0.4, 0, 0.2, 1)',
             transitionDelay: animationPhase === 'form' ? '0.5s' : '0s',
             // Position form in lower area
             alignItems: 'flex-end',
@@ -326,7 +336,6 @@ Please enter your code below to unlock all the details of the big day — from t
               borderRadius: '1em',
               border: '1px solid rgba(255, 255, 255, 0.2)',
               boxShadow: '0 32px 64px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.05)',
-              backdropFilter: 'blur(20px)',
               overflow: 'hidden'
             }}
           >
@@ -343,12 +352,12 @@ Please enter your code below to unlock all the details of the big day — from t
                 <div style={{
                   width: '-webkit-fill-available',
                 }}>
-                  <Field 
+                  <Field                     
                     label={
-                      <span style={{
+                      <span id='access-code-label' style={{
                         fontSize: 'clamp(0.875rem, 3vw, 1rem)',
                         fontWeight: '500',
-                        color: '#374151',
+                        color: '#3D3D3D',
                         letterSpacing: '0.01em',
                       }}>
                         Access Code
@@ -358,27 +367,27 @@ Please enter your code below to unlock all the details of the big day — from t
                     style={{ width: '100%' }}
                   >
                     <Input
-                      id="accessCode"
-                      name="accessCode"
-                      type="text"
-                      required
-                      placeholder="Enter your code"
-                      value={accessCode}
-                      onChange={(e) => setAccessCode(e.target.value)}
-                      disabled={loading}
-                      //size="large"
-                      appearance="outline"
-                      style={{ 
-                        width: '100%',
-                        minHeight: '52px',
-                        fontSize: 'clamp(0.875rem, 3vw, 1rem)',
-                        borderRadius: '12px',
-                        border: '2px solid #e5e7eb',
-                        backgroundColor: '#fafafa',
-                        transition: 'all 0.2s ease'
-                      }}
-                      aria-describedby={error ? "error-message" : undefined}
-                    />
+                        id="accessCode"
+                        name="accessCode"
+                        className={styles.input}
+                        type="text"
+                        required
+                        placeholder="Enter your code"
+                        value={accessCode}
+                        onChange={(e) => setAccessCode(e.target.value)}
+                        disabled={loading}
+                        size="large"
+                        appearance="outline"
+                        style={{ 
+                          width: '100%',
+                          fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                          borderRadius: '12px',
+                          border: '2px solid #e5e7eb',
+                          backgroundColor: '#fafafa',
+                          transition: 'all 0.2s ease',
+                        }}
+                        aria-describedby={error ? "error-message" : undefined}
+                      />
                   </Field>
                 </div>
 
@@ -396,7 +405,7 @@ Please enter your code below to unlock all the details of the big day — from t
                   </div>
                 )}
 
-                <div>
+                <div style={{width: 'webkit-fill-available'}}>
                   <Button
                     type="submit"
                     disabled={loading || !accessCode.trim()}
@@ -405,7 +414,6 @@ Please enter your code below to unlock all the details of the big day — from t
                     style={{ 
                       marginTop: '8px',
                       width: '100%',
-                      minHeight: '52px',
                       fontSize: 'clamp(0.875rem, 3vw, 1rem)',
                       fontWeight: '500',
                       borderRadius: '12px',
