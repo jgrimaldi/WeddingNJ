@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+}
+
+/* Microsoft Fluent Design Color Palette */
+:root {
+  /* Primary Blues */
+  --fluent-blue-10: #061724;
+  --fluent-blue-20: #082338;
+  --fluent-blue-30: #0a2e4a;
+  --fluent-blue-40: #0c3b5e;
+  --fluent-blue-50: #0f4c75;
+  --fluent-blue-60: #115ea3;
+  --fluent-blue-70: #0078d4;
+  --fluent-blue-80: #106ebe;
+  --fluent-blue-90: #2886de;
+  --fluent-blue-100: #479ef5;
+  --fluent-blue-110: #62abf5;
+  --fluent-blue-120: #77b7f7;
+  --fluent-blue-130: #96c6fa;
+  --fluent-blue-140: #b4d6fa;
+  --fluent-blue-150: #cfe4fa;
+  --fluent-blue-160: #deecf9;
+
+  /* Neutral colors */
+  --fluent-grey-10: #faf9f8;
+  --fluent-grey-20: #f3f2f1;
+  --fluent-grey-30: #edebe9;
+  --fluent-grey-40: #e1dfdd;
+  --fluent-grey-50: #d2d0ce;
+  --fluent-grey-60: #c8c6c4;
+  --fluent-grey-70: #b3b0ad;
+  --fluent-grey-80: #a19f9d;
+  --fluent-grey-90: #8a8886;
+  --fluent-grey-100: #797775;
+  --fluent-grey-110: #69797e;
+  --fluent-grey-120: #5d6a6e;
+  --fluent-grey-130: #515c61;
+  --fluent-grey-140: #434a53;
+  --fluent-grey-150: #323130;
+  --fluent-grey-160: #201f1e;
+
+  /* Semantic colors */
+  --fluent-success: #107c10;
+  --fluent-warning: #ff8c00;
+  --fluent-error: #d13438;
+  --fluent-info: var(--fluent-blue-70);
+
+  /* Shadows */
+  --fluent-shadow-2: 0 1px 2px rgba(0, 0, 0, 0.14);
+  --fluent-shadow-4: 0 1.6px 3.6px rgba(0, 0, 0, 0.13), 0 0.3px 0.9px rgba(0, 0, 0, 0.11);
+  --fluent-shadow-8: 0 3.2px 7.2px rgba(0, 0, 0, 0.13), 0 0.6px 1.8px rgba(0, 0, 0, 0.11);
+  --fluent-shadow-16: 0 6.4px 14.4px rgba(0, 0, 0, 0.13), 0 1.2px 3.6px rgba(0, 0, 0, 0.11);
+  --fluent-shadow-28: 0 11.2px 25.6px rgba(0, 0, 0, 0.13), 0 2.1px 6.3px rgba(0, 0, 0, 0.11);
+
+  /* Border radius */
+  --fluent-radius-small: 4px;
+  --fluent-radius-medium: 8px;
+  --fluent-radius-large: 12px;
+}
+
+@layer base {
+  html {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+    font-feature-settings: 'kern' 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    background: #ECECEA;
+    color: var(--fluent-grey-160);
+  }
+}
+
+@layer components {
+  /* Modern Fluent-style components */
+  .fluent-btn-primary {
+    background-color: var(--fluent-blue-70);
+    color: white;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: var(--fluent-radius-medium);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 14px;
+    min-height: 44px; /* Accessibility: minimum touch target */
+  }
+  
+  .fluent-btn-primary:hover:not(:disabled) {
+    background-color: var(--fluent-blue-80);
+    box-shadow: var(--fluent-shadow-4);
+  }
+  
+  .fluent-btn-primary:focus {
+    outline: 2px solid var(--fluent-blue-100);
+    outline-offset: 2px;
+  }
+  
+  .fluent-btn-primary:disabled {
+    background-color: var(--fluent-grey-60);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  
+  .fluent-card {
+    background-color: white;
+    border-radius: var(--fluent-radius-large);
+    box-shadow: var(--fluent-shadow-8);
+    padding: 32px;
+    border: 1px solid var(--fluent-grey-40);
+  }
+  
+  .fluent-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--fluent-grey-60);
+    border-radius: var(--fluent-radius-small);
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    min-height: 40px; /* Accessibility: minimum touch target */
+  }
+  
+  .fluent-input:focus {
+    outline: none;
+    border-color: var(--fluent-blue-70);
+    box-shadow: 0 0 0 1px var(--fluent-blue-70);
+  }
+  
+  .fluent-input:disabled {
+    background-color: var(--fluent-grey-20);
+    color: var(--fluent-grey-100);
+    cursor: not-allowed;
+  }
+  
+  .fluent-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fluent-grey-160);
+    margin-bottom: 8px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .fluent-error {
+    color: var(--fluent-error);
+    font-size: 12px;
+    margin-top: 4px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  /* Responsive utilities */
+  @media (max-width: 480px) {
+    .fluent-card {
+      padding: 24px;
+      margin: 16px;
+    }
+    
+    .fluent-btn-primary {
+      padding: 14px 20px;
+      font-size: 16px; /* Larger text on mobile */
+    }
+    
+    .fluent-input {
+      padding: 14px 16px;
+      font-size: 16px; /* Prevents zoom on iOS */
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .fluent-card {
+      border: 2px solid var(--fluent-grey-130);
+    }
+    
+    .fluent-input {
+      border: 2px solid var(--fluent-grey-130);
+    }
+    
+    .fluent-btn-primary {
+      border: 2px solid var(--fluent-grey-160);
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .fluent-btn-primary,
+    .fluent-input {
+      transition: none;
+    }
+  }
+}
