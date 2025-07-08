@@ -24,6 +24,6 @@ export const config = {
      * - login (login page)
      * - logos (logo files)
      */
-    '/((?!api/auth|_next/static|_next/image|favicon.ico|login|logos).*)',
+    '/((?!api/auth|_next/static|_next/image|favicon.ico|login|logos|icons).*)',
   ],
 }

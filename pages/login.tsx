@@ -88,7 +88,7 @@ export default function LoginPage() {
   return (
     <>
       <Head>
-        <title>Wedding Guest Portal - Access Your Invitation</title>
+        <title>Nathy & Jorge's Wedding</title>
         <meta name="description" content="Enter your unique wedding access code to view event details, RSVP, and access your personalized guest portal" />
         <style jsx>{`
           @keyframes logoEntrance {
@@ -216,7 +216,8 @@ export default function LoginPage() {
           backgroundColor: 'var(--fluent-grey-10)',
           position: 'relative',
           transition: 'background-color 1.5s ease-in-out',
-          minHeight: '100vh',
+          minHeight: '98vh',
+          maxHeight: '98vh',
           marginBottom: animationPhase === 'loading' ? '50vh' : '0', // No margin bottom needed
         }}
       >
@@ -265,9 +266,19 @@ export default function LoginPage() {
                   fontWeight: '300',
                   letterSpacing: '-0.02em',
                   textAlign: 'center',
+                  padding: '0 1em',
                 }}>
-                  Welcome to our wedding site
+                  <span style={{ 
+                    color: '#3D3D3D', 
+                    fontWeight: '400', 
+                    fontFamily: 'Segoe Print' 
+                    }}
+                    >
+                      Welcome to  Nathy & Jorge's wedding site
+                  </span> 
             </Title2>
+
+
           </div>
           
         </div>
@@ -285,7 +296,7 @@ export default function LoginPage() {
             // Position form in lower area
             alignItems: 'flex-end',
             paddingTop: '2vh',
-            maxWidth: '50vw',
+            maxWidth: '70vw',
           }}
         >
           <div 
@@ -299,13 +310,19 @@ export default function LoginPage() {
                 
               <Body1 style={{ 
                 color: '#6b7280',
-                fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                fontSize: 'clamp(1rem, 3vw, 1.5rem)',
                 fontWeight: '400',
                 lineHeight: '1.5',
                 textAlign: 'center',
               }}>
-                To keep things personal and secure, each guest has a unique access code.
-Please enter your code below to unlock all the details of the big day — from the schedule to special messages just for you.
+                Thank you for visiting our site ! To keep things personal and secure, each guest has a unique access code.
+Please enter your code below to unlock all the details of the big day plus a special message
+              <span style={{
+                color: '#3D3D3D',
+                fontWeight: '500',
+                marginLeft: '0.25em',
+              }}>just for you.</span>
+              
               </Body1>
           </div>
 
@@ -334,7 +351,7 @@ Please enter your code below to unlock all the details of the big day — from t
               padding: '0',
               backgroundColor: 'rgba(255, 255, 255, 0.95)',
               borderRadius: '1em',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
+              border: '2px solid #6F6F6F',
               boxShadow: '0 32px 64px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.05)',
               overflow: 'hidden'
             }}
@@ -418,7 +435,7 @@ Please enter your code below to unlock all the details of the big day — from t
                       fontWeight: '500',
                       borderRadius: '12px',
                       backgroundColor: loading || !accessCode.trim() ? '#d1d5db' : '#323232',
-                      border: 'none',
+                      border: '2px solid #6F6F6F',
                       color: 'white',
                       transition: 'all 0.2s ease',
                       cursor: loading || !accessCode.trim() ? 'not-allowed' : 'pointer',
