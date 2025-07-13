@@ -62,7 +62,8 @@ export default function LoginPage() {
     try {
       const result = await signIn('credentials', {
         accessCode,
-        redirect: false
+        redirect: false,
+        callbackUrl: '/', // Always redirect to home after login
       })
 
       console.log('SignIn result:', result)
@@ -485,6 +486,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     }
   }
 
+  // If user is not authenticated, do NOT set a callbackUrl
   return {
     props: {},
   }

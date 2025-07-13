@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from 'next'
-import { signOut, useSession } from 'next-auth/react'
 import { getServerAuthSession } from '@/lib/auth'
+import { signOut } from "next-auth/react";
 import Head from 'next/head'
 import Image from 'next/image'
 import { 
@@ -22,12 +22,18 @@ import {
   SignOutRegular
 } from '@fluentui/react-icons'
 
-export default function HomePage() {
-  const { data: session } = useSession()
+type HomePageProps = {
+  session: {
+    user: {
+      name: string;
+      email?: string | null;
+      image?: string | null;
+      accessCode?: string | null;
+    };
+  };
+};
 
-  const handleSignOut = async () => {
-    await signOut({ callbackUrl: '/login' })
-  }
+export default function HomePage({ session } : HomePageProps) {
 
   return (
     <>
@@ -71,7 +77,7 @@ export default function HomePage() {
               </div>
               <Button
                 appearance="secondary"
-                onClick={handleSignOut}
+                onClick={() => signOut({ callbackUrl: '/login' })}
                 icon={<SignOutRegular />}
               >
                 Sign Out
@@ -321,6 +327,7 @@ export default function HomePage() {
 // Server-side authentication check
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerAuthSession(context)
+  console.log('SESSION:', session);
 
   // If user is not authenticated, redirect to login
   if (!session) {
