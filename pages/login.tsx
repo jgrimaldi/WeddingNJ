@@ -232,7 +232,7 @@ export default function LoginPage() {
             transitionDelay: animationPhase === 'logo' ? '0.5s' : '0s',
             // Position logo: center during logo phase, top during form phase
             alignItems: 'flex-start',
-            paddingTop: animationPhase === 'form' ? '10vh' : '20vh',
+            paddingTop: animationPhase === 'form' ? '10vh' : '30vh',
             paddingBottom: '2vh',
             transition: 'all 1.8s ease-out'
           }}
@@ -268,11 +268,12 @@ export default function LoginPage() {
                   letterSpacing: '-0.02em',
                   textAlign: 'center',
                   padding: '0 1em',
+                  paddingTop: '1em',
                 }}>
                   <span style={{ 
                     color: '#3D3D3D', 
                     fontWeight: '400', 
-                    fontFamily: 'Segoe Print' 
+                    fontFamily: 'Segoe UI Light', 
                     }}
                     >
                       Welcome to  Nathy & Jorge's wedding site
@@ -314,7 +315,8 @@ export default function LoginPage() {
                 fontSize: 'clamp(1rem, 3vw, 1.5rem)',
                 fontWeight: '400',
                 lineHeight: '1.5',
-                textAlign: 'center',
+                textAlign: 'left',
+                //fontFamily: 'Segoe UI Light'
               }}>
                 Thank you for visiting our site ! To keep things personal and secure, each guest has a unique access code.
 Please enter your code below to unlock all the details of the big day plus a special message
@@ -345,24 +347,7 @@ Please enter your code below to unlock all the details of the big day plus a spe
             maxWidth: '60vw',
           }}
         >
-          <Card 
-            className="card-entrance"
-            style={{
-              width: 'clamp(200px,60vw,400px)',
-              padding: '0',
-              backgroundColor: 'rgba(255, 255, 255, 0.95)',
-              borderRadius: '1em',
-              border: '2px solid #6F6F6F',
-              boxShadow: '0 32px 64px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.05)',
-              overflow: 'hidden'
-            }}
-          >
-            <div className="form-container" style={{
-              padding: '1em'
-            }}>            
-
-
-              <form onSubmit={handleSubmit} style={{
+          <form onSubmit={handleSubmit} style={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -371,16 +356,7 @@ Please enter your code below to unlock all the details of the big day plus a spe
                   width: '-webkit-fill-available',
                 }}>
                   <Field                     
-                    label={
-                      <span id='access-code-label' style={{
-                        fontSize: 'clamp(0.875rem, 3vw, 1rem)',
-                        fontWeight: '500',
-                        color: '#3D3D3D',
-                        letterSpacing: '0.01em',
-                      }}>
-                        Access Code
-                      </span>
-                    }
+                    
                     required
                     style={{ width: '100%' }}
                   >
@@ -463,9 +439,27 @@ Please enter your code below to unlock all the details of the big day plus a spe
                   </div>
                 </div>
               </form>
+          {/* <Card 
+            className="card-entrance"
+            style={{
+              width: 'clamp(200px,60vw,400px)',
+              padding: '0',
+              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+              borderRadius: '1em',
+              border: '2px solid #6F6F6F',
+              boxShadow: '0 32px 64px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.05)',
+              overflow: 'hidden'
+            }}
+          >
+            <div className="form-container" style={{
+              padding: '1em'
+            }}>            
+
+
+              
               
             </div>
-          </Card>
+          </Card> */}
         </div>
       </div>
     </>

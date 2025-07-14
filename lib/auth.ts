@@ -11,7 +11,9 @@ export async function getServerAuthSession(
   return await getServerSession(ctx.req, ctx.res, authOptions)
 }
 
-export function validateAccessCode(code: string): boolean {
+export async function validateAccessCode(code: string): Promise<boolean> {
   const validCodes = process.env.VALID_CODES?.split(',') || ['SECRET123']
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  
   return validCodes.includes(code)
 }

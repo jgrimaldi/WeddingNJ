@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error('Access code is required')
         }
 
-        const isValid = validateAccessCode(credentials.accessCode)
+        const isValid = await validateAccessCode(credentials.accessCode)
         
         if (isValid) {
           // Return user object - this will be saved in the session
