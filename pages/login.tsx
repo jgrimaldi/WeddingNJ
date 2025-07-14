@@ -46,7 +46,7 @@ export default function LoginPage() {
     // Stage 2: Form entrance (logo stays visible)
     const stage3Timer = setTimeout(() => {
       setAnimationPhase('form') // Form entrance - logo remains visible
-    }, 2500) // Form starts after 2 seconds
+    }, 3500) // Form starts after 3.5 seconds
 
     return () => {
       clearTimeout(stage1Timer)
@@ -272,7 +272,7 @@ export default function LoginPage() {
                     color: '#3D3D3D', 
                     fontFamily: 'Parisienne',
                     fontSize: '2em',
-                    padding: '1em 0',
+                    lineHeight: '1',
                     }}
                     >
                       Welcome to Nathalia & Jorge's wedding!
@@ -317,13 +317,13 @@ export default function LoginPage() {
                 textAlign: 'left',
                 //fontFamily: 'Segoe UI Light'
               }}>
-                Thank you for visiting our site ! To keep things personal and secure, each guest has a unique access code.
+                Thank you for visiting our site! To keep things personal and secure, each guest has a unique access code.
 Please enter your code below to unlock all the details of the big day plus a special message
               <span style={{
                 color: '#3D3D3D',
-                fontWeight: '500',
                 marginLeft: '0.25em',
-              }}>just for you.</span>
+                fontFamily: 'Segoe UI Semibold',
+              }}>just for you🖤</span>
               
               </Body1>
           </div>
