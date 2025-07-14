@@ -13,7 +13,7 @@ export async function getServerAuthSession(
 
 export async function validateAccessCode(code: string): Promise<boolean> {
   const validCodes = process.env.VALID_CODES?.split(',') || ['SECRET123']
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
+  await new Promise(resolve => setTimeout(resolve, 2000));
+
   return validCodes.includes(code)
 }

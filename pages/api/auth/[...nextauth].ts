@@ -1,11 +1,7 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { validateAccessCode } from '@/lib/auth';
 
-// Mock validation function - in production, check against database
-const validateAccessCode = (code: string): boolean => {
-  const validCodes = process.env.VALID_CODES?.split(',') || ['SECRET123']
-  return validCodes.includes(code)
-}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -22,7 +18,7 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.accessCode) {
           throw new Error('Access code is required')
         }
-
+        
         const isValid = await validateAccessCode(credentials.accessCode)
         
         if (isValid) {

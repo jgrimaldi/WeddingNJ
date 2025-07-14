@@ -66,10 +66,9 @@ export default function LoginPage() {
         callbackUrl: '/', // Always redirect to home after login
       })
 
-      console.log('SignIn result:', result)
-
       if (result?.error) {
         setError('Invalid access code. Please try again.')
+        setLoading(false)
       } else if (result?.ok) {
         // Wait a moment for session to be established
         setTimeout(() => {
@@ -79,7 +78,6 @@ export default function LoginPage() {
     } catch (error) {
       console.error('SignIn error:', error)
       setError('Something went wrong. Please try again.')
-    } finally {
       setLoading(false)
     }
   }
@@ -272,12 +270,13 @@ export default function LoginPage() {
                 }}>
                   <span style={{ 
                     color: '#3D3D3D', 
-                    fontWeight: '400', 
-                    fontFamily: 'Segoe UI Light', 
+                    fontFamily: 'Parisienne',
+                    fontSize: '2em',
+                    padding: '1em 0',
                     }}
                     >
-                      Welcome to  Nathy & Jorge's wedding site
-                  </span> 
+                      Welcome to Nathalia & Jorge's wedding!
+                  </span>
             </Title2>
 
 
@@ -399,7 +398,7 @@ Please enter your code below to unlock all the details of the big day plus a spe
                   </div>
                 )}
 
-                <div style={{width: 'webkit-fill-available'}}>
+                <div style={{width: '-webkit-fill-available'}}>
                   <Button
                     type="submit"
                     disabled={loading || !accessCode.trim()}
