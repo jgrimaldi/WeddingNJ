@@ -10,12 +10,11 @@ import {
   Button, 
   MessageBar,
   Spinner,
-  Card,
   Body1,
   Title2,
   Field,
   makeStyles,
-  shorthands 
+  Divider  
 } from '@fluentui/react-components'
 
 const useStyles = makeStyles({
@@ -230,7 +229,6 @@ export default function LoginPage() {
             // Position logo: center during logo phase, top during form phase
             alignItems: 'flex-start',
             paddingTop: animationPhase === 'form' ? '5vh' : '20vh',
-            paddingBottom: '2vh',
             transition: 'all 2.3s ease-out'
           }}
         >
@@ -274,14 +272,26 @@ export default function LoginPage() {
                     lineHeight: '1',
                     }}
                     >
-                      Welcome to Nathalia & Jorge's wedding!
+                      Welcome to Nathalia & Jorge's wedding! 
                   </span>
             </Title2>
 
 
           </div>
-          
+          <Divider style={{
+            padding: '1em 2em 1em 2em', 
+            fontFamily:"Segoe UI Light",
+            color: '#6b7280',
+            opacity: animationPhase === 'form' ? 1 : 0,
+            visibility: animationPhase === 'form' ? 'visible' : 'hidden',
+            transform: animationPhase === 'form' ? 'translateY(0) scale(1)' : 'translateY(2em) scale(0.95)',
+            zIndex: animationPhase === 'form' ? 5 : 1,
+            transition: 'all 1.8s cubic-bezier(0.4, 0, 0.2, 1)',
+            transitionDelay: animationPhase === 'form' ? '0.5s' : '0s',         
+          }}
+          appearance='strong'>02 . 28 . 26</Divider>
         </div>
+        
 
         {/* Stage 2: Form Phase - Login form entrance (appears from bottom) */}
         <div 
@@ -295,7 +305,6 @@ export default function LoginPage() {
             transitionDelay: animationPhase === 'form' ? '0.5s' : '0s',
             // Position form in lower area
             alignItems: 'flex-end',
-            paddingTop: '2vh',
             maxWidth: ' 90vw',
             margin: '0 10vw',
           }}
@@ -319,7 +328,7 @@ Please enter yours below to unlock all the wedding details - and a heartfelt mes
                 textAlign: 'left',
                 //fontFamily: 'Segoe UI Light'
                 //margin: '0 1em',
-              }}>We're so happy you're here! Please enter access code below to unlock all the wedding details.
+              }}>We're so happy you're here! Please enter your code below to unlock all the wedding details - and a heartfelt message made just for you.🖤 
               </Body1>
 
         </div>
