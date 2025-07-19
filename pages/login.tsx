@@ -46,7 +46,7 @@ export default function LoginPage() {
     // Stage 2: Form entrance (logo stays visible)
     const stage3Timer = setTimeout(() => {
       setAnimationPhase('form') // Form entrance - logo remains visible
-    }, 3500) // Form starts after 3.5 seconds
+    }, 2500) // Form starts after 2.5 seconds
 
     return () => {
       clearTimeout(stage1Timer)
@@ -210,13 +210,12 @@ export default function LoginPage() {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
+          alignItems: 'center',          
           backgroundColor: 'var(--fluent-grey-10)',
           position: 'relative',
           transition: 'background-color 1.5s ease-in-out',
           minHeight: '98vh',
-          maxHeight: '98vh',
+          // maxHeight: '98vh',
           marginBottom: animationPhase === 'loading' ? '50vh' : '0', // No margin bottom needed
         }}
       >
@@ -230,9 +229,9 @@ export default function LoginPage() {
             transitionDelay: animationPhase === 'logo' ? '0.5s' : '0s',
             // Position logo: center during logo phase, top during form phase
             alignItems: 'flex-start',
-            paddingTop: animationPhase === 'form' ? '10vh' : '30vh',
+            paddingTop: animationPhase === 'form' ? '5vh' : '20vh',
             paddingBottom: '2vh',
-            transition: 'all 1.8s ease-out'
+            transition: 'all 2.3s ease-out'
           }}
         >
           <div 
@@ -266,12 +265,12 @@ export default function LoginPage() {
                   letterSpacing: '-0.02em',
                   textAlign: 'center',
                   padding: '0 1em',
-                  paddingTop: '1em',
+                  paddingTop: '0.2em',
                 }}>
                   <span style={{ 
                     color: '#3D3D3D', 
-                    fontFamily: 'Parisienne',
-                    fontSize: '2em',
+                    //fontFamily: 'Playfair Display SC',
+                    fontSize: '1em',
                     lineHeight: '1',
                     }}
                     >
@@ -297,19 +296,11 @@ export default function LoginPage() {
             // Position form in lower area
             alignItems: 'flex-end',
             paddingTop: '2vh',
-            maxWidth: '70vw',
+            maxWidth: ' 90vw',
+            margin: '0 10vw',
           }}
         >
-          <div 
-              style={{ 
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center', 
-              paddingBottom: '2vh'              
-              }}
-            >          
-                
-              <Body1 style={{ 
+          {/* <Body1 style={{ 
                 color: '#6b7280',
                 fontSize: 'clamp(1rem, 3vw, 1.5rem)',
                 fontWeight: '400',
@@ -317,16 +308,19 @@ export default function LoginPage() {
                 textAlign: 'left',
                 //fontFamily: 'Segoe UI Light'
               }}>
-                Thank you for visiting our site! To keep things personal and secure, each guest has a unique access code.
-Please enter your code below to unlock all the details of the big day plus a special message
-              <span style={{
-                color: '#3D3D3D',
-                marginLeft: '0.25em',
-                fontFamily: 'Segoe UI Semibold',
-              }}>just for you🖤</span>
-              
+                We're so happy you're here! To keep things personal and secure, each guest has their own special access code.
+Please enter yours below to unlock all the wedding details - and a heartfelt message made just for you.🖤
+              </Body1> */}
+              <Body1 style={{ 
+                color: '#6b7280',
+                fontSize: 'clamp(1rem, 3vw, 1.5rem)',
+                fontWeight: '400',
+                lineHeight: '1.5',
+                textAlign: 'left',
+                //fontFamily: 'Segoe UI Light'
+                //margin: '0 1em',
+              }}>We're so happy you're here! Please enter access code below to unlock all the wedding details.
               </Body1>
-          </div>
 
         </div>
 
@@ -341,9 +335,10 @@ Please enter your code below to unlock all the details of the big day plus a spe
             transitionDelay: animationPhase === 'form' ? '0.5s' : '0s',
             // Position form in lower area
             alignItems: 'flex-end',
-            paddingBottom: '20vh',
+            paddingBottom: '2vh',
             paddingTop: '2vh',
-            maxWidth: '60vw',
+            maxWidth: ' 90vw',
+            
           }}
         >
           <form onSubmit={handleSubmit} style={{
@@ -351,10 +346,7 @@ Please enter your code below to unlock all the details of the big day plus a spe
                 flexDirection: 'column',
                 alignItems: 'center',
               }}>
-                <div style={{
-                  width: '-webkit-fill-available',
-                }}>
-                  <Field                     
+                <Field                     
                     
                     required
                     style={{ width: '100%' }}
@@ -365,7 +357,7 @@ Please enter your code below to unlock all the details of the big day plus a spe
                         className={styles.input}
                         type="text"
                         required
-                        placeholder="Enter your code"
+                        placeholder="Enter your access code"
                         value={accessCode}
                         onChange={(e) => setAccessCode(e.target.value)}
                         disabled={loading}
@@ -374,7 +366,7 @@ Please enter your code below to unlock all the details of the big day plus a spe
                         style={{ 
                           width: '100%',
                           fontSize: 'clamp(0.875rem, 3vw, 1rem)',
-                          borderRadius: '12px',
+                          borderRadius: '4px',
                           border: '2px solid #e5e7eb',
                           backgroundColor: '#fafafa',
                           transition: 'all 0.2s ease',
@@ -382,7 +374,6 @@ Please enter your code below to unlock all the details of the big day plus a spe
                         aria-describedby={error ? "error-message" : undefined}
                       />
                   </Field>
-                </div>
 
                 {error && (
                   <div>
@@ -397,21 +388,20 @@ Please enter your code below to unlock all the details of the big day plus a spe
                     </MessageBar>
                   </div>
                 )}
-
-                <div style={{width: '-webkit-fill-available'}}>
-                  <Button
+                <Button
                     type="submit"
                     disabled={loading || !accessCode.trim()}
                     appearance="primary"
                     size="large"
                     style={{ 
                       marginTop: '8px',
-                      width: '100%',
-                      fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                      width: '-webkit-fill-available',                      
+                      //fontSize: 'clamp(0.875rem, 3vw, 1rem)',
                       fontWeight: '500',
-                      borderRadius: '12px',
-                      backgroundColor: loading || !accessCode.trim() ? '#d1d5db' : '#323232',
-                      border: '2px solid #6F6F6F',
+                      borderRadius: '4px',
+                      backgroundColor: loading || !accessCode.trim() ? '#d1d5db' : '#4C4C4C',
+                      border: '2px solid',
+                      borderColor: loading || !accessCode.trim() ? '#6F6F6F' : '#323232',
                       color: 'white',
                       transition: 'all 0.2s ease',
                       cursor: loading || !accessCode.trim() ? 'not-allowed' : 'pointer',
@@ -430,35 +420,13 @@ Please enter your code below to unlock all the details of the big day plus a spe
                         <span style={{ fontSize: '16px', fontWeight: '500' }}>Verifying...</span>
                       </div>
                     ) : (
-                      <span style={{ fontSize: '16px', fontWeight: '500' }}>Join the wedding</span>
+                      <span style={{ fontSize: '16px', fontWeight: '500' }}>Join the celebration</span>
                     )}
                   </Button>
-                  <div id="submit-button-description" style={{ display: 'none' }}>
-                    Click to sign in with your access code
-                  </div>
-                </div>
+
+                
               </form>
-          {/* <Card 
-            className="card-entrance"
-            style={{
-              width: 'clamp(200px,60vw,400px)',
-              padding: '0',
-              backgroundColor: 'rgba(255, 255, 255, 0.95)',
-              borderRadius: '1em',
-              border: '2px solid #6F6F6F',
-              boxShadow: '0 32px 64px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.05)',
-              overflow: 'hidden'
-            }}
-          >
-            <div className="form-container" style={{
-              padding: '1em'
-            }}>            
 
-
-              
-              
-            </div>
-          </Card> */}
         </div>
       </div>
     </>
