@@ -304,7 +304,7 @@ export default function LoginPage() {
             transition: 'all 1.8s cubic-bezier(0.4, 0, 0.2, 1)',
             transitionDelay: animationPhase === 'form' ? '0.5s' : '0s',
             // Position form in lower area
-            alignItems: 'flex-end',
+            alignItems: 'center',
             maxWidth: ' 90vw',
             margin: '0 10vw',
           }}
@@ -322,10 +322,9 @@ Please enter yours below to unlock all the wedding details - and a heartfelt mes
               </Body1> */}
               <Body1 style={{ 
                 color: '#6b7280',
-                fontSize: 'clamp(1rem, 3vw, 1.5rem)',
                 fontWeight: '400',
                 lineHeight: '1.5',
-                textAlign: 'left',
+                textAlign: 'center',
                 //fontFamily: 'Segoe UI Light'
                 //margin: '0 1em',
               }}>We're so happy you're here! Please enter your code below to unlock all the wedding details - and a heartfelt message made just for you.🖤 
