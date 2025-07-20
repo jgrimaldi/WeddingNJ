@@ -1,6 +1,7 @@
 .git/
 .github/
-node_modules/
+node_modules/*
+**/node_modules/*
 .next/cache/           # Exclude only the cache directory
 coverage/
 __tests__/
