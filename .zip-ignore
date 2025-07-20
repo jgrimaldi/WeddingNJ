@@ -1,24 +1,6 @@
-.git/
+.git/*
 .github/
 node_modules/*
 **/node_modules/*
-.next/cache/           # Exclude only the cache directory
-coverage/
-__tests__/
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.env*
-.gitignore
-.eslintrc*
-.prettier*
-README.md
-tsconfig.json
-jest.config.js
-next.config.js
-postcss.config.js
-tailwind.config.js
-build/                # Exclude build folder
-dist/                 # Exclude dist folder if present
-out/                  # Exclude out folder if present
+.next/cache/**
+build/cache/**
