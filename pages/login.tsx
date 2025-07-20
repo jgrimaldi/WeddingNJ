@@ -21,9 +21,9 @@ const useStyles = makeStyles({
   input: {
     "::after": {
       content: "",
-      width: "99%",
+      width: "100%",
       justifySelf: "center",
-      borderBottomColor: "#161616 !important", // Change this to your desired focus color
+      borderBottomColor: "#161616 !important",
     },
   },
   container1: {
@@ -104,119 +104,7 @@ export default function LoginPage() {
           name="description"
           content="Enter your unique wedding access code to view event details, RSVP, and access your personalized guest portal"
         />
-        <style jsx>{`
-          @keyframes logoEntrance {
-            0% {
-              opacity: 0;
-              transform: scale(0.3) translateY(80px) rotate(-20deg);
-            }
-            30% {
-              opacity: 0.3;
-              transform: scale(0.7) translateY(20px) rotate(-8deg);
-            }
-            60% {
-              opacity: 0.8;
-              transform: scale(1.02) translateY(-5px) rotate(2deg);
-            }
-            80% {
-              opacity: 0.95;
-              transform: scale(1.05) translateY(-2px) rotate(1deg);
-            }
-            100% {
-              opacity: 1;
-              transform: scale(1) translateY(0px) rotate(0deg);
-            }
-          }
-
-          @keyframes logoMoveUp {
-            0% {
-              transform: translateY(0);
-            }
-            100% {
-              transform: translateY(-25vh);
-            }
-          }
-
-          @keyframes gentleGlow {
-            0%,
-            100% {
-              box-shadow: var(--fluent-shadow-28);
-            }
-            50% {
-              box-shadow: 0 12px 40px rgba(0, 120, 212, 0.12),
-                var(--fluent-shadow-28);
-            }
-          }
-
-          @keyframes backgroundShift {
-            0%,
-            100% {
-              background-color: var(--fluent-grey-10);
-            }
-            50% {
-              background-color: var(--fluent-grey-20);
-            }
-          }
-
-          .phase-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-
-          .phase-container .logo-entrance {
-            animation: logoEntrance 1.8s cubic-bezier(0.19, 1, 0.22, 1) forwards !important;
-            animation-delay: 0.3s !important;
-            animation-fill-mode: both !important;
-            /* Ensure the animation starts with the correct initial state */
-            opacity: 0 !important;
-            transform: scale(0.3) translateY(80px) rotate(-20deg) !important;
-          }
-
-          .card-entrance {
-            animation: gentleGlow 4s ease-in-out;
-          }
-
-          .background-animated {
-            animation: backgroundShift 8s ease-in-out infinite;
-          }
-
-          @media (prefers-reduced-motion: reduce) {
-            .logo-entrance,
-            .card-entrance,
-            .background-animated {
-              animation: none;
-            }
-          }
-
-          /* Modern input styling */
-          .fui-Input__input:focus {
-            border-color: #3b82f6 !important;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
-            background-color: #ffffff !important;
-          }
-
-          .fui-Input__input:hover:not(:disabled) {
-            border-color: #9ca3af !important;
-            background-color: #ffffff !important;
-          }
-
-          /* Button hover effects */
-          .fui-Button:hover:not(:disabled) {
-            background-color: #2563eb !important;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
-          }
-
-          .fui-Button:active:not(:disabled) {
-            transform: translateY(0);
-          }
-        `}</style>
+        
       </Head>
 
       <div
@@ -304,7 +192,7 @@ export default function LoginPage() {
           </div>
           <Divider
             style={{
-              padding: "1em 2em 1em 2em",
+              padding: "2em 2em 2em 2em",
               fontFamily: "Segoe UI Light",
               color: "#6b7280",
               opacity: animationPhase === "form" ? 1 : 0,
@@ -370,7 +258,7 @@ Please enter yours below to unlock all the wedding details - and a heartfelt mes
         <div
           className="phase-container"
           style={{
-            paddingTop: "1em",
+            
             opacity: animationPhase === "form" ? 1 : 0,
             visibility: animationPhase === "form" ? "visible" : "hidden",
             transform:
@@ -410,7 +298,7 @@ Please enter yours below to unlock all the wedding details - and a heartfelt mes
             // Position form in lower area
             alignItems: "flex-end",
             paddingBottom: "2vh",
-            paddingTop: "2vh",
+            paddingTop: "1em",
             maxWidth: " 90vw",
           }}
         >
