@@ -102,7 +102,7 @@ export default function LoginPage() {
         <title>Nathy & Jorge's Wedding</title>
         <meta
           name="description"
-          content="Enter your unique wedding access code to view event details, RSVP, and access your personalized guest portal"
+          content="Welcome to our wedding portal! Please enter your access code to unlock all the details."
         />
         
       </Head>
