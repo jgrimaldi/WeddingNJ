@@ -6,7 +6,6 @@ import {
   Title2,
 } from "@fluentui/react-components";
 import { HomeMoreRegular } from "@fluentui/react-icons";
-import { trace } from "console";
 
 type HoverCardProps = {
   title: string;
@@ -40,7 +39,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const HoverCard = ({
+const HoverCard = ({
   title,
   dividerIcon = <HomeMoreRegular />,
   body,
@@ -102,3 +101,5 @@ export const HoverCard = ({
     </>
   );
 };
+
+export default HoverCard;

@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const TopNavBar = () => {
+const TopNavBar = () => {
   const [open, setOpen] = useState(false);
   const styles = useStyles();
   return (
@@ -121,3 +121,5 @@ export const TopNavBar = () => {
     </>
   );
 };
+
+export default TopNavBar;
