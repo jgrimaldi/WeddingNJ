@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "startAzure": "build/standalone/server.js",
+    "startAzure": "node build/standalone/server.js",
     "lint": "next lint",
     "generate-secret": "node scripts/generate-secret.js"
   },
