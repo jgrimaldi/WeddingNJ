@@ -4,8 +4,8 @@ import Head from "next/head";
 import { makeStyles } from "@fluentui/react-components";
 import ChurchIcon from "@mui/icons-material/Church";
 import LocationCityIcon from '@mui/icons-material/LocationCity';
-import { TopNavBar } from "./components/TopNavBar";
-import { HoverCard } from "./components/HoverCard";
+import TopNavBar from "./components/TopNavBar";
+import HoverCard from "./components/HoverCard";
 
 type HomePageProps = {
   session: {
