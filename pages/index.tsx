@@ -2,8 +2,6 @@ import { GetServerSidePropsContext } from "next";
 import { getServerAuthSession } from "@/lib/auth";
 import Head from "next/head";
 import { makeStyles } from "@fluentui/react-components";
-import ChurchIcon from "@mui/icons-material/Church";
-import LocationCityIcon from '@mui/icons-material/LocationCity';
 import TopNavBar from "./components/TopNavBar";
 import HoverCard from "./components/HoverCard";
 
@@ -59,12 +57,10 @@ export default function HomePage({ session }: HomePageProps) {
           <HoverCard
             title="Venue"
             body="Calle Gavilanes, Santa Ana. Santa Ana Country Club."
-            dividerIcon={<LocationCityIcon />}
           />
           <HoverCard
             title="Ceremony"
             body="Av. Central, La Trinidad, Alajuela."
-            dividerIcon={<ChurchIcon />}
           />
         </div>
       </div>

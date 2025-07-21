@@ -6,17 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "startAzure": "./node_modules/next/dist/bin/next start",
+    "startAzure": "build/standalone/server.js",
     "lint": "next lint",
     "generate-secret": "node scripts/generate-secret.js"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
     "@fluentui/react-components": "^9.66.5",
     "@fluentui/react-icons": "^2.0.305",
-    "@mui/icons-material": "^7.2.0",
-    "@mui/material": "^7.2.0",
     "autoprefixer": "^10.4.21",
     "next": "^15.3.4",
     "next-auth": "^4.24.5",
