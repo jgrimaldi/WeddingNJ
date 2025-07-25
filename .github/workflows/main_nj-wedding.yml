@@ -32,15 +32,7 @@ jobs:
 
       - name: Zip artifact for deployment
         run: |
-          mkdir -p deploy
-          cp -r .next/standalone/.next deploy/
-          cp -r .next/standalone/pages deploy/
-          cp -r .next/standalone/package.json deploy/
-          cp -r .next/standalone/server.js deploy/
-          cp -r .next/static deploy/.next/
-          cp -r public deploy/
-          cd deploy
-          zip -r ../release.zip .
+          zip release.zip . -r -x @.zip-ignore
 
       - name: Show deploy directory and contents
         run: |
