@@ -40,6 +40,7 @@ jobs:
           cp next-env.d.ts deploy/
           cp next.config.js deploy/
           cp package.json deploy/
+          cp tsconfig.json deploy/
           cd deploy
           zip -r ../release.zip .
 
