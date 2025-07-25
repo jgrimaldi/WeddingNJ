@@ -26,10 +26,6 @@ const useStyles = makeStyles({
       transition: "background-color 0.5s ease",
       border: "2px solid #3D3D3D",
     },
-    "&:hover $divider::after": {
-      borderTopStyle: "solid",
-      borderTopColor: "#3D3D3D !important",
-    },
   },
   divider: {
     "&:hover::after": {
