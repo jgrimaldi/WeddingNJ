@@ -1,9 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
-  outputFileTracingIncludes: {
-    "./standalone": ["./node_modules/@swc/helpers"],
-  },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@": require("path").resolve(__dirname, "src"),
+    };
+    return config;
+  }
 };
 
 module.exports = nextConfig;
