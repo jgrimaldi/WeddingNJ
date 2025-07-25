@@ -33,7 +33,7 @@ jobs:
       - name: Zip artifact for deployment
         run: |
           mkdir -p deploy
-          cp -r .next/standalone deploy/
+          cp -r .next/standalone/* deploy/
           cp -r .next/static deploy/.next/
           cp -r public deploy/
           cp package.json deploy/
