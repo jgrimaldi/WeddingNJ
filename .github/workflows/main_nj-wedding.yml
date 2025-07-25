@@ -43,7 +43,7 @@ jobs:
       - name: Show deploy directory and contents
         run: |
           pwd
-          ls -la
+          ls -la deploy
 
       - name: Show size of zipped artifact
         run: du -h release.zip
