@@ -37,6 +37,7 @@ jobs:
           cp -r pages/ deploy/
           cp -r public/ deploy/
           cp -r types/ deploy/
+          cp -r styles/ deploy/
           cp next-env.d.ts deploy/
           cp next.config.js deploy/
           cp package.json deploy/

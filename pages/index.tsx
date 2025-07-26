@@ -3,7 +3,6 @@ import { getServerAuthSession } from "@/lib/auth";
 import Head from "next/head";
 import { makeStyles } from "@fluentui/react-components";
 import TopNavBar from "./components/TopNavBar";
-import HoverCard from "./components/HoverCard";
 import HeroSection from "./components/HeroSection";
 import Timer from "./components/Timer";
 
@@ -56,7 +55,6 @@ export default function HomePage({ session }: HomePageProps) {
         >
           <HeroSection bgColor="dark" customComponent={<Timer targetDate={new Date("2026-02-28T14:00:00Z")} />}/>
           <HeroSection bgColor="light" customComponent={"Test"}/>
-
         </div>
       </div>
     </>

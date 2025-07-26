@@ -10,11 +10,10 @@ import {
   LargeTitle,
   Title1,
 } from "@fluentui/react-components";
-import { useEffect, useState } from "react";
-
+import { useEffect, useRef, useState } from "react";
 
 type TimerProps = {
- targetDate: Date; // ISO format date string
+  targetDate: Date; // ISO format date string
 };
 
 interface TimeLeft {
@@ -24,10 +23,8 @@ interface TimeLeft {
   seconds: number;
 }
 
-
-
 const useStyles = makeStyles({
-  timerContainer:{
+  timerContainer: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -38,39 +35,56 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "column",    
+    flexDirection: "column",
+    gap: "0.5em"
   },
   timerValue: {
     padding: "0.5em",
     width: "3em",
     alignItems: "center",
   },
+  timerDigit: {
+    transition: 'transform 0.5s ease-in-out', 
+    opacity: '0.5s ease-in-out',
+  },
+  digitAnimate: {
+    transform: 'rotateX(360deg)',
+  },
   timerTitle: {
     fontFamily: "Segoe UI Light",
     color: "#3D3D3D",
+    marginTop: "0.5em"
   },
+  timerValueLabel: {
+    fontFamily: "Segoe UI Light",
+    color: "#3D3D3D",
+  }
 });
 
 const Timer: React.FC<TimerProps> = ({ targetDate }) => {
   const styles = useStyles();
   const calculateTimeLeft = (): TimeLeft | null => {
     const difference = +new Date(targetDate) - +new Date();
-    if (difference < 0) { return null; }
-    
+    if (difference < 0) {
+      return null;
+    }
+
     return {
       days: Math.floor(difference / (1000 * 60 * 60 * 24)),
       hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
       minutes: Math.floor((difference / 1000 / 60) % 60),
       seconds: Math.floor((difference / 1000) % 60),
     };
-
   };
 
-  
-  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(calculateTimeLeft());
+  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(
+    calculateTimeLeft()
+  );
+  const prevTimeRef = useRef(timeLeft);
 
   useEffect(() => {
     const timer = setTimeout(() => {
+      prevTimeRef.current = timeLeft;
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
@@ -79,28 +93,59 @@ const Timer: React.FC<TimerProps> = ({ targetDate }) => {
 
   return (
     <>
-      
       {timeLeft ? (
         <>
           <Title1 className={styles.timerTitle}>It's happening !</Title1>
           <div className={styles.timerContainer}>
             <div className={styles.timerSubContainer}>
               <Card className={styles.timerValue}>
-              <Subtitle2 color="#3D3D3D">{timeLeft.days}</Subtitle2>              
+                <Subtitle2
+                  color="#3D3D3D"
+                  className={`${styles.timerDigit} ${
+                    timeLeft.days !== prevTimeRef.current?.days
+                  }`}
+                >
+                  {timeLeft.days}
+                </Subtitle2>
               </Card>
-              <Body1 color="#3D3D3D">Days</Body1>
+              <Body1 className={styles.timerValueLabel}>Days</Body1>
             </div>
             <div className={styles.timerSubContainer}>
               <Card className={styles.timerValue}>
-              <Subtitle2>{timeLeft.hours}</Subtitle2>              
+                <Subtitle2
+                  className={`${styles.timerDigit} ${
+                    timeLeft.hours !== prevTimeRef.current?.hours
+                  }`}
+                >
+                  {timeLeft.hours}
+                </Subtitle2>
               </Card>
-              <Body1>Hours</Body1>
+              <Body1 className={styles.timerValueLabel}>Hours</Body1>
             </div>
             <div className={styles.timerSubContainer}>
               <Card className={styles.timerValue}>
-              <Subtitle2>{timeLeft.seconds}</Subtitle2>              
+                <Subtitle2
+                  className={`${styles.timerDigit} ${
+                    timeLeft.minutes !== prevTimeRef.current?.minutes
+                  }`}
+                >
+                  {timeLeft.minutes}
+                </Subtitle2>
               </Card>
-              <Body1>Seconds</Body1>
+              <Body1 className={styles.timerValueLabel}>Minutes</Body1>
+            </div>
+            <div className={styles.timerSubContainer}>
+              <Card className={styles.timerValue}>
+                <Subtitle2
+                  className={`${styles.timerDigit} ${
+                    timeLeft.seconds !== prevTimeRef.current?.seconds
+                    ? styles.digitAnimate : ''
+                  }`}
+                >
+                  {timeLeft.seconds}
+                </Subtitle2>
+              </Card>
+              <Body1 className={styles.timerValueLabel}>Seconds</Body1>
             </div>
           </div>
         </>
