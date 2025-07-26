@@ -64,18 +64,6 @@ const TopNavBar = () => {
           }}
           priority
         />
-        <Title2
-          style={{
-            letterSpacing: "-0.02em",
-            textAlign: "center",
-            padding: "5px",
-            color: "#ffffffff",
-            fontSize: "1.2em",
-            lineHeight: "1",
-          }}
-        >
-          Welcome
-        </Title2>
         {!open ? (
           <Hamburger
             style={{ color: "#ffffffff" }}

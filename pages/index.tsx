@@ -4,6 +4,7 @@ import Head from "next/head";
 import { makeStyles } from "@fluentui/react-components";
 import TopNavBar from "./components/TopNavBar";
 import HoverCard from "./components/HoverCard";
+import HeroSection from "./components/HeroSection";
 
 type HomePageProps = {
   session: {
@@ -22,7 +23,6 @@ const useStyles = makeStyles({
   },
   mainContent: {
     marginTop: "4em", // Navbar height is ~3.5em, so add some margin to avoid overlap
-    padding: "2em 3em",
   },
 });
 
@@ -54,14 +54,8 @@ export default function HomePage({ session }: HomePageProps) {
             alignItems: "center",
           }}
         >
-          <HoverCard
-            title="Venue"
-            body="Calle Gavilanes, Santa Ana. Santa Ana Country Club."
-          />
-          <HoverCard
-            title="Ceremony"
-            body="Av. Central, La Trinidad, Alajuela."
-          />
+          <HeroSection bgColor="light" imageBGSource={"/images/SACCBackgroundWatercolor.png"}/>
+          <HeroSection bgColor="dark"/>
         </div>
       </div>
     </>
