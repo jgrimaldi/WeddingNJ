@@ -3,10 +3,11 @@ import {
   Image,
 } from "@fluentui/react-components";
 import { Component } from "react";
+import Timer from "./Timer";
 
 type HeroSectionProps = {
   bgColor: string;
-  imageBGSource?: string;
+  customComponent: React.ReactNode;
 };
 
 const useStyles = makeStyles({
@@ -20,23 +21,22 @@ const useStyles = makeStyles({
   },
   image: {
     width: "100%",
-    height: "auto",
+    maxHeight: "15em",
     objectFit: "cover",
+    filter: "blur(1.5px)",
   },
 });
 
-const HeroSection = ({ bgColor = "light", imageBGSource }: HeroSectionProps) => {
+const HeroSection = ({ bgColor = "light", customComponent }: HeroSectionProps) => {
   const styles = useStyles();
 
   return (
     <>
       <div
         className={styles.heroSection}
-        style={{ backgroundColor: bgColor === "dark" ? "#0178D3" : "#1F1F1F" }}
+        style={{ backgroundColor: bgColor === "dark" ? "#D0D0D0" : "#E7E7E7" }}
       >
-        {imageBGSource ? 
-          <Image src={imageBGSource} className={styles.image} /> 
-          : "Test"}
+        {customComponent}
       </div>
     </>
   );

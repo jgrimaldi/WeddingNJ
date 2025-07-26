@@ -5,6 +5,7 @@ import { makeStyles } from "@fluentui/react-components";
 import TopNavBar from "./components/TopNavBar";
 import HoverCard from "./components/HoverCard";
 import HeroSection from "./components/HeroSection";
+import Timer from "./components/Timer";
 
 type HomePageProps = {
   session: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles({
     display: "flex",
   },
   mainContent: {
-    marginTop: "4em", // Navbar height is ~3.5em, so add some margin to avoid overlap
+    marginTop: "3em", // Navbar height is ~3em, so add some margin to avoid overlap
   },
 });
 
@@ -50,12 +51,12 @@ export default function HomePage({ session }: HomePageProps) {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "2em",
             alignItems: "center",
           }}
         >
-          <HeroSection bgColor="light" imageBGSource={"/images/SACCBackgroundWatercolor.png"}/>
-          <HeroSection bgColor="dark"/>
+          <HeroSection bgColor="dark" customComponent={<Timer targetDate={new Date("2026-02-28T14:00:00Z")} />}/>
+          <HeroSection bgColor="light" customComponent={"Test"}/>
+
         </div>
       </div>
     </>

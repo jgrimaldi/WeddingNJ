@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     lineHeight: "20px",
     width: "20px",
     height: "20px",
-    color: "#ffffffff",
+    color: "#3D3D3D",
   },
 });
 
@@ -43,9 +43,8 @@ const TopNavBar = () => {
           left: 0,
           right: 0,
           zIndex: 1000,
-          backgroundColor: "#2C2C2C",
-          //boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
-          padding: "0.5rem 1rem",
+          backgroundColor: "#ffffffff",
+          //boxShadow: "0 1px 2px rgba(0,0,0,0.1)",padding: "0.5rem 1rem",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -60,13 +59,12 @@ const TopNavBar = () => {
             padding: "5px",
             paddingBottom: "5px",
             filter:
-              "brightness(0) saturate(100%) invert(99%) sepia(0%) saturate(7498%) hue-rotate(73deg) brightness(109%) contrast(101%)",
-          }}
+                  "brightness(0) saturate(100%) invert(22%) sepia(19%) saturate(0%) hue-rotate(140deg) brightness(104%) contrast(100%)",          }}
           priority
         />
         {!open ? (
           <Hamburger
-            style={{ color: "#ffffffff" }}
+            style={{ color: "#3D3D3D" }}
             onClick={() => setOpen(!open)}
           />
         ) : (
@@ -79,7 +77,7 @@ const TopNavBar = () => {
       <div
         style={{
           position: "fixed",
-          top: open ? "50px" : "-200px",
+          top: open ? "40px" : "-200px",
           left: 0,
           right: 0,
           backgroundColor: "#f9f9f9",
