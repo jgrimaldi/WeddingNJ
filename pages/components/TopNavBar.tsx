@@ -7,7 +7,11 @@ import {
   Title2,
   Tooltip,
 } from "@fluentui/react-components";
-import { Dismiss24Regular, SignOutRegular } from "@fluentui/react-icons";
+import {
+  Dismiss24Regular,
+  SignOutRegular,
+  NavigationRegular,
+} from "@fluentui/react-icons";
 import React, { useState } from "react";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
@@ -17,12 +21,14 @@ const useStyles = makeStyles({
     border: "none",
     color: "var(--colorNeutralForeground2)",
     backgroundColor: "var(--colorTransparentBackground)",
+    margin: "5px",
+    padding: 0,
+    height: "40px",
   },
   closeIcon: {
-    lineHeight: "30px",
-    width: "30px",
-    height: "30px",
-    color: "#3D3D3D",
+    color: "#ffffff",
+    height: "40px",
+    width: "42px",
   },
 });
 
@@ -39,7 +45,7 @@ const TopNavBar = () => {
           left: 0,
           right: 0,
           zIndex: 1000,
-          backgroundColor: "#ffffffff",
+          backgroundColor: "#202020",
           //boxShadow: "0 1px 2px rgba(0,0,0,0.1)",padding: "0.5rem 1rem",
           display: "flex",
           justifyContent: "space-between",
@@ -49,20 +55,20 @@ const TopNavBar = () => {
         <Image
           src="/logos/nj-logo-black-bold.svg"
           alt="Wedding Logo"
-          width={32}
-          height={30}
+          width={42}
+          height={40}
           style={{
             padding: "5px",
             paddingBottom: "5px",
             filter:
-                  "brightness(0) saturate(100%) invert(22%) sepia(19%) saturate(0%) hue-rotate(140deg) brightness(104%) contrast(100%)",          }}
+              "invert(100%) sepia(100%) saturate(0%) hue-rotate(98deg) brightness(107%) contrast(101%)",
+          }}
           priority
         />
         {!open ? (
-          <Hamburger
-            style={{ color: "#3D3D3D" }}
-            onClick={() => setOpen(!open)}
-          />
+          <button className={styles.closeButton} onClick={() => setOpen(!open)}>
+            <NavigationRegular className={styles.closeIcon} />
+          </button>
         ) : (
           <button className={styles.closeButton} onClick={() => setOpen(!open)}>
             <Dismiss24Regular className={styles.closeIcon} />
@@ -99,7 +105,7 @@ const TopNavBar = () => {
             </Button>
           </li>
         </ul>
-      </div>      
+      </div>
     </>
   );
 };

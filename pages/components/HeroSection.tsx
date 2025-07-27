@@ -33,7 +33,7 @@ const HeroSection = ({ bgColor = "light", customComponent }: HeroSectionProps) =
     <>
       <div
         className={styles.heroSection}
-        style={{ backgroundColor: bgColor === "dark" ? "#D0D0D0" : "#E7E7E7" }}
+        style={{ backgroundColor: bgColor === "dark" ? "#D0D0D0" : "#FFFFFF" }}
       >
         {customComponent}
       </div>
