@@ -11,7 +11,7 @@ import {
 
 const useStyles = makeStyles({
   mainContainer: {
-    backgroundImage: 'url("/images/JyNSTD1.JPG")',
+    backgroundImage: 'url("/images/JyNSTD1.jpg")',
     backgroundSize: "cover",
     backgroundPosition: "center",
     height: "25em",
