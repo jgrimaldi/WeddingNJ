@@ -80,11 +80,9 @@ const Timer: React.FC<TimerProps> = ({ targetDate }) => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(
     calculateTimeLeft()
   );
-  const prevTimeRef = useRef(timeLeft);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      prevTimeRef.current = timeLeft;
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
@@ -101,11 +99,9 @@ const Timer: React.FC<TimerProps> = ({ targetDate }) => {
               <Card className={styles.timerValue}>
                 <Subtitle2
                   color="#3D3D3D"
-                  className={`${styles.timerDigit} ${
-                    timeLeft.days !== prevTimeRef.current?.days
-                  }`}
+                  className={styles.timerDigit}
                 >
-                  {String(timeLeft.days).padStart(3, '0')}
+                  {timeLeft.days.toString().padStart(3, '0')}
                 </Subtitle2>
               </Card>
               <Body1 className={styles.timerValueLabel}>Days</Body1>
@@ -113,11 +109,9 @@ const Timer: React.FC<TimerProps> = ({ targetDate }) => {
             <div className={styles.timerSubContainer}>
               <Card className={styles.timerValue}>
                 <Subtitle2
-                  className={`${styles.timerDigit} ${
-                    timeLeft.hours !== prevTimeRef.current?.hours
-                  }`}
+                  className={styles.timerDigit}
                 >
-                  {String(timeLeft.hours).padStart(2, '0')}
+                  {timeLeft.hours.toString().padStart(2, '0')}
                 </Subtitle2>
               </Card>
               <Body1 className={styles.timerValueLabel}>Hours</Body1>
@@ -125,11 +119,9 @@ const Timer: React.FC<TimerProps> = ({ targetDate }) => {
             <div className={styles.timerSubContainer}>
               <Card className={styles.timerValue}>
                 <Subtitle2
-                  className={`${styles.timerDigit} ${
-                    timeLeft.minutes !== prevTimeRef.current?.minutes
-                  }`}
+                  className={styles.timerDigit}
                 >
-                  {String(timeLeft.minutes).padStart(2, '0')}
+                  {timeLeft.minutes.toString().padStart(2, '0')}
                 </Subtitle2>
               </Card>
               <Body1 className={styles.timerValueLabel}>Minutes</Body1>
@@ -137,12 +129,9 @@ const Timer: React.FC<TimerProps> = ({ targetDate }) => {
             <div className={styles.timerSubContainer}>
               <Card className={styles.timerValue}>
                 <Subtitle2
-                  className={`${styles.timerDigit} ${
-                    timeLeft.seconds !== prevTimeRef.current?.seconds
-                    ? styles.digitAnimate : ''
-                  }`}
+                  className={styles.timerDigit}
                 >
-                  {String(timeLeft.seconds).padStart(2, '0')}
+                  {timeLeft.seconds.toString().padStart(2, '0')}
                 </Subtitle2>
               </Card>
               <Body1 className={styles.timerValueLabel}>Seconds</Body1>

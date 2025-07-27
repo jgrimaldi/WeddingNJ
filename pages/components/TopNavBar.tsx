@@ -17,15 +17,11 @@ const useStyles = makeStyles({
     border: "none",
     color: "var(--colorNeutralForeground2)",
     backgroundColor: "var(--colorTransparentBackground)",
-    padding: "5px",
-    maxWidth: "32px",
-    minWidth: "32px",
-    height: "30px",
   },
   closeIcon: {
-    lineHeight: "20px",
-    width: "20px",
-    height: "20px",
+    lineHeight: "30px",
+    width: "30px",
+    height: "30px",
     color: "#3D3D3D",
   },
 });
