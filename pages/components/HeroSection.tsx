@@ -16,8 +16,6 @@ const useStyles = makeStyles({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: "1em",
-    paddingBottom: "1em",
     width: "-webkit-fill-available",
   },
   image: {

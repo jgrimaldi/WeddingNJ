@@ -6,6 +6,7 @@ import TopNavBar from "./components/TopNavBar";
 import HeroSection from "./components/HeroSection";
 import Timer from "./components/Timer";
 import Timeline from "./components/Timeline";
+import BannerImage from "./components/BannerImage";
 
 type HomePageProps = {
   session: {
@@ -54,8 +55,23 @@ export default function HomePage({ session }: HomePageProps) {
             alignItems: "center",
           }}
         >
-          <HeroSection bgColor="dark" customComponent={<Timer targetDate={new Date("2026-02-28T14:00:00Z")} />}/>
-          <HeroSection bgColor="light" customComponent={<Timeline></Timeline>}/>
+          <HeroSection
+            bgColor="light"
+            customComponent={
+              <BannerImage></BannerImage>
+            }
+          />
+
+          <HeroSection
+            bgColor="dark"
+            customComponent={
+              <Timer targetDate={new Date("2026-02-28T14:00:00Z")} />
+            }
+          />
+          <HeroSection
+            bgColor="light"
+            customComponent={<Timeline></Timeline>}
+          />
         </div>
       </div>
     </>
