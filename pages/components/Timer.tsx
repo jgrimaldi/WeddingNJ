@@ -105,7 +105,7 @@ const Timer: React.FC<TimerProps> = ({ targetDate }) => {
                     timeLeft.days !== prevTimeRef.current?.days
                   }`}
                 >
-                  {timeLeft.days}
+                  {String(timeLeft.days).padStart(3, '0')}
                 </Subtitle2>
               </Card>
               <Body1 className={styles.timerValueLabel}>Days</Body1>
@@ -117,7 +117,7 @@ const Timer: React.FC<TimerProps> = ({ targetDate }) => {
                     timeLeft.hours !== prevTimeRef.current?.hours
                   }`}
                 >
-                  {timeLeft.hours}
+                  {String(timeLeft.hours).padStart(2, '0')}
                 </Subtitle2>
               </Card>
               <Body1 className={styles.timerValueLabel}>Hours</Body1>
@@ -129,7 +129,7 @@ const Timer: React.FC<TimerProps> = ({ targetDate }) => {
                     timeLeft.minutes !== prevTimeRef.current?.minutes
                   }`}
                 >
-                  {timeLeft.minutes}
+                  {String(timeLeft.minutes).padStart(2, '0')}
                 </Subtitle2>
               </Card>
               <Body1 className={styles.timerValueLabel}>Minutes</Body1>
@@ -142,7 +142,7 @@ const Timer: React.FC<TimerProps> = ({ targetDate }) => {
                     ? styles.digitAnimate : ''
                   }`}
                 >
-                  {timeLeft.seconds}
+                  {String(timeLeft.seconds).padStart(2, '0')}
                 </Subtitle2>
               </Card>
               <Body1 className={styles.timerValueLabel}>Seconds</Body1>
