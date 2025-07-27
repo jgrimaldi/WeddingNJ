@@ -11,13 +11,14 @@ import {
 
 const useStyles = makeStyles({
   mainContainer: {
-    backgroundImage: 'url("/images/JyNSaveTheDateBW.JPG")',
+    backgroundImage: 'url("/images/JyNSTD1.JPG")',
     backgroundSize: "cover",
     backgroundPosition: "center",
     height: "25em",
     width: "100%",
-    borderBottomLeftRadius: "200px",
-    borderBottomRightRadius: "200px",
+    borderBottomLeftRadius: "10em",
+    borderBottomRightRadius: "10em",
+    filter: "grayscale(100%)",
   },
 });
 
