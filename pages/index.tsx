@@ -1,22 +1,19 @@
 import { GetServerSidePropsContext } from "next";
 import { getServerAuthSession } from "@/lib/auth";
 import Head from "next/head";
-import { makeStyles } from "@fluentui/react-components";
+import { makeStyles, Title2 } from "@fluentui/react-components";
 import TopNavBar from "./components/TopNavBar";
 import HeroSection from "./components/HeroSection";
 import Timer from "./components/Timer";
 import Timeline from "./components/Timeline";
 import BannerImage from "./components/BannerImage";
+import BannerTitle from "./components/BannerTitle";
+import PersonalMessage from "./components/PersonalMessage";
+import { Invitation } from "./api/auth/[...nextauth]";
+import { useSession } from 'next-auth/react';
 
 type HomePageProps = {
-  session: {
-    user: {
-      name: string;
-      email?: string | null;
-      image?: string | null;
-      accessCode?: string | null;
-    };
-  };
+  // No session prop needed - we'll use client-side session
 };
 
 const useStyles = makeStyles({
@@ -28,9 +25,21 @@ const useStyles = makeStyles({
   },
 });
 
-export default function HomePage({ session }: HomePageProps) {
+export default function HomePage({}: HomePageProps) {
+  const { data: clientSession, status } = useSession();
   const styles = useStyles();
+  
+  // Show loading while session is being fetched
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
 
+  // If no session at all, this shouldn't happen due to getServerSideProps redirect
+  if (!clientSession) {
+    console.log("No final session found!");
+    return <div>No session found</div>;
+  }
+  
   return (
     <>
       <Head>
@@ -43,7 +52,7 @@ export default function HomePage({ session }: HomePageProps) {
           minHeight: "100vh",
           backgroundColor: "var(--fluent-grey-10)",
         }}
-      >
+      >        
         <TopNavBar />
 
         {/* Main Content Area */}
@@ -57,8 +66,19 @@ export default function HomePage({ session }: HomePageProps) {
         >
           <HeroSection
             bgColor="light"
+            customComponent={<BannerImage />}
+          />
+          <HeroSection
+            bgColor="light"
+            customComponent={<BannerTitle />}
+          />
+
+          <HeroSection
+            bgColor="light"
             customComponent={
-              <BannerImage></BannerImage>
+              <PersonalMessage 
+                customMessage={clientSession?.user?.invitation?.CustomGreet || "Welcome to our wedding portal!"} 
+              />
             }
           />
 
@@ -70,7 +90,7 @@ export default function HomePage({ session }: HomePageProps) {
           />
           <HeroSection
             bgColor="light"
-            customComponent={<Timeline></Timeline>}
+            customComponent={<Timeline />}
           />
         </div>
       </div>
@@ -81,7 +101,6 @@ export default function HomePage({ session }: HomePageProps) {
 // Server-side authentication check
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerAuthSession(context);
-  console.log("SESSION:", session);
 
   // If user is not authenticated, redirect to login
   if (!session) {
@@ -93,19 +112,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  // Clean the session object to avoid serialization issues
-  const cleanSession = {
-    user: {
-      name: session.user?.name || "Authorized User",
-      email: session.user?.email || null,
-      image: session.user?.image || null,
-      accessCode: (session.user as any)?.accessCode || null,
-    },
-  };
-
+  // Don't pass complex session data through props - let client-side session handle it
   return {
     props: {
-      session: cleanSession,
+      // We could pass simple data here if needed, but complex objects cause serialization issues
     },
   };
 }

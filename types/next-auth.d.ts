@@ -6,12 +6,14 @@ declare module 'next-auth' {
    */
   interface Session {
     user: {
-      accessCode?: string
+      accessCode?: string,
+      invitation?: Invitation | null
     } & DefaultSession['user']
   }
 
   interface User {
     accessCode?: string
+    invitation?: Invitation | null
   }
 }
 

@@ -16,8 +16,8 @@ const useStyles = makeStyles({
     backgroundPosition: "center",
     height: "25em",
     width: "100%",
-    borderBottomLeftRadius: "10em",
-    borderBottomRightRadius: "10em",
+    borderBottomLeftRadius: "15em",
+    borderBottomRightRadius: "15em",
     filter: "grayscale(100%)",
   },
 });
@@ -27,9 +27,7 @@ const BannerImage = () => {
 
   return (
     <>
-      <div className={styles.mainContainer}>
-          
-      </div>
+      <div className={styles.mainContainer}></div>
     </>
   );
 };

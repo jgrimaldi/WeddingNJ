@@ -1,0 +1,239 @@
+{
+  "FGB718": {
+    "Guests": [
+      { "Name": "Papa", "Gender": "male", "language": "ES", "Residency": "Local" },
+      { "Name": "Mama", "Gender": "female", "language": "ES", "Residency": "Local" },
+      { "Name": "Raul", "Gender": "male", "language": "ES", "Residency": "Local" },
+      { "Name": "Yunita", "Gender": "female", "language": "ES", "Residency": "Local" }
+    ],
+    "CustomGreet": "FAM GRIM Unánse a nosotros en este inicio del nuevo capítulo en nuestras vidas."
+  },
+  "FMB409": {
+    "Guests": [
+      { "Name": "Anahi", "Gender": "female", "language": "ES", "Residency": "Local" },
+      { "Name": "Manolo", "Gender": "male", "language": "ES", "Residency": "Local" },
+      { "Name": "Mariana", "Gender": "female", "language": "ES", "Residency": "Local" },
+      { "Name": "Miranda", "Gender": "female", "language": "ES", "Residency": "Local" },
+      { "Name": "Manolo", "Gender": "male", "language": "ES", "Residency": "Local" },
+      { "Name": "Luz Mery", "Gender": "female", "language": "ES", "Residency": "Local" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "AMI235": {
+    "Guests": [
+      { "Name": "Mario", "Gender": "male", "language": "ES", "Residency": "Local" },
+      { "Name": "Guille", "Gender": "male", "language": "ES", "Residency": "Local" }
+    ],
+    "CustomGreet": "A nuestros queridisimos amigos, ¡no podemos esperar a celebrar juntos!"
+  },
+  "AMI719": {
+    "Guests": [
+      { "Name": "Kerlyn", "Gender": "female", "language": "ES", "Residency": "Local" },
+      { "Name": "Anthony", "Gender": "male", "language": "ES", "Residency": "Local" }
+    ],
+    "CustomGreet": "A nuestros queridisimos amigos, ¡no podemos esperar a celebrar juntos!"
+  },
+  "AMI398": {
+    "Guests": [
+      { "Name": "Regina", "Gender": "female", "language": "ES", "Residency": "Local" },
+      { "Name": "Fabian", "Gender": "male", "language": "ES", "Residency": "Local" }
+    ],
+    "CustomGreet": "A nuestros queridisimos amigos, ¡no podemos esperar a celebrar juntos!"
+  },
+  "FRR830": {
+    "Guests": [
+      { "Name": "Adela", "Gender": "female", "language": "ES", "Residency": "Local" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FRR349": {
+    "Guests": [
+      { "Name": "Alvaro", "Gender": "male", "language": "ES", "Residency": "Local" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FCP262": {
+    "Guests": [
+      { "Name": "Maria del Carmen", "Gender": "female", "language": "ES", "Residency": "Local" },
+      { "Name": "Christopher", "Gender": "male", "language": "ES", "Residency": "Local" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "AMI483": {
+    "Guests": [
+      { "Name": "Lucia", "Gender": "female", "language": "ES", "Residency": "Local" },
+      { "Name": "Moises", "Gender": "male", "language": "ES", "Residency": "Local" }
+    ],
+    "CustomGreet": "A nuestros queridisimos amigos, ¡no podemos esperar a celebrar juntos!"
+  },
+  "AMI951": {
+    "Guests": [
+      { "Name": "Diana", "Gender": "female", "language": "ES", "Residency": "Local" },
+      { "Name": "Johnny", "Gender": "male", "language": "ES", "Residency": "Local" }
+    ],
+    "CustomGreet": "A nuestros queridisimos amigos, ¡no podemos esperar a celebrar juntos!"
+  },
+  "AMI101": {
+    "Guests": [
+      { "Name": "Mariela", "Gender": "female", "language": "ES", "Residency": "Local" },
+      { "Name": "Mario", "Gender": "male", "language": "ES", "Residency": "Local" }
+    ],
+    "CustomGreet": "A nuestros queridisimos amigos, ¡no podemos esperar a celebrar juntos!"
+  },
+  "AMI702": {
+    "Guests": [
+      { "Name": "Bacano", "Gender": "male", "language": "ES", "Residency": "Local" }
+    ],
+    "CustomGreet": "A nuestros queridisimos amigos, ¡no podemos esperar a celebrar juntos!"
+  },
+  "AMI539": {
+    "Guests": [
+      { "Name": "Charlie", "Gender": "male", "language": "ES", "Residency": "Local" }
+    ],
+    "CustomGreet": "A nuestros queridisimos amigos, ¡no podemos esperar a celebrar juntos!"
+  },
+  "AMI179": {
+    "Guests": [
+      { "Name": "Daniela", "Gender": "female", "language": "ES", "Residency": "Local" }
+    ],
+    "CustomGreet": "A nuestros queridisimos amigos, ¡no podemos esperar a celebrar juntos!"
+  },
+  "FGI502": {
+    "Guests": [
+      { "Name": "Tio Rene", "Gender": "male", "language": "ES", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FGI159": {
+    "Guests": [
+      { "Name": "Tio Edgardo", "Gender": "male", "language": "ES", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FGI106": {
+    "Guests": [
+      { "Name": "Abuelito Rene", "Gender": "male", "language": "ES", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FGI957": {
+    "Guests": [
+      { "Name": "Tio Oscar", "Gender": "male", "language": "ES", "Residency": "Remote" },
+      { "Name": "Tia Gloria", "Gender": "female", "language": "ES", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FBF865": {
+    "Guests": [
+      { "Name": "Abuilla", "Gender": "female", "language": "ES", "Residency": "Remote" },
+      { "Name": "Tia Letty", "Gender": "female", "language": "ES", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FBB916": {
+    "Guests": [
+      { "Name": "Joshua", "Gender": "male", "language": "EN", "Residency": "Remote" },
+      { "Name": "Hannah", "Gender": "female", "language": "EN", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FLB858": {
+    "Guests": [
+      { "Name": "Tio Jack", "Gender": "male", "language": "EN", "Residency": "Remote" },
+      { "Name": "Tia Elena", "Gender": "female", "language": "EN", "Residency": "Remote" },
+      { "Name": "Andrea", "Gender": "female", "language": "EN", "Residency": "Remote" },
+      { "Name": "Monica", "Gender": "female", "language": "EN", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FGI545": {
+    "Guests": [
+      { "Name": "Abuilla", "Gender": "female", "language": "ES", "Residency": "Remote" },
+      { "Name": "Tia Letty", "Gender": "female", "language": "ES", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FCP749": {
+    "Guests": [
+      { "Name": "Daniel", "Gender": "male", "language": "ES", "Residency": "Remote" },
+      { "Name": "Melania", "Gender": "female", "language": "ES", "Residency": "Remote" },
+      { "Name": "Julian", "Gender": "male", "language": "ES", "Residency": "Remote" },
+      { "Name": "Gabriel", "Gender": "male", "language": "ES", "Residency": "Remote" },
+      { "Name": "Fiorella", "Gender": "female", "language": "ES", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FCP956": {
+    "Guests": [
+      { "Name": "Ricky", "Gender": "male", "language": "ES", "Residency": "Remote" },
+      { "Name": "Roselyn", "Gender": "female", "language": "ES", "Residency": "Remote" },
+      { "Name": "Olivia", "Gender": "female", "language": "ES", "Residency": "Remote" },
+      { "Name": "Elena", "Gender": "female", "language": "ES", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FRR546": {
+    "Guests": [
+      { "Name": "Adriana", "Gender": "female", "language": "EN", "Residency": "Remote" },
+      { "Name": "Jessie", "Gender": "male", "language": "EN", "Residency": "Remote" },
+      { "Name": "Mateo", "Gender": "male", "language": "EN", "Residency": "Remote" },
+      { "Name": "Alba", "Gender": "female", "language": "EN", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FRR686": {
+    "Guests": [
+      { "Name": "Collin", "Gender": "male", "language": "EN", "Residency": "Remote" },
+      { "Name": "Andrea", "Gender": "female", "language": "EN", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FPO416": {
+    "Guests": [
+      { "Name": "Jorge", "Gender": "male", "language": "EN", "Residency": "Remote" },
+      { "Name": "Rhea", "Gender": "female", "language": "EN", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FPO323": {
+    "Guests": [
+      { "Name": "Courtney", "Gender": "male", "language": "EN", "Residency": "Remote" },
+      { "Name": "Catherine", "Gender": "female", "language": "EN", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FPO972": {
+    "Guests": [
+      { "Name": "Tio Jim", "Gender": "male", "language": "EN", "Residency": "Remote" },
+      { "Name": "Tia Iris", "Gender": "female", "language": "EN", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FCO605": {
+    "Guests": [
+      { "Name": "Tio Mario", "Gender": "male", "language": "ES", "Residency": "Remote" },
+      { "Name": "Tia Rosita", "Gender": "female", "language": "ES", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FCO461": {
+    "Guests": [
+      { "Name": "Sebastian", "Gender": "male", "language": "ES", "Residency": "Remote" },
+      { "Name": "Pilar", "Gender": "female", "language": "ES", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FCO548": {
+    "Guests": [
+      { "Name": "Andrey", "Gender": "male", "language": "EN", "Residency": "Remote" },
+      { "Name": "Gabriela", "Gender": "female", "language": "EN", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  },
+  "FCO664": {
+    "Guests": [
+      { "Name": "Maria Jose", "Gender": "female", "language": "ES", "Residency": "Remote" }
+    ],
+    "CustomGreet": "Querida familia, gracias por acompañarnos."
+  }
+}

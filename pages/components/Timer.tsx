@@ -63,6 +63,11 @@ const useStyles = makeStyles({
 
 const Timer: React.FC<TimerProps> = ({ targetDate }) => {
   const styles = useStyles();
+  
+  // Initialize with null to avoid hydration mismatch
+  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
+  const [isClient, setIsClient] = useState(false);
+
   const calculateTimeLeft = (): TimeLeft | null => {
     const difference = +new Date(targetDate) - +new Date();
     if (difference < 0) {
@@ -77,17 +82,23 @@ const Timer: React.FC<TimerProps> = ({ targetDate }) => {
     };
   };
 
-  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(
-    calculateTimeLeft()
-  );
-
   useEffect(() => {
-    const timer = setTimeout(() => {
+    // Set isClient to true and calculate initial time on client
+    setIsClient(true);
+    setTimeLeft(calculateTimeLeft());
+
+    // Set up the interval
+    const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
-    return () => clearTimeout(timer);
-  });
+    return () => clearInterval(timer);
+  }, [targetDate]);
+
+  // Show loading state until client-side hydration is complete
+  if (!isClient) {
+    return <div>Loading timer...</div>;
+  }
 
   return (
     <>
