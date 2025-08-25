@@ -11,6 +11,7 @@ import BannerTitle from "./components/BannerTitle";
 import PersonalMessage from "./components/PersonalMessage";
 import { useSession } from 'next-auth/react';
 import BannerDateText from "./components/BannerDateText";
+import BannerMessage from "./components/BannerMessage";
 
 type HomePageProps = {
   // No session prop needed - we'll use client-side session
@@ -90,6 +91,11 @@ export default function HomePage({}: HomePageProps) {
           <HeroSection
             bgColor="light"
             customComponent={<BannerImage imageName="JyNSTDAlt3.jpg" roundedCorners="top"/>}
+          />
+
+          <HeroSection
+            bgColor="light"
+            customComponent={<BannerMessage language={clientSession?.user?.invitation?.Language} />}
           />
 
           <HeroSection

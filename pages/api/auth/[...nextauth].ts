@@ -71,7 +71,11 @@ export const authOptions: NextAuthOptions = {
     error: '/login'
   },
   session: {
-    strategy: 'jwt'
+    strategy: 'jwt',
+    // Reduce session duration to 2 hours (7200 seconds)
+    maxAge: 2 * 60 * 60, // 2 hours in seconds
+    // Update session every 30 minutes to keep it fresh if user is active
+    updateAge: 30 * 60 // 30 minutes in seconds
   },
   secret: process.env.NEXTAUTH_SECRET
 }

@@ -76,6 +76,16 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
       
+      - name: Install production dependencies
+        run: npm install --production --no-dev
+        
+      - name: Verify installation
+        run: |
+          echo "Node modules installed:"
+          ls -la node_modules | head -10
+          echo "Package.json exists:"
+          ls -la package.json
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
