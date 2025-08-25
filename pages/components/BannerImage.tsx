@@ -13,11 +13,11 @@ type CornerPosition = 'top' | 'bottom';
 
 type BannerImageProps = {
   roundedCorners?: CornerPosition;
+  imageName?: string;
 };
 
 const useStyles = makeStyles({
   mainContainer: {
-    backgroundImage: 'url("/images/JyNSTD1.jpg")',
     backgroundSize: "cover",
     backgroundPosition: "center",
     height: "25em",
@@ -34,7 +34,7 @@ const useStyles = makeStyles({
   },
 });
 
-const BannerImage = ({ roundedCorners = 'bottom' }: BannerImageProps) => {
+const BannerImage = ({ roundedCorners = 'bottom', imageName = 'JyNSTD1.jpg' }: BannerImageProps) => {
   const styles = useStyles();
 
   // Determine which corner style to apply
@@ -42,9 +42,15 @@ const BannerImage = ({ roundedCorners = 'bottom' }: BannerImageProps) => {
     return roundedCorners === 'top' ? styles.roundedTop : styles.roundedBottom;
   };
 
+  // Create the background image URL
+  const backgroundImageUrl = `url("/images/${imageName}")`;
+
   return (
     <>
-      <div className={`${styles.mainContainer} ${getCornerClass()}`}></div>
+      <div 
+        className={`${styles.mainContainer} ${getCornerClass()}`}
+        style={{ backgroundImage: backgroundImageUrl }}
+      ></div>
     </>
   );
 };

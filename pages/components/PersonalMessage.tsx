@@ -34,10 +34,10 @@ const useStyles = makeStyles({
 
 
 type PersonalMessageProps = {
-  customMessage: string;
+  customMessage?: string;
 };
 
-const PersonalMessage = ({customMessage} : PersonalMessageProps) => {
+const PersonalMessage = ({customMessage = "Welcome to our wedding portal!"} : PersonalMessageProps) => {
   const styles = useStyles();
 
   return (

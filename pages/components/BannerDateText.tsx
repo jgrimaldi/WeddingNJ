@@ -14,6 +14,7 @@ const useStyles = makeStyles({
   mainContainer: {
     display: "flex",
     paddingTop: "4em",
+    paddingBottom: "4em",
     flexDirection: "column",
   },
   dateText: {

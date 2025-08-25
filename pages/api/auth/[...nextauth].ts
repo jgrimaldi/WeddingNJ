@@ -1,7 +1,8 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { validateAccessCode } from '@/lib/auth';
-import invitationCodes from './invitations.json';
+import * as fs from 'fs';
+import * as path from 'path';
 
 export type Language = 'ES' | 'EN';
 export type Gender = 'female' | 'male';
@@ -21,9 +22,22 @@ export interface Invitation {
 // Root object keyed by code
 export type InvitationsByCode = Record<string, Invitation>;
 
+// Load invitations data dynamically to avoid deployment path issues
+const loadInvitations = (): InvitationsByCode => {
+  try {
+    const filePath = path.join(process.cwd(), 'pages', 'api', 'auth', 'invitations.json');
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(fileContent) as InvitationsByCode;
+  } catch (error) {
+    console.error('Error loading invitations:', error);
+    return {};
+  }
+};
 
-const invitations = invitationCodes as InvitationsByCode;
-const getInvitation = (code: string) => invitations[code];
+const getInvitation = (code: string) => {
+  const invitations = loadInvitations();
+  return invitations[code];
+};
 
 export const authOptions: NextAuthOptions = {
   providers: [

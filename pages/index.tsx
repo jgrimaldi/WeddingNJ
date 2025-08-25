@@ -90,7 +90,7 @@ export default function HomePage({}: HomePageProps) {
 
           <HeroSection
             bgColor="light"
-            customComponent={<BannerImage />}
+            customComponent={<BannerImage imageName="JyNSTDAlt3.jpg" roundedCorners="top"/>}
           />
 
           <HeroSection
