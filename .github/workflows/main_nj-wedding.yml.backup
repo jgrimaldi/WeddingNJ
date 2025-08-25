@@ -23,23 +23,23 @@ jobs:
         with:
           node-version: 'latest'
 
-      - name: npm install, build, and test
-        run: |
-          npm install
-          npm run build
-          rm -rf .next/cache
-
-      - name: Zip artifact for deployment
+      - name: Copy files, install and build, finally zip
         run: |
           mkdir -p deploy
           cp -r .next/ deploy/
-          cp -r node_modules/ deploy/
+          cp -r lib/ deploy/
+          cp -r pages/ deploy/
           cp -r public/ deploy/
+          cp -r types/ deploy/
+          cp -r styles/ deploy/
           cp next-env.d.ts deploy/
           cp next.config.js deploy/
           cp package.json deploy/
           cp tsconfig.json deploy/
           cd deploy
+          npm install
+          npm run build
+          rm -rf .next/cache
           zip -r ../release.zip .
 
       - name: Show deploy directory and contents
