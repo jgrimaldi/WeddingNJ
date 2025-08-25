@@ -1,25 +1,8 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { validateAccessCode } from '@/lib/auth'
-import { INVITATIONS_DATA } from '@/lib/invitations-data';
-
-export type Language = 'ES' | 'EN';
-export type Gender = 'female' | 'male';
-
-export interface User {
-  Name: string;
-  Gender: Gender;
-  Residency: 'Local' | 'Remote';
-}
-
-export interface Invitation {
-  Language: Language;
-  Guests: User[];
-  CustomGreet: string;
-}
-
-// Root object keyed by code
-export type InvitationsByCode = Record<string, Invitation>;
+import { INVITATIONS_DATA } from '@/lib/invitations-data'
+import type { Invitation } from '@/types/invitations';
 
 const getInvitation = (code: string) => {
   return INVITATIONS_DATA[code];

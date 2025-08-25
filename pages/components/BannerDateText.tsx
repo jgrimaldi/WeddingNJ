@@ -8,7 +8,7 @@ import {
   Title2,
   Title3,
 } from "@fluentui/react-components";
-import { Language } from "../api/auth/[...nextauth]";
+import { Language } from "@/types/invitations";
 
 const useStyles = makeStyles({
   mainContainer: {
