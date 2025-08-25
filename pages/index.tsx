@@ -9,7 +9,6 @@ import Timeline from "./components/Timeline";
 import BannerImage from "./components/BannerImage";
 import BannerTitle from "./components/BannerTitle";
 import PersonalMessage from "./components/PersonalMessage";
-import { Invitation } from "./api/auth/[...nextauth]";
 import { useSession } from 'next-auth/react';
 import BannerDateText from "./components/BannerDateText";
 

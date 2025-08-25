@@ -1,4 +1,4 @@
-import { InvitationsByCode } from './types';
+import { InvitationsByCode } from '@/pages/api/auth/[...nextauth]';
 
 export const INVITATIONS_DATA: InvitationsByCode = {
   "FGB718": {
