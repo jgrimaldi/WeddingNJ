@@ -32,9 +32,9 @@ jobs:
       - name: Zip artifact for deployment
         run: |
           mkdir -p deploy
-          # Include source files for rebuild on server
-          cp -r pages/ deploy/
+          cp -r .next/ deploy/
           cp -r lib/ deploy/
+          cp -r pages/ deploy/
           cp -r public/ deploy/
           cp -r types/ deploy/
           cp -r styles/ deploy/
@@ -42,8 +42,6 @@ jobs:
           cp next.config.js deploy/
           cp package.json deploy/
           cp tsconfig.json deploy/
-          cp postcss.config.js deploy/
-          # Don't copy .next - will rebuild on server
           cd deploy
           zip -r ../release.zip .
 
@@ -77,19 +75,6 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-      
-      - name: Install dependencies and build
-        run: |
-          npm install
-          npm run build
-          rm -rf .next/cache
-          
-      - name: Verify build
-        run: |
-          echo "Build completed. Contents:"
-          ls -la .next
-          echo "Package.json exists:"
-          ls -la package.json
       
       - name: Login to Azure
         uses: azure/login@v2
