@@ -23,6 +23,12 @@ jobs:
         with:
           node-version: 'latest'
 
+      - name: npm install, build
+        run: |
+          npm install
+          npm run build
+          rm -rf .next/cache
+
       - name: Copy files, install and build, finally zip
         run: |
           mkdir -p deploy
