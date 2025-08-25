@@ -9,11 +9,11 @@ export type Gender = 'female' | 'male';
 export interface User {
   Name: string;
   Gender: Gender;
-  language: Language;
   Residency: 'Local' | 'Remote';
 }
 
 export interface Invitation {
+  Language: Language;
   Guests: User[];
   CustomGreet: string;
 }

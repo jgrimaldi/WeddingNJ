@@ -12,13 +12,16 @@ import {
 const useStyles = makeStyles({
   mainContainer: {
     display: "flex",
-    paddingBottom: "2em",
     paddingTop: "4em",
     flexDirection: "column",
+    maxWidth: "70vw"
   },
   sophisticatedText: {
-    fontFamily: "Playfair Display",
+    fontFamily: "Segoe UI Light",
     color: "#3D3D3D",
+    fontSize: "1em",
+    textAlign: "center",
+    lineHeight: "1.5em"
   },
   cursiveText: {
     fontFamily: "Edu NSW ACT Cursive",
@@ -40,7 +43,7 @@ const PersonalMessage = ({customMessage} : PersonalMessageProps) => {
   return (
     <>
       <div className={styles.mainContainer}>
-        <Title2 className={styles.sophisticatedText}>{customMessage}</Title2>
+        <Title2 className={styles.sophisticatedText}>{customMessage.toUpperCase()}</Title2>
       </div>
     </>
   );

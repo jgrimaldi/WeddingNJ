@@ -12,7 +12,6 @@ import {
 const useStyles = makeStyles({
   mainContainer: {
     display: "flex",
-    paddingBottom: "2em",
     paddingTop: "4em",
     flexDirection: "column",
   },
