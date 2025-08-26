@@ -30,6 +30,7 @@ jobs:
         uses: azure/docker-login@v2
         with:
           login-server: njweddingacr.azurecr.io
+          login-with-azure-cli: true
 
       - name: Build and push Docker image
         run: |
