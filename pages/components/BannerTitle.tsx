@@ -30,14 +30,24 @@ const useStyles = makeStyles({
   }
 });
 
-const BannerTitle = () => {
+
+type BannerTitleProps = {
+  language?: string;
+};
+
+const BannerTitle = ({ language = "en" }: BannerTitleProps) => {
   const styles = useStyles();
+  let subtitle = "our wedding";
+  if (language === "ES") {
+    subtitle = "nuestra boda";
+  }
+  // Add more languages as needed
 
   return (
     <>
       <div className={styles.mainContainer}>
         <Title2 className={styles.sophisticatedText}>Nathy & Jorge</Title2>
-        <Title3 className={styles.cursiveText}>the wedding</Title3>
+        <Title3 className={styles.cursiveText}>{subtitle}</Title3>
       </div>
     </>
   );

@@ -9,9 +9,10 @@ import Timeline from "./components/Timeline";
 import BannerImage from "./components/BannerImage";
 import BannerTitle from "./components/BannerTitle";
 import PersonalMessage from "./components/PersonalMessage";
-import { useSession } from 'next-auth/react';
+import { useSession } from "next-auth/react";
 import BannerDateText from "./components/BannerDateText";
 import BannerMessage from "./components/BannerMessage";
+import BannerSubtitle from "./components/BannerSubtitle";
 
 type HomePageProps = {
   // No session prop needed - we'll use client-side session
@@ -29,7 +30,7 @@ const useStyles = makeStyles({
 export default function HomePage({}: HomePageProps) {
   const { data: clientSession, status } = useSession();
   const styles = useStyles();
-  
+
   // Show loading while session is being fetched
   if (status === "loading") {
     return <div>Loading...</div>;
@@ -40,7 +41,7 @@ export default function HomePage({}: HomePageProps) {
     console.log("No final session found!");
     return <div>No session found</div>;
   }
-  
+
   return (
     <>
       <Head>
@@ -53,7 +54,7 @@ export default function HomePage({}: HomePageProps) {
           minHeight: "100vh",
           backgroundColor: "var(--fluent-grey-10)",
         }}
-      >        
+      >
         <TopNavBar />
 
         {/* Main Content Area */}
@@ -65,37 +66,81 @@ export default function HomePage({}: HomePageProps) {
             alignItems: "center",
           }}
         >
-          <HeroSection
-            bgColor="light"
-            customComponent={<BannerImage />}
-          />
-          <HeroSection
-            bgColor="light"
-            customComponent={<BannerTitle />}
-          />
+          <HeroSection bgColor="light" customComponent={<BannerImage />} />
+          <HeroSection bgColor="light" customComponent={<BannerTitle language={clientSession?.user?.invitation?.Language} />} />
 
           <HeroSection
             bgColor="light"
             customComponent={
-              <PersonalMessage 
-                customMessage={clientSession?.user?.invitation?.CustomGreet || "Welcome to our wedding portal!"} 
+              <PersonalMessage
+                customMessage={
+                  clientSession?.user?.invitation?.CustomGreet ||
+                  "Welcome to our wedding portal!"
+                }
               />
             }
           />
 
           <HeroSection
             bgColor="light"
-            customComponent={<BannerDateText language={clientSession?.user?.invitation?.Language} />}
+            customComponent={
+              <BannerDateText
+                language={clientSession?.user?.invitation?.Language}
+              />
+            }
           />
 
           <HeroSection
             bgColor="light"
-            customComponent={<BannerImage imageName="JyNSTDAlt3.jpg" roundedCorners="top"/>}
+            customComponent={
+              <BannerImage imageName="JyNSTDAlt3.jpg" roundedCorners="top" />
+            }
           />
 
           <HeroSection
             bgColor="light"
-            customComponent={<BannerMessage language={clientSession?.user?.invitation?.Language} />}
+            customComponent={
+              <BannerMessage
+                language={clientSession?.user?.invitation?.Language}
+              />
+            }
+          />
+
+          <HeroSection
+            bgColor="light"
+            customComponent={
+              <BannerSubtitle
+                imageSrc="/images/SACCWatercolor.png"
+                topText={
+                  clientSession?.user?.invitation?.Language == "ES"
+                    ? "Eventos"
+                    : "Events"
+                }
+                alt="Events preview"
+              />
+            }
+          />
+
+          <HeroSection bgColor="light" customComponent={<Timeline />} />
+
+          <HeroSection
+            bgColor="light"
+            customComponent={
+              <BannerSubtitle
+                imageSrc="/images/HotelWatercolor.png"
+                topText={
+                  clientSession?.user?.invitation?.Language == "ES"
+                    ? "Vuelos &"
+                    : "Travel"
+                }
+                bottomText={
+                  clientSession?.user?.invitation?.Language == "ES"
+                    ? "Hoteles"
+                    : "& Stay"
+                }
+                alt="Events preview"
+              />
+            }
           />
 
           <HeroSection
@@ -104,10 +149,7 @@ export default function HomePage({}: HomePageProps) {
               <Timer targetDate={new Date("2026-02-28T14:00:00Z")} />
             }
           />
-          <HeroSection
-            bgColor="light"
-            customComponent={<Timeline />}
-          />
+          
         </div>
       </div>
     </>
