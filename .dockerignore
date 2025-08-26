@@ -1,0 +1,31 @@
+# Exclude development files
+node_modules
+npm-debug.log*
+.next
+.git
+.gitignore
+README.md
+Dockerfile
+.dockerignore
+
+# Exclude build artifacts and cache
+.next/cache
+
+# Exclude environment files (should be set in container runtime)
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Exclude IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+
+# Exclude OS files
+.DS_Store
+Thumbs.db
+
+# Exclude CI/CD files
+.github
