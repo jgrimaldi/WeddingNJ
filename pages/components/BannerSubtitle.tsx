@@ -17,9 +17,8 @@ const useStyles = makeStyles({
     paddingTop: "2em",
   },
   mainImage: {    
-    width: "80%",
+    width: "100%",
     height: "auto",
-    borderRadius: "8px",
     filter: "grayscale(100%)",
   },
   topTextWrapper: {    

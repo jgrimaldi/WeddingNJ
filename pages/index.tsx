@@ -140,6 +140,7 @@ export default function HomePage({}: HomePageProps) {
             customComponent={
               <Timeline
                 residency={clientSession?.user?.invitation?.Residency}
+                language={clientSession?.user?.invitation?.Language as "EN" | "ES"}
               />
             }
           />

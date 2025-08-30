@@ -19,6 +19,7 @@ const useStyles = makeStyles({
     fontFamily: "Playfair Display",
     color: "#3D3D3D",
     letterSpacing: "0.1em",
+  textTransform: "uppercase",
   },
   cursiveText: {
     fontFamily: "Edu NSW ACT Cursive",
