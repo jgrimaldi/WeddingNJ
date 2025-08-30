@@ -1,13 +1,7 @@
-import {
-  Caption1,
-  Divider,
-  LargeTitle,
-  makeStyles,
-  Subtitle1,
-  Title1,
-  Title2,
-  Title3,
-} from "@fluentui/react-components";
+import { LargeTitle, makeStyles, Subtitle1 } from "@fluentui/react-components";
+import type { Invitation } from "@/types/invitations";
+import TimelineItem from "./TimelineItem";
+import timeline from "@/data/timeline.json";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -16,77 +10,67 @@ const useStyles = makeStyles({
     fontFamily: "Segoe UI Light",
     color: "#3D3D3D",
     gap: "2em",
-    padding: "2em"
+    padding: "2em",
   },
   titleContainer: {
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
+  paddingTop: "2em",
+  paddingBottom: "2em",
   },
-  timelineItemContainer: {
-    display: "flex",
-    alignSelf: "flex-start",
-    gap: "1em",
+  titleFont: {
+    fontFamily: `'Playfair Display', serif`,
+  fontWeight: 400,
+  textAlign: "center",
   },
-  timelineItemColumn: {
+  itemsContainer: {
     display: "flex",
     flexDirection: "column",
-  },
-  divider: {
-    '&::before': {
-      borderRightColor: "#8A8A8A",
-    }, 
-    '&::after': {
-      borderRightColor: "#8A8A8A",
-    },    
+    gap: "1.25em",
   },
 });
 
-const Timeline = () => {
+type TimelineProps = {
+  residency?: Invitation["Residency"]; // 'Local' | 'Remote'
+};
+
+const Timeline = ({ residency }: TimelineProps) => {
   const styles = useStyles();
+  const normalizedResidency = residency?.toLowerCase();
+  console.log("Invitation's residency:", residency);
+  const isRemote = normalizedResidency === "remote";
+  const titleText = isRemote ? "The Wedding Weekend" : "Wedding Day";
+  const dateText = isRemote ? "Fri Feb 27 - Sun Mar 1" : "Sat Feb 28";
+  const filtered = (timeline as Array<any>).filter((item) => {
+    const g = String(item.guests || "All").toLowerCase();
+    if (g === "all") return true;
+    return normalizedResidency ? g === normalizedResidency : g === "all";
+  });
 
   return (
     <>
       <div className={styles.mainContainer}>
         <div className={styles.titleContainer}>
-          <LargeTitle>Wedding Day</LargeTitle>
-          <Subtitle1>Sat Feb 28</Subtitle1>
+          <LargeTitle className={styles.titleFont}>{titleText.toUpperCase()}</LargeTitle>
+          <Subtitle1 className={styles.titleFont}>{dateText}</Subtitle1>
         </div>
-        {/*First Timeline Item*/}
-        <div className={styles.timelineItemContainer}>
-          <Divider
-            vertical
-            alignContent="start"
-            className={styles.divider}
-          >
-            01
-          </Divider>
-          <div className={styles.timelineItemColumn}>
-            <Caption1>Ceremony</Caption1>
-            <Title2>Catholic Mass</Title2>
-            <Caption1>Iglesia La Trinidad, Alajuela</Caption1>
-            <Caption1>Saturday, February 28, 1:30PM - 4:00PM</Caption1>
-            <Caption1>Formal Attire</Caption1>
-            <Caption1>Our intimate ceremony in the town where the bride grew up in.</Caption1>
-          </div>
-        </div>
-        {/*Second Timeline Item */}
-        <div className={styles.timelineItemContainer}>
-          <Divider
-            vertical
-            alignContent="start"
-            className={styles.divider}
-          >
-            02
-          </Divider>
-          <div className={styles.timelineItemColumn}>
-            <Caption1>Cocktail, Dinner & Dance</Caption1>
-            <Title2>Reception</Title2>
-            <Caption1>Santa Ana Country Club, Santa Ana</Caption1>
-            <Caption1>Saturday, February 28, 5:30PM - 12:00AM</Caption1>
-            <Caption1>Formal Attire</Caption1>
-            <Caption1>Dinner, dancing and celebration for everyone to enjoy.</Caption1>
-          </div>
+
+        <div className={styles.itemsContainer}>
+          {filtered.map((item, idx) => (
+            <TimelineItem
+              key={`${item.title}-${item.start}`}
+              index={idx + 1}
+              caption={item.caption}
+              title={item.title}
+              location={item.location}
+              locationUrl={item.url}
+              start={item.start}
+              end={item.end}
+              attire={item.attire}
+              description={item.description}
+            />
+          ))}
         </div>
       </div>
     </>

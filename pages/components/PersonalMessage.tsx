@@ -1,4 +1,5 @@
 import {
+  Body1,
   Caption1,
   Divider,
   LargeTitle,
@@ -14,21 +15,13 @@ const useStyles = makeStyles({
     display: "flex",
     paddingTop: "4em",
     flexDirection: "column",
-    maxWidth: "70vw"
+    maxWidth: "80vw"
   },
   sophisticatedText: {
     fontFamily: "Segoe UI Light",
-    color: "#3D3D3D",
-    fontSize: "1em",
+    fontSize: "1.4em",
     textAlign: "center",
-    lineHeight: "1.5em"
-  },
-  cursiveText: {
-    fontFamily: "Edu NSW ACT Cursive",
-    color: "#3D3D3D",
-    fontWeight: 400,
-    fontSize: "1.25em",
-    alignSelf: "flex-end",
+    lineHeight: "1.3em",    
   }
 });
 
@@ -43,7 +36,7 @@ const PersonalMessage = ({customMessage = "Welcome to our wedding portal!"} : Pe
   return (
     <>
       <div className={styles.mainContainer}>
-        <Title2 className={styles.sophisticatedText}>{customMessage.toUpperCase()}</Title2>
+        <Body1 className={styles.sophisticatedText}>{customMessage}</Body1>
       </div>
     </>
   );

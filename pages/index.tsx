@@ -42,6 +42,8 @@ export default function HomePage({}: HomePageProps) {
     return <div>No session found</div>;
   }
 
+  console.log("Final session found:", clientSession);
+
   return (
     <>
       <Head>
@@ -121,7 +123,10 @@ export default function HomePage({}: HomePageProps) {
             }
           />
 
-          <HeroSection bgColor="light" customComponent={<Timeline />} />
+          <HeroSection
+            bgColor="light"
+            customComponent={<Timeline residency={clientSession?.user?.invitation?.Residency} />}
+          />
 
           <HeroSection
             bgColor="light"

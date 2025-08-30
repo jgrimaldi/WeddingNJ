@@ -5,8 +5,8 @@ import {
   makeStyles,
   Subtitle1,
   Title1,
-  Title2,
   Title3,
+  Body1,
 } from "@fluentui/react-components";
 import { Language } from "@/types/invitations";
 
@@ -15,21 +15,13 @@ const useStyles = makeStyles({
     display: "flex",
     paddingTop: "4em",
     flexDirection: "column",
-    maxWidth: "60vw"
+    maxWidth: "70vw"
   },
   sophisticatedText: {
     fontFamily: "Segoe UI Light",
-    color: "#3D3D3D",
-    fontSize: "1em",
+    fontSize: "1.4em",
     textAlign: "center",
-    lineHeight: "1.5em"
-  },
-  cursiveText: {
-    fontFamily: "Edu NSW ACT Cursive",
-    color: "#3D3D3D",
-    fontWeight: 400,
-    fontSize: "1.25em",
-    alignSelf: "flex-end",
+    lineHeight: "1.3em",    
   }
 });
 
@@ -49,9 +41,9 @@ const BannerMessage = ({ language = 'EN' }: BannerMessageProps) => {
   return (
     <>
       <div className={styles.mainContainer}>
-        <Title2 className={styles.sophisticatedText}>
+        <Body1 className={styles.sophisticatedText}>
           {getMessage()}
-        </Title2>
+        </Body1>
       </div>
     </>
   );
