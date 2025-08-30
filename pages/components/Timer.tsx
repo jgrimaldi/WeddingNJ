@@ -29,14 +29,14 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     gap: "1em",
-    padding: "1em",
+    paddingTop: "4em",
   },
   timerSubContainer: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-    gap: "0.5em"
+    gap: "0.5em",
   },
   timerValue: {
     padding: "0.5em",
@@ -44,26 +44,30 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
   timerDigit: {
-    transition: 'transform 0.5s ease-in-out', 
-    opacity: '0.5s ease-in-out',
+    transition: "transform 0.5s ease-in-out",
+    opacity: "0.5s ease-in-out",
+    fontFamily: `'Playfair Display', serif`,
+    fontSize: '2em',
+    color: "#3D3D3D",
   },
   digitAnimate: {
-    transform: 'rotateX(360deg)',
+    transform: "rotateX(360deg)",
   },
   timerTitle: {
-    fontFamily: "Segoe UI Light",
+    fontFamily: `'Playfair Display', serif`,
     color: "#3D3D3D",
-    marginTop: "0.5em"
+    marginTop: "0.5em",
   },
   timerValueLabel: {
-    fontFamily: "Segoe UI Light",
+    fontFamily: `'Playfair Display', serif`,
     color: "#3D3D3D",
-  }
+    textTransform: 'uppercase'
+  },
 });
 
 const Timer: React.FC<TimerProps> = ({ targetDate }) => {
   const styles = useStyles();
-  
+
   // Initialize with null to avoid hydration mismatch
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
   const [isClient, setIsClient] = useState(false);
@@ -103,48 +107,30 @@ const Timer: React.FC<TimerProps> = ({ targetDate }) => {
   return (
     <>
       {timeLeft ? (
-        <>
-          <Title1 className={styles.timerTitle}>It's happening !</Title1>
+        <>          
           <div className={styles.timerContainer}>
             <div className={styles.timerSubContainer}>
-              <Card className={styles.timerValue}>
-                <Subtitle2
-                  color="#3D3D3D"
-                  className={styles.timerDigit}
-                >
-                  {timeLeft.days.toString().padStart(3, '0')}
+              <Subtitle2 color="#3D3D3D" className={styles.timerDigit}>
+                  {timeLeft.days.toString().padStart(3, "0")}
                 </Subtitle2>
-              </Card>
               <Body1 className={styles.timerValueLabel}>Days</Body1>
             </div>
             <div className={styles.timerSubContainer}>
-              <Card className={styles.timerValue}>
-                <Subtitle2
-                  className={styles.timerDigit}
-                >
-                  {timeLeft.hours.toString().padStart(2, '0')}
+              <Subtitle2 className={styles.timerDigit}>
+                  {timeLeft.hours.toString().padStart(2, "0")}
                 </Subtitle2>
-              </Card>
               <Body1 className={styles.timerValueLabel}>Hours</Body1>
             </div>
             <div className={styles.timerSubContainer}>
-              <Card className={styles.timerValue}>
-                <Subtitle2
-                  className={styles.timerDigit}
-                >
-                  {timeLeft.minutes.toString().padStart(2, '0')}
+              <Subtitle2 className={styles.timerDigit}>
+                  {timeLeft.minutes.toString().padStart(2, "0")}
                 </Subtitle2>
-              </Card>
               <Body1 className={styles.timerValueLabel}>Minutes</Body1>
             </div>
             <div className={styles.timerSubContainer}>
-              <Card className={styles.timerValue}>
-                <Subtitle2
-                  className={styles.timerDigit}
-                >
-                  {timeLeft.seconds.toString().padStart(2, '0')}
+              <Subtitle2 className={styles.timerDigit}>
+                  {timeLeft.seconds.toString().padStart(2, "0")}
                 </Subtitle2>
-              </Card>
               <Body1 className={styles.timerValueLabel}>Seconds</Body1>
             </div>
           </div>

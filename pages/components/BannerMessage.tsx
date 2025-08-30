@@ -15,7 +15,8 @@ const useStyles = makeStyles({
     display: "flex",
     paddingTop: "4em",
     flexDirection: "column",
-    maxWidth: "70vw"
+    maxWidth: "70vw",
+    paddingBottom: "2em"
   },
   sophisticatedText: {
     fontFamily: "Segoe UI Light",

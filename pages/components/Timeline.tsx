@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   itemsContainer: {
     display: "flex",
     flexDirection: "column",
-    gap: "1.25em",
+    gap: "3em",
   },
 });
 

@@ -69,7 +69,14 @@ export default function HomePage({}: HomePageProps) {
           }}
         >
           <HeroSection bgColor="light" customComponent={<BannerImage />} />
-          <HeroSection bgColor="light" customComponent={<BannerTitle language={clientSession?.user?.invitation?.Language} />} />
+          <HeroSection
+            bgColor="light"
+            customComponent={
+              <BannerTitle
+                language={clientSession?.user?.invitation?.Language}
+              />
+            }
+          />
 
           <HeroSection
             bgColor="light"
@@ -98,7 +105,12 @@ export default function HomePage({}: HomePageProps) {
               <BannerImage imageName="JyNSTDAlt3.jpg" roundedCorners="top" />
             }
           />
-
+          <HeroSection
+            bgColor="light"
+            customComponent={
+              <Timer targetDate={new Date("2026-02-28T14:00:00Z")} />
+            }
+          />
           <HeroSection
             bgColor="light"
             customComponent={
@@ -125,7 +137,11 @@ export default function HomePage({}: HomePageProps) {
 
           <HeroSection
             bgColor="light"
-            customComponent={<Timeline residency={clientSession?.user?.invitation?.Residency} />}
+            customComponent={
+              <Timeline
+                residency={clientSession?.user?.invitation?.Residency}
+              />
+            }
           />
 
           <HeroSection
@@ -147,14 +163,6 @@ export default function HomePage({}: HomePageProps) {
               />
             }
           />
-
-          <HeroSection
-            bgColor="light"
-            customComponent={
-              <Timer targetDate={new Date("2026-02-28T14:00:00Z")} />
-            }
-          />
-          
         </div>
       </div>
     </>
