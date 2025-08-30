@@ -1,14 +1,4 @@
-import {
-  Caption1,
-  Divider,
-  LargeTitle,
-  makeStyles,
-  Subtitle1,
-  Title1,
-  Title3,
-  Body1,
-} from "@fluentui/react-components";
-import { Language } from "@/types/invitations";
+import { Body1, makeStyles } from "@fluentui/react-components";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -27,24 +17,16 @@ const useStyles = makeStyles({
 });
 
 type BannerMessageProps = {
-  language?: Language;
+  text: string;
 };
 
-const BannerMessage = ({ language = 'EN' }: BannerMessageProps) => {
+const BannerMessage = ({ text }: BannerMessageProps) => {
   const styles = useStyles();
-  const messageEN = "We're thrilled to invite you to our wedding. We've created this space to share everything you need to know about our big day.";
-  const messageES = "Estamos emocionados de invitarte a nuestra boda. Hemos creado este espacio para compartir todo lo que necesitas saber sobre nuestro gran día.";
-  
-  const getMessage = (): string => {
-    return language === 'ES' ? messageES : messageEN;
-  };
 
   return (
     <>
       <div className={styles.mainContainer}>
-        <Body1 className={styles.sophisticatedText}>
-          {getMessage()}
-        </Body1>
+        <Body1 className={styles.sophisticatedText}>{text}</Body1>
       </div>
     </>
   );

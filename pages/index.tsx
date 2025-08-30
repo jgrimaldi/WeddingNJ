@@ -13,6 +13,7 @@ import { useSession } from "next-auth/react";
 import BannerDateText from "./components/BannerDateText";
 import BannerMessage from "./components/BannerMessage";
 import BannerSubtitle from "./components/BannerSubtitle";
+import Footer from "./components/Footer";
 
 type HomePageProps = {
   // No session prop needed - we'll use client-side session
@@ -43,6 +44,24 @@ export default function HomePage({}: HomePageProps) {
   }
 
   console.log("Final session found:", clientSession);
+
+  const welcomeMessageEN =
+    "We're thrilled to invite you to our wedding. We've created this space to share everything you need to know about our big day.";
+  const welcomeMessageES =
+    "Estamos emocionados de invitarte a nuestra boda. Hemos creado este espacio para compartir todo lo que necesitas saber sobre nuestro gran día.";
+  const bannerMessageTextWelcome =
+    clientSession?.user?.invitation?.Language === "ES"
+      ? welcomeMessageES
+      : welcomeMessageEN;
+
+  const hotelMessageEN =
+    "We’ve handpicked a list of hotel options and travel tips to help make your trip as smooth and enjoyable as possible.";
+  const hotelMessageES =
+    "Hemos seleccionado una lista de opciones de hoteles y vuelos para ayudar a que su viaje sea lo más fluido y agradable posible.";
+  const bannerMessageTextHotel =
+    clientSession?.user?.invitation?.Language === "ES"
+      ? hotelMessageES
+      : hotelMessageEN;
 
   return (
     <>
@@ -113,11 +132,7 @@ export default function HomePage({}: HomePageProps) {
           />
           <HeroSection
             bgColor="light"
-            customComponent={
-              <BannerMessage
-                language={clientSession?.user?.invitation?.Language}
-              />
-            }
+            customComponent={<BannerMessage text={bannerMessageTextWelcome} />}
           />
 
           <HeroSection
@@ -140,7 +155,9 @@ export default function HomePage({}: HomePageProps) {
             customComponent={
               <Timeline
                 residency={clientSession?.user?.invitation?.Residency}
-                language={clientSession?.user?.invitation?.Language as "EN" | "ES"}
+                language={
+                  clientSession?.user?.invitation?.Language as "EN" | "ES"
+                }
               />
             }
           />
@@ -164,6 +181,11 @@ export default function HomePage({}: HomePageProps) {
               />
             }
           />
+          <HeroSection
+            bgColor="light"
+            customComponent={<BannerMessage text={bannerMessageTextHotel} />}
+          />
+          <Footer language={clientSession?.user?.invitation?.Language} />
         </div>
       </div>
     </>
