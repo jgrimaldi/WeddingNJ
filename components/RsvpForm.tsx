@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  Body1,
   Button,
   Caption1,
   Card,
@@ -8,6 +9,7 @@ import {
   makeStyles,
   Radio,
   RadioGroup,
+  Spinner,
   Textarea,
 } from "@fluentui/react-components";
 import type { User, Language } from "@/types/invitations";
@@ -31,7 +33,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     gap: "1.25em",
-    margin: "2em 0",
+    margin: "2em 2em",
   },
   header: {
     display: "none",
@@ -53,11 +55,29 @@ const useStyles = makeStyles({
     alignItems: "center",
     gap: "0.75em 1.5em",
   },
-  actions: {
-    display: "flex",
-    justifyContent: "flex-end",
-    gap: "0.75em",
+  submitButton: {
     marginTop: "0.5em",
+    backgroundColor: "#3D3D3D",
+    // Keep same color on hover
+    "&:hover": {
+      backgroundColor: "#3D3D3D",
+    },
+  },
+  label: {
+    fontWeight: 500,
+    color: "#3D3D3D",
+  },
+  nameLabel: {
+    fontSize: "2em",
+    fontFamily: "'Playfair Display', serif",
+  },
+  hint: {
+    color: "#6B7280",
+    marginTop: "0.25em",
+  },
+  successText: {
+    color: "#065F46",
+    marginTop: "0.75em",
   },
 });
 
@@ -79,6 +99,15 @@ export default function RsvpForm({
       : "Notes (dietary restrictions, allergies, etc.)",
     submit: isES ? "Enviar confirmación" : "Submit RSVP",
     empty: isES ? "No hay invitados para confirmar." : "No guests to RSVP.",
+    required: isES ? "Seleccione una opción" : "Please select an option",
+    updateNote: isES
+      ? "Puedes actualizar tu respuesta en cualquier momento reenviando este formulario."
+      : "You can update your response anytime by resubmitting this form.",
+    submitting: isES ? "Enviando..." : "Submitting...",
+    submittingAria: isES ? "Enviando confirmación" : "Submitting RSVP",
+    success: isES
+      ? "¡Gracias! Tu confirmación fue enviada. Recibirás un correo de confirmación en breve."
+      : "Thanks! Your RSVP was sent. You'll receive a confirmation email shortly.",
   } as const;
 
   const [responses, setResponses] = React.useState<
@@ -98,9 +127,18 @@ export default function RsvpForm({
         return acc;
       }, {})
     );
+  setShowErrors(false);
+  setSubmitted(false);
   }, [guests]);
 
+  // Track if user attempted to submit to show validation messages
+  const [showErrors, setShowErrors] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [submitted, setSubmitted] = React.useState(false);
+  const radioRefs = React.useRef<(HTMLDivElement | null)[]>([]);
+
   const updateAttendance = (index: number, attending: Attendance) => {
+    setSubmitted(false);
     setResponses((prev) => ({
       ...prev,
       [index]: { ...prev[index], attending },
@@ -108,6 +146,7 @@ export default function RsvpForm({
   };
 
   const updateNote = (index: number, note: string) => {
+    setSubmitted(false);
     setResponses((prev) => ({
       ...prev,
       [index]: { ...prev[index], note },
@@ -116,11 +155,37 @@ export default function RsvpForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Validate all guests have an attendance selection
+    const missingIndexes = (guests || []).reduce<number[]>((acc, _, idx) => {
+      if (!responses[idx]?.attending) acc.push(idx);
+      return acc;
+    }, []);
+
+    if (missingIndexes.length > 0) {
+      setShowErrors(true);
+      // Scroll to first missing group
+      const first = missingIndexes[0];
+      const el = radioRefs.current[first];
+      if (el && typeof el.scrollIntoView === "function") {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      return;
+    }
+
     const list = Object.keys(responses)
       .map((k) => Number(k))
       .sort((a, b) => a - b)
       .map((i) => responses[i]);
-    onSubmit?.(list);
+    setLoading(true);
+    try {
+      onSubmit?.(list);
+    } finally {
+      // Simulate 4s loading, then show success
+      setTimeout(() => {
+        setLoading(false);
+        setSubmitted(true);
+      }, 4000);
+    }
   };
 
   if (!guests || guests.length === 0) {
@@ -133,13 +198,32 @@ export default function RsvpForm({
         {guests.map((g, idx) => (
           <section key={`${g.Name}-${idx}`}>
             <div className={styles.row}>
-              <Label>{g.Name}</Label>
+              <span className={`${styles.label} ${styles.nameLabel}`}>
+                {g.Name}
+              </span>
             </div>
 
-            <Field label={labels.attendance} style={{ marginTop: "0.5em" }}>
+            <Field
+              label={
+                <Label className={styles.label}>{labels.attendance}</Label>
+              }
+              style={{ marginTop: "0.5em" }}
+              required
+              validationState={
+                showErrors && !responses[idx]?.attending ? "error" : undefined
+              }
+              validationMessage={
+                showErrors && !responses[idx]?.attending
+                  ? labels.required
+                  : undefined
+              }
+            >
               <RadioGroup
                 layout="horizontal"
                 value={responses[idx]?.attending}
+                ref={(el) => {
+                  radioRefs.current[idx] = el;
+                }}
                 onChange={(_, data) =>
                   updateAttendance(idx, data.value as Attendance)
                 }
@@ -150,7 +234,10 @@ export default function RsvpForm({
               </RadioGroup>
             </Field>
 
-            <Field label={labels.notes} style={{ marginTop: "0.5em" }}>
+            <Field
+              label={<Label className={styles.label}>{labels.notes}</Label>}
+              style={{ marginTop: "0.5em" }}
+            >
               <Textarea
                 resize="vertical"
                 value={responses[idx]?.note ?? ""}
@@ -162,12 +249,42 @@ export default function RsvpForm({
           </section>
         ))}
       </Card>
-
-      <div className={styles.actions}>
-        <Button appearance="primary" type="submit">
-          {labels.submit}
+      <Caption1 className={styles.hint} role="note">
+        {labels.updateNote}
+      </Caption1>
+      <div>
+        <Button
+          className={styles.submitButton}
+          appearance="primary"
+          type="submit"
+          disabled={loading}
+          aria-busy={loading}
+        >
+          {loading ? (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+                justifyContent: "center",
+              }}
+            >
+              <Spinner size="tiny" aria-label={labels.submittingAria} />
+              <span style={{ fontSize: "16px", fontWeight: 500 }}>
+                {labels.submitting}
+              </span>
+            </div>
+          ) : (
+            labels.submit
+          )}
         </Button>
       </div>
+
+      {submitted && !loading && (
+        <Caption1 className={styles.successText} role="status" aria-live="polite">
+          {labels.success}
+        </Caption1>
+      )}
     </form>
   );
 }

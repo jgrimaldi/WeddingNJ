@@ -177,7 +177,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Joshua", "Gender": "male"},
       {"Name": "Hannah", "Gender": "female"}
     ],
-    "CustomGreet": "Querida familia, gracias por acompañarnos."
+    "CustomGreet": "Dear Joshua and Hannah, we are thrilled to invite you to our wedding."
   },
   "FLB858": {
     "Language": "EN",

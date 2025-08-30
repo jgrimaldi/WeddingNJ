@@ -65,9 +65,9 @@ export default function HomePage({}: HomePageProps) {
       : hotelMessageEN;
 
   const rsvpMessageEN =
-    "Please help us by using the RSVP form to confirm your attendance.";
+    "Please help us by using the RSVP form to confirm your attendance before January 1st, 2026.";
   const rsvpMessageES =
-    "Por favor, ayúdanos utilizando el formulario de RSVP para confirmar tu asistencia.";
+    "Por favor, ayúdanos utilizando el formulario de RSVP para confirmar tu asistencia antes del 1ero de Enero del 2026.";
   const bannerMessageTextRsvp =
     clientSession?.user?.invitation?.Language === "ES"
       ? rsvpMessageES
