@@ -1,13 +1,4 @@
-import {
-  Caption1,
-  Divider,
-  LargeTitle,
-  makeStyles,
-  Subtitle1,
-  Title1,
-  Title2,
-  Title3,
-} from "@fluentui/react-components";
+import { makeStyles } from "@fluentui/react-components";
 
 type CornerPosition = 'top' | 'bottom';
 
@@ -37,12 +28,10 @@ const useStyles = makeStyles({
 const BannerImage = ({ roundedCorners = 'bottom', imageName = 'JyNSTD1.jpg' }: BannerImageProps) => {
   const styles = useStyles();
 
-  // Determine which corner style to apply
   const getCornerClass = () => {
     return roundedCorners === 'top' ? styles.roundedTop : styles.roundedBottom;
   };
 
-  // Create the background image URL
   const backgroundImageUrl = `url("/images/${imageName}")`;
 
   return (

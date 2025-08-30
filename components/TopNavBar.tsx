@@ -1,17 +1,5 @@
-import {
-  Body1,
-  Button,
-  Card,
-  Hamburger,
-  makeStyles,
-  Title2,
-  Tooltip,
-} from "@fluentui/react-components";
-import {
-  Dismiss24Regular,
-  SignOutRegular,
-  NavigationRegular,
-} from "@fluentui/react-icons";
+import { Button, makeStyles } from "@fluentui/react-components";
+import { Dismiss24Regular, SignOutRegular, NavigationRegular } from "@fluentui/react-icons";
 import React, { useState } from "react";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
@@ -37,7 +25,6 @@ const TopNavBar = () => {
   const styles = useStyles();
   return (
     <>
-      {/* Top Navigation Bar */}
       <div
         style={{
           position: "fixed",
@@ -46,7 +33,6 @@ const TopNavBar = () => {
           right: 0,
           zIndex: 1000,
           backgroundColor: "#202020",
-          //boxShadow: "0 1px 2px rgba(0,0,0,0.1)",padding: "0.5rem 1rem",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -75,7 +61,6 @@ const TopNavBar = () => {
           </button>
         )}
       </div>
-      {/* Navigation Vertical Drawer */}
       <div
         style={{
           position: "fixed",

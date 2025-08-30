@@ -2,18 +2,19 @@ import { GetServerSidePropsContext } from "next";
 import { getServerAuthSession } from "@/lib/auth";
 import Head from "next/head";
 import { makeStyles, Title2 } from "@fluentui/react-components";
-import TopNavBar from "./components/TopNavBar";
-import HeroSection from "./components/HeroSection";
-import Timer from "./components/Timer";
-import Timeline from "./components/Timeline";
-import BannerImage from "./components/BannerImage";
-import BannerTitle from "./components/BannerTitle";
-import PersonalMessage from "./components/PersonalMessage";
+import TopNavBar from "@/components/TopNavBar";
+import HeroSection from "@/components/HeroSection";
+import Timer from "@/components/Timer";
+import Timeline from "@/components/Timeline";
+import BannerImage from "@/components/BannerImage";
+import BannerTitle from "@/components/BannerTitle";
+import PersonalMessage from "@/components/PersonalMessage";
 import { useSession } from "next-auth/react";
-import BannerDateText from "./components/BannerDateText";
-import BannerMessage from "./components/BannerMessage";
-import BannerSubtitle from "./components/BannerSubtitle";
-import Footer from "./components/Footer";
+import BannerDateText from "@/components/BannerDateText";
+import BannerMessage from "@/components/BannerMessage";
+import BannerSubtitle from "@/components/BannerSubtitle";
+import Footer from "@/components/Footer";
+import RsvpForm from "@/components/RsvpForm";
 
 type HomePageProps = {
   // No session prop needed - we'll use client-side session
@@ -62,6 +63,15 @@ export default function HomePage({}: HomePageProps) {
     clientSession?.user?.invitation?.Language === "ES"
       ? hotelMessageES
       : hotelMessageEN;
+
+  const rsvpMessageEN =
+    "Please help us by using the RSVP form to confirm your attendance.";
+  const rsvpMessageES =
+    "Por favor, ayúdanos utilizando el formulario de RSVP para confirmar tu asistencia.";
+  const bannerMessageTextRsvp =
+    clientSession?.user?.invitation?.Language === "ES"
+      ? rsvpMessageES
+      : rsvpMessageEN;
 
   return (
     <>
@@ -184,6 +194,29 @@ export default function HomePage({}: HomePageProps) {
           <HeroSection
             bgColor="light"
             customComponent={<BannerMessage text={bannerMessageTextHotel} />}
+          />
+
+          <HeroSection
+            bgColor="light"
+            customComponent={
+              <BannerSubtitle
+                imageSrc="/images/WeddingEnvelopeWC.png"
+                topText={
+                  clientSession?.user?.invitation?.Language == "ES"
+                    ? "Asistencia"
+                    : "RSVP"
+                }
+                alt="RSVP preview"
+              />
+            }
+          />
+          <HeroSection
+            bgColor="light"
+            customComponent={<BannerMessage text={bannerMessageTextRsvp} />}
+          />
+          <RsvpForm
+            guests={clientSession?.user?.invitation?.Guests}
+            language={clientSession?.user?.invitation?.Language}
           />
           <Footer language={clientSession?.user?.invitation?.Language} />
         </div>

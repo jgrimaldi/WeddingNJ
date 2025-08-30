@@ -1,13 +1,4 @@
-import {
-  Caption1,
-  Divider,
-  LargeTitle,
-  makeStyles,
-  Subtitle1,
-  Title1,
-  Title2,
-  Title3,
-} from "@fluentui/react-components";
+import { Title2, Title3, makeStyles } from "@fluentui/react-components";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -19,7 +10,7 @@ const useStyles = makeStyles({
     fontFamily: "Playfair Display",
     color: "#3D3D3D",
     letterSpacing: "0.1em",
-  textTransform: "uppercase",
+    textTransform: "uppercase",
   },
   cursiveText: {
     fontFamily: "Edu NSW ACT Cursive",
@@ -28,9 +19,8 @@ const useStyles = makeStyles({
     fontSize: "1.25em",
     alignSelf: "flex-end",
     letterSpacing: "0.1em",
-  }
+  },
 });
-
 
 type BannerTitleProps = {
   language?: string;
@@ -42,7 +32,6 @@ const BannerTitle = ({ language = "en" }: BannerTitleProps) => {
   if (language === "ES") {
     subtitle = "nuestra boda";
   }
-  // Add more languages as needed
 
   return (
     <>

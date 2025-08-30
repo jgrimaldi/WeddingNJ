@@ -6,14 +6,14 @@ const useStyles = makeStyles({
     paddingTop: "4em",
     flexDirection: "column",
     maxWidth: "70vw",
-    paddingBottom: "2em"
+    paddingBottom: "2em",
   },
   sophisticatedText: {
     fontFamily: "Segoe UI Light",
     fontSize: "1.4em",
     textAlign: "center",
-    lineHeight: "1.3em",    
-  }
+    lineHeight: "1.3em",
+  },
 });
 
 type BannerMessageProps = {

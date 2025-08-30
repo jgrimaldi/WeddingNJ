@@ -1,9 +1,4 @@
-import {
-  makeStyles,
-  Image,
-} from "@fluentui/react-components";
-import { Component } from "react";
-import Timer from "./Timer";
+import { makeStyles } from "@fluentui/react-components";
 
 type HeroSectionProps = {
   bgColor: string;
@@ -17,12 +12,6 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     width: "-webkit-fill-available",
-  },
-  image: {
-    width: "100%",
-    maxHeight: "15em",
-    objectFit: "cover",
-    filter: "blur(1.5px)",
   },
 });
 
