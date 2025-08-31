@@ -1,5 +1,9 @@
-import { Button, makeStyles } from "@fluentui/react-components";
-import { Dismiss24Regular, SignOutRegular, NavigationRegular } from "@fluentui/react-icons";
+import { Body1, Button, makeStyles } from "@fluentui/react-components";
+import {
+  Dismiss24Regular,
+  SignOutRegular,
+  NavigationRegular,
+} from "@fluentui/react-icons";
 import React, { useState } from "react";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
@@ -18,11 +22,29 @@ const useStyles = makeStyles({
     height: "40px",
     width: "42px",
   },
+  adminMenuText: {
+    padding: "0 1em",
+    textAlign: "justify",
+    paddingBottom: "1em"
+  },
+  signOutButton: {
+    margin: "0 1em",
+    height: "2em", 
+  }
 });
 
-const TopNavBar = () => {
+type TopNavBarProps = {
+  language?: "EN" | "ES";
+};
+
+const TopNavBar = ({ language = "EN" }: TopNavBarProps) => {
   const [open, setOpen] = useState(false);
   const styles = useStyles();
+  const signOutText = language === "ES" ? "Cerrar sesión" : "Sign Out";
+  const adminMenuText =
+    language === "ES"
+      ? "No hay más páginas por el momento, en ese menú solo puedes cerrar sesión, a menos que tengas un código especial de admin, pero ni si quiera yo tengo uno.."
+      : "There are no more pages for the moment, the only option here is for signing out, unless you have a special admin access code, but even I don't have one.";
   return (
     <>
       <div
@@ -36,7 +58,7 @@ const TopNavBar = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          maxWidth: "100vw"
+          maxWidth: "100vw",
         }}
       >
         <Image
@@ -74,20 +96,26 @@ const TopNavBar = () => {
           zIndex: 999,
         }}
       >
-        <ul style={{ listStyle: "none", margin: 0, padding: "1rem" }}>
+        <ul
+          style={{
+            listStyle: "none",
+            marginTop: "2em",
+            padding: "0 0 0 0.5em",
+          }}
+        >
           <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href="/about">About</a>
+            <div className={styles.adminMenuText}>
+              <span>{adminMenuText}</span>
+            </div>
           </li>
           <li>
             <Button
               appearance="secondary"
               onClick={() => signOut({ callbackUrl: "/login" })}
               icon={<SignOutRegular />}
+              className={styles.signOutButton}
             >
-              Sign Out
+              {signOutText}
             </Button>
           </li>
         </ul>

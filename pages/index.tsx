@@ -81,7 +81,7 @@ export default function HomePage({}: HomePageProps) {
   return (
     <>
       <Head>
-  <title>{pageTitle}</title>
+        <title>{pageTitle}</title>
         <meta name="description" content="Welcome to our wedding portal!" />
       </Head>
 
@@ -91,7 +91,9 @@ export default function HomePage({}: HomePageProps) {
           backgroundColor: "var(--fluent-grey-10)",
         }}
       >
-        <TopNavBar />
+        <TopNavBar
+          language={clientSession?.user?.invitation?.Language as "EN" | "ES"}
+        />
 
         {/* Main Content Area */}
         <div
