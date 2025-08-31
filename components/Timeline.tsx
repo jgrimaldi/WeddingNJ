@@ -41,9 +41,20 @@ const Timeline = ({ residency, language = "EN" }: TimelineProps) => {
   const styles = useStyles();
   const normalizedResidency = residency?.toLowerCase();
   const isRemote = normalizedResidency === "remote";
-  const titleText = isRemote ? (language === "ES" ? "Fin de semana de boda" : "The Wedding Weekend") : (language === "ES" ? "Día de la Boda" : "Wedding Day");
-  const dateText = isRemote ? (language === "ES" ? "Vie Feb 27 - Dom Mar 1" : "Fri Feb 27 - Sun Mar 1") : "Sat Feb 28";
-  const source = language === "ES" ? (timelineEs as Array<any>) : (timelineEn as Array<any>);
+  const titleText = isRemote
+    ? language === "ES"
+      ? "Fin de semana de boda"
+      : "The Wedding Weekend"
+    : language === "ES"
+    ? "Día de la Boda"
+    : "Wedding Day";
+  const dateText = isRemote
+    ? language === "ES"
+      ? "Vie Feb 27 - Dom Mar 1"
+      : "Fri Feb 27 - Sun Mar 1"
+    : "Sat Feb 28";
+  const source =
+    language === "ES" ? (timelineEs as Array<any>) : (timelineEn as Array<any>);
   const dateLocale = language === "ES" ? "es-CR" : "en-US";
   const filtered = source.filter((item) => {
     const g = String(item.guests || "All").toLowerCase();
@@ -76,6 +87,7 @@ const Timeline = ({ residency, language = "EN" }: TimelineProps) => {
               description={item.description}
               detailsBackgroundUrl={item.detailsBackgroundUrl}
               dateLocale={dateLocale}
+              language={language}
               subTime1={item.subTime1}
               subTime1Label={item.subTime1Label}
               subTime2={item.subTime2}

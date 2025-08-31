@@ -6,7 +6,7 @@ import {
   makeStyles,
   Link,
 } from "@fluentui/react-components";
-import { useEffect, useRef, useState } from "react";
+import { } from "react";
 import {
   Location16Regular,
   Calendar16Regular,
@@ -18,7 +18,21 @@ const useStyles = makeStyles({
     display: "flex",
     alignSelf: "flex-start",
     gap: "1em",
-    cursor: "pointer",
+  cursor: "default",
+    userSelect: "none",
+    WebkitTapHighlightColor: "transparent",
+    // Remove default focus outline but keep an accessible focus-visible ring
+    ":focus": {
+      outline: "none",
+    },
+    ":active": {
+      outline: "none",
+    },
+    ":focus-visible": {
+      outline: "2px solid #D1D5DB",
+      outlineOffset: "2px",
+      borderRadius: "6px",
+    },
   },
   timelineItemColumn: {
     display: "flex",
@@ -37,7 +51,7 @@ const useStyles = makeStyles({
     textUnderlineOffset: "2px",
   },
   whenText: {
-    fontSize: "0.95em",
+    fontSize: "1em",
   },
   divider: {
     "&::before": {
@@ -128,6 +142,7 @@ type TimelineItemProps = {
   description: string;
   detailsBackgroundUrl?: string; // optional background image for details row
   dateLocale?: string; // e.g., 'es-CR' for Local, 'en-US' otherwise
+  language?: "EN" | "ES";
   subTime1?: string;
   subTime1Label?: string;
   subTime2?: string;
@@ -185,7 +200,7 @@ function formatTimeRange(
     hour: "numeric",
     minute: "2-digit",
   });
-  return `${datePart}, ${sTime} - ${eTime}`;
+  return `${datePart}`;
 }
 
 const TimelineItem = ({
@@ -200,6 +215,7 @@ const TimelineItem = ({
   description,
   detailsBackgroundUrl,
   dateLocale,
+  language = "EN",
   subTime1,
   subTime1Label,
   subTime2,
@@ -209,8 +225,6 @@ const TimelineItem = ({
 }: TimelineItemProps) => {
   const styles = useStyles();
   const detailsBg = detailsBackgroundUrl ?? "/images/TenisWC.png";
-  const [expanded, setExpanded] = useState(false);
-  const containerRef = useRef<HTMLDivElement | null>(null);
   const idx = formatIndex(index);
   const when = formatTimeRange(start, end, dateLocale ?? "en-US");
   const mapUrl =
@@ -219,46 +233,11 @@ const TimelineItem = ({
       : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
           location
         )}`;
-
-  useEffect(() => {
-    const handlePointerDown = (e: PointerEvent) => {
-      if (!containerRef.current) return;
-      if (!containerRef.current.contains(e.target as Node)) {
-        setExpanded(false);
-      }
-    };
-    if (expanded) {
-      document.addEventListener("pointerdown", handlePointerDown);
-    }
-    return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
-    };
-  }, [expanded]);
+  
 
   return (
     <div>
-      <div
-        className={styles.timelineItemContainer}
-        onClick={() => setExpanded((v) => !v)}
-        role="button"
-        tabIndex={0}
-        ref={containerRef}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            setExpanded((v) => !v);
-          }
-        }}
-        onBlur={(e) => {
-          const next = e.relatedTarget as Node | null;
-          if (
-            !next ||
-            (containerRef.current && !containerRef.current.contains(next))
-          ) {
-            setExpanded(false);
-          }
-        }}
-      >
+  <div className={styles.timelineItemContainer}>
         <Divider vertical alignContent="start" className={styles.divider}>
           {idx}
         </Divider>
@@ -286,15 +265,10 @@ const TimelineItem = ({
             <Tag16Regular className={styles.locationIcon} />
             <Body1>{attire}</Body1>
           </div>
-          <Body1 className={styles.rowPadding}>{description}</Body1>
+          <Body1 className={styles.rowPadding}>{description}</Body1>          
         </div>
       </div>
-      {/* <div className={`${styles.expandSection} ${styles.expandOpen}`}> */}
-      <div
-        className={`${styles.expandSection} ${
-          expanded ? styles.expandOpen : styles.expandClosed
-        }`}
-      >
+  <div className={`${styles.expandSection} ${styles.expandOpen}`}>
         <div
           className={styles.itemDetails}
           style={{
