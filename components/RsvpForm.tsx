@@ -10,6 +10,7 @@ import {
   Radio,
   RadioGroup,
   Spinner,
+  Input,
   Textarea,
 } from "@fluentui/react-components";
 import type { User, Language } from "@/types/invitations";
@@ -91,6 +92,13 @@ export default function RsvpForm({
   const isES = language === "ES";
   const labels = {
     attendance: isES ? "Asistencia" : "Attendance",
+    email: isES
+      ? "Correo electrónico para confirmación"
+      : "Email for confirmation",
+    emailPlaceholder: isES ? "tucorreo@ejemplo.com" : "you@example.com",
+    emailRequired: isES
+      ? "Ingresa un correo válido"
+      : "Please enter a valid email",
     yes: isES ? "Sí" : "Yes",
     no: isES ? "No" : "No",
     maybe: isES ? "Tal vez" : "Maybe",
@@ -127,8 +135,8 @@ export default function RsvpForm({
         return acc;
       }, {})
     );
-  setShowErrors(false);
-  setSubmitted(false);
+    setShowErrors(false);
+    setSubmitted(false);
   }, [guests]);
 
   // Track if user attempted to submit to show validation messages
@@ -136,6 +144,14 @@ export default function RsvpForm({
   const [loading, setLoading] = React.useState(false);
   const [submitted, setSubmitted] = React.useState(false);
   const radioRefs = React.useRef<(HTMLDivElement | null)[]>([]);
+  const emailRef = React.useRef<HTMLDivElement | null>(null);
+  const [email, setEmail] = React.useState("");
+
+  const isEmailValid = (value: string) => {
+    // Basic email validation
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(value.trim());
+  };
 
   const updateAttendance = (index: number, attending: Attendance) => {
     setSubmitted(false);
@@ -155,19 +171,28 @@ export default function RsvpForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Validate email first
+    const emailOk = isEmailValid(email);
     // Validate all guests have an attendance selection
     const missingIndexes = (guests || []).reduce<number[]>((acc, _, idx) => {
       if (!responses[idx]?.attending) acc.push(idx);
       return acc;
     }, []);
 
-    if (missingIndexes.length > 0) {
+    if (!emailOk || missingIndexes.length > 0) {
       setShowErrors(true);
-      // Scroll to first missing group
-      const first = missingIndexes[0];
-      const el = radioRefs.current[first];
-      if (el && typeof el.scrollIntoView === "function") {
-        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      // Scroll to email if invalid, otherwise to first missing group
+      if (!emailOk) {
+        const eEl = emailRef.current;
+        if (eEl && typeof eEl.scrollIntoView === "function") {
+          eEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      } else if (missingIndexes.length > 0) {
+        const first = missingIndexes[0];
+        const el = radioRefs.current[first];
+        if (el && typeof el.scrollIntoView === "function") {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
       }
       return;
     }
@@ -195,6 +220,28 @@ export default function RsvpForm({
   return (
     <form className={styles.container} onSubmit={handleSubmit}>
       <Card className={styles.list}>
+        <Field
+          label={<Label className={styles.label}>{labels.email}</Label>}
+          required
+          validationState={
+            showErrors && !isEmailValid(email) ? "error" : undefined
+          }
+          validationMessage={
+            showErrors && !isEmailValid(email)
+              ? labels.emailRequired
+              : undefined
+          }
+          style={{ marginBottom: "0.5em" }}
+        >
+          <div ref={emailRef}>
+            <Input
+              type="email"
+              value={email}
+              placeholder={labels.emailPlaceholder}
+              onChange={(_, data) => setEmail(data.value)}
+            />
+          </div>
+        </Field>
         {guests.map((g, idx) => (
           <section key={`${g.Name}-${idx}`}>
             <div className={styles.row}>
@@ -230,7 +277,6 @@ export default function RsvpForm({
               >
                 <Radio value="yes" label={labels.yes} />
                 <Radio value="no" label={labels.no} />
-                <Radio value="maybe" label={labels.maybe} />
               </RadioGroup>
             </Field>
 
@@ -281,7 +327,11 @@ export default function RsvpForm({
       </div>
 
       {submitted && !loading && (
-        <Caption1 className={styles.successText} role="status" aria-live="polite">
+        <Caption1
+          className={styles.successText}
+          role="status"
+          aria-live="polite"
+        >
           {labels.success}
         </Caption1>
       )}

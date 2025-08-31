@@ -65,18 +65,23 @@ export default function HomePage({}: HomePageProps) {
       : hotelMessageEN;
 
   const rsvpMessageEN =
-    "Please help us by using the RSVP form to confirm your attendance before January 1st, 2026.";
+    "Please help us by using the RSVP form to confirm your attendance before December 1st, 2025.";
   const rsvpMessageES =
-    "Por favor, ayúdanos utilizando el formulario de RSVP para confirmar tu asistencia antes del 1ero de Enero del 2026.";
+    "Por favor, ayúdanos utilizando el formulario de RSVP para confirmar tu asistencia antes del 1ero de Diciembre del 2025.";
   const bannerMessageTextRsvp =
     clientSession?.user?.invitation?.Language === "ES"
       ? rsvpMessageES
       : rsvpMessageEN;
 
+  const pageTitle =
+    clientSession?.user?.invitation?.Language === "ES"
+      ? "Boda de Nathy y Jorge"
+      : "Nathy & Jorge's Wedding";
+
   return (
     <>
       <Head>
-        <title>Nathy & Jorge's Wedding</title>
+  <title>{pageTitle}</title>
         <meta name="description" content="Welcome to our wedding portal!" />
       </Head>
 
