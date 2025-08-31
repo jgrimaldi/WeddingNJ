@@ -12,7 +12,6 @@ const useStyles = makeStyles({
     color: "#3D3D3D",
     gap: "2em",
     padding: "2em",
-    overflowX: "visible",
   },
   titleContainer: {
     alignItems: "center",
@@ -30,7 +29,6 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     gap: "1em",
-    overflowX: "visible",
   },
 });
 
