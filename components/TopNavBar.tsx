@@ -44,8 +44,8 @@ const TopNavBar = ({ language = "EN" }: TopNavBarProps) => {
   const signOutText = language === "ES" ? "Cerrar sesión" : "Sign Out";
   const adminMenuText =
     language === "ES"
-      ? "No hay más páginas por el momento, en ese menú solo puedes cerrar sesión, a menos que tengas un código especial de admin, pero ni si quiera yo tengo uno.."
-      : "There are no more pages for the moment, the only option here is for signing out, unless you have a special admin access code, but even I don't have one.";
+      ? "No hay más páginas por el momento, en ese menú solo puedes cerrar sesión, a menos que sepas donde esta el boton escondido para administrar la página.."
+      : "There are no more pages for the moment, the only option here is for signing out, unless you know the location of the hidden button for admin access..";
   useEffect(() => {
     if (open && drawerRef.current) {
       drawerRef.current.focus();
