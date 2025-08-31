@@ -1,17 +1,21 @@
-import { Caption1, Body1, Divider, Title2, makeStyles, Link } from "@fluentui/react-components";
-import { mergeClasses } from "@fluentui/react-components";
-import { } from "react";
 import {
-  Location16Regular,
-  Tag16Regular,
-} from "@fluentui/react-icons";
+  Caption1,
+  Body1,
+  Divider,
+  Title2,
+  makeStyles,
+  Link,
+} from "@fluentui/react-components";
+import { mergeClasses } from "@fluentui/react-components";
+import {} from "react";
+import { Location16Regular, Tag16Regular } from "@fluentui/react-icons";
 
 const useStyles = makeStyles({
   timelineItemContainer: {
     display: "flex",
     alignSelf: "flex-start",
     gap: "1em",
-  cursor: "default",
+    cursor: "default",
     userSelect: "none",
     WebkitTapHighlightColor: "transparent",
     // Remove default focus outline but keep an accessible focus-visible ring
@@ -125,17 +129,21 @@ const HotelListItem = ({
     no: isES ? "No" : "No",
     caption: isES ? "Hotel" : "Hotel",
   } as const;
-  
 
   return (
     <div>
-  <div className={styles.timelineItemContainer}>
+      <div className={styles.timelineItemContainer}>
         <Divider vertical alignContent="start" className={styles.divider}>
           {idx}
         </Divider>
-        <div className={styles.timelineItemColumn}>          
+        <div className={styles.timelineItemColumn}>
           <Title2 className={styles.titleText}>{name}</Title2>
-            <div className={mergeClasses(styles.textIconContainer, styles.rowPadding)}>
+          <div
+            className={mergeClasses(
+              styles.textIconContainer,
+              styles.rowPadding
+            )}
+          >
             <Location16Regular className={styles.locationIcon} />
             <Link
               href={mapUrl}
@@ -149,14 +157,26 @@ const HotelListItem = ({
             </Link>
           </div>
           <Body1 className={styles.rowPadding}>
-            <strong>{labels.ceremony}:</strong> {ceremonyCompare} · <strong>{labels.reception}:</strong> {receptionCompare} · <strong>{labels.airport}:</strong> {airportCompare}
+            <strong>{labels.ceremony}:</strong> {ceremonyCompare} ·{" "}
+            <strong>{labels.reception}:</strong> {receptionCompare} ·{" "}
+            <strong>{labels.airport}:</strong> {airportCompare}
           </Body1>
-            <div className={mergeClasses(styles.textIconContainer, styles.rowPadding)}>
-            <Tag16Regular className={styles.locationIcon} />
+          <div
+            className={mergeClasses(
+              styles.textIconContainer,
+              styles.rowPadding
+            )}
+          >
             <Body1>
-              <strong>{labels.shuttle}:</strong> {offerShuttle ? labels.yes : labels.no} • <strong>{labels.price}:</strong> {priceRangePerNight} • <strong>{labels.website}:</strong> {(() => {
+              <strong>{labels.shuttle}:</strong>{" "}
+              {offerShuttle ? labels.yes : labels.no} •{" "}
+              <strong>{labels.price}:</strong> {priceRangePerNight} •{" "}
+              <strong>{labels.website}:</strong>{" "}
+              {(() => {
                 try {
-                  const url = new URL(website.startsWith("http") ? website : `https://${website}`);
+                  const url = new URL(
+                    website.startsWith("http") ? website : `https://${website}`
+                  );
                   return url.hostname.replace("www.", "");
                 } catch {
                   return website;
@@ -165,7 +185,10 @@ const HotelListItem = ({
             </Body1>
           </div>
           {review && (
-            <Body1 className={styles.rowPadding} style={{ fontStyle: "italic", color: "#4b5563" }}>
+            <Body1
+              className={styles.rowPadding}
+              style={{ fontStyle: "italic", color: "#4b5563" }}
+            >
               {review}
             </Body1>
           )}

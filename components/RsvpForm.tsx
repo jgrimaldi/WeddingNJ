@@ -9,6 +9,8 @@ import {
   Spinner,
   Input,
   Checkbox,
+  Textarea,
+  mergeClasses,
 } from "@fluentui/react-components";
 import type { User, Language, Invitation } from "@/types/invitations";
 import timelineEn from "@/data/timeline.json";
@@ -103,6 +105,12 @@ export default function RsvpForm({
     success: isES
       ? "¡Gracias! Tu confirmación fue enviada. Recibirás un correo de confirmación en breve."
       : "Thanks! Your RSVP was sent. You'll receive a confirmation email shortly.",
+    dietaryLabel: isES
+      ? "Restricciones alimenticias o alergias"
+      : "Dietary restrictions or allergies",
+    dietaryPlaceholder: isES
+      ? "Ej.: vegetariano, sin gluten, alergia a nueces"
+      : "E.g., vegetarian, gluten-free, nut allergy",
   } as const;
 
   const [responses, setResponses] = React.useState<
@@ -114,6 +122,7 @@ export default function RsvpForm({
   setResponses((guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: {} }), {}));
     setShowErrors(false);
     setSubmitted(false);
+  setDietaryNotes((guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: "" }), {}));
   }, [guests, residency, language]);
 
   // Track if user attempted to submit to show validation messages
@@ -126,6 +135,9 @@ export default function RsvpForm({
   const [email, setEmail] = React.useState("");
   const [notAttending, setNotAttending] = React.useState<Record<number, boolean>>(
     () => (guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: false }), {})
+  );
+  const [dietaryNotes, setDietaryNotes] = React.useState<Record<number, string>>(
+    () => (guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: "" }), {})
   );
 
   const isEmailValid = (value: string) => {
@@ -202,11 +214,12 @@ export default function RsvpForm({
     }
 
     // Build submission list per guest with selected events
-    const list: GuestResponse[] = (guests || []).map((g, gi) => {
+  const list: GuestResponse[] = (guests || []).map((g, gi) => {
       const selections = responses[gi] || {};
       return {
         name: g.Name,
         selectedEvents: Object.keys(selections).filter((k) => !!selections[k]),
+    note: (dietaryNotes[gi] || "").trim() || undefined,
       };
     });
     setLoading(true);
@@ -258,7 +271,7 @@ export default function RsvpForm({
             }}
           >
             <div className={styles.row}>
-              <span className={`${styles.label} ${styles.nameLabel}`}>{g.Name}</span>
+              <span className={mergeClasses(styles.label, styles.nameLabel)}>{g.Name}</span>
             </div>
             <Field
               label={<Label className={styles.label}>{labels.selectAllAttending}</Label>}
@@ -296,6 +309,19 @@ export default function RsvpForm({
                   );
                 })}
               </div>
+            </Field>
+            <Field
+              label={<Label className={styles.label}>{labels.dietaryLabel}</Label>}
+              style={{ marginTop: "0.5em" }}
+            >
+              <Textarea
+                value={dietaryNotes[idx] || ""}
+                placeholder={labels.dietaryPlaceholder}
+                onChange={(_, data) =>
+                  setDietaryNotes((prev) => ({ ...prev, [idx]: data.value }))
+                }
+                rows={3}
+              />
             </Field>
           </section>
         ))}

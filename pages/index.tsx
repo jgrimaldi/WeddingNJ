@@ -199,34 +199,38 @@ export default function HomePage({ groomWa, brideWa }: HomePageProps) {
             }
           />
 
-          <HeroSection
-            bgColor="light"
-            customComponent={
-              <BannerSubtitle
-                imageSrc="/images/HotelWatercolor.png"
-                topText={
-                  clientSession?.user?.invitation?.Language == "ES"
-                    ? "Vuelos &"
-                    : "Travel"
-                }
-                bottomText={
-                  clientSession?.user?.invitation?.Language == "ES"
-                    ? "Hoteles"
-                    : "& Stay"
-                }
-                alt="Events preview"
-              />
-            }
-          />
-          <HeroSection
-            bgColor="light"
-            customComponent={
-              <div>
-                <BannerMessage text={bannerMessageTextHotel} />
-                <BannerSubmessageLink text={bannerMessageLinkTextHotel} />
-              </div>
-            }
-          />
+          {clientSession.user.invitation.Residency === "Remote" && (
+            <HeroSection
+              bgColor="light"
+              customComponent={
+                <BannerSubtitle
+                  imageSrc="/images/HotelWatercolor.png"
+                  topText={
+                    clientSession?.user?.invitation?.Language == "ES"
+                      ? "Vuelos &"
+                      : "Travel"
+                  }
+                  bottomText={
+                    clientSession?.user?.invitation?.Language == "ES"
+                      ? "Hoteles"
+                      : "& Stay"
+                  }
+                  alt="Events preview"
+                />
+              }
+            />
+          )}
+          {clientSession.user.invitation.Residency === "Remote" && (
+            <HeroSection
+              bgColor="light"
+              customComponent={
+                <div>
+                  <BannerMessage text={bannerMessageTextHotel} />
+                  <BannerSubmessageLink text={bannerMessageLinkTextHotel} />
+                </div>
+              }
+            />
+          )}
 
           <HeroSection
             bgColor="light"

@@ -1,4 +1,11 @@
-import { Body1, Button, makeStyles, NavItem, Tab, TabList } from "@fluentui/react-components";
+import {
+  Body1,
+  Button,
+  makeStyles,
+  NavItem,
+  Tab,
+  TabList,
+} from "@fluentui/react-components";
 import {
   Dismiss24Regular,
   SignOutRegular,
@@ -6,7 +13,7 @@ import {
   Board20Filled,
   Board20Regular,
   bundleIcon,
-  Bed16Regular
+  Bed16Regular,
 } from "@fluentui/react-icons";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
@@ -34,18 +41,23 @@ const useStyles = makeStyles({
     paddingBottom: "1em",
   },
   signOutButton: {
-    margin: "0 1em",
+    marginLeft: "1em",
+    marginBottom: "1em",
     height: "2em",
+
   },
   menuContentsContainer: {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
+    marginBottom: "1em",
   },
   navRow: {
     display: "flex",
     alignItems: "center",
-  }
+    backgroundColor: "#f9f9f9",
+    borderBottom: "1px solid var(--colorNeutralStroke1)",
+  },
 });
 
 type TopNavBarProps = {
@@ -131,63 +143,39 @@ const TopNavBar = ({ language = "EN" }: TopNavBarProps) => {
         onBlur={handleDrawerBlur}
       >
         <div className={styles.menuContentsContainer}>
-          <NavItem className={styles.navRow} href="/" icon={<Dashboard />} value="1">
+          <NavItem
+            className={styles.navRow}
+            href="/"
+            icon={<Dashboard />}
+            value="1"
+          >
             {language === "ES" ? "Inicio" : "Home"}
           </NavItem>
-          <NavItem className={styles.navRow} href={`/hotels?lang=${langParam}`} icon={<Bed16Regular />} value="1">
+          <NavItem
+            className={styles.navRow}
+            href={`/hotels?lang=${langParam}`}
+            icon={<Bed16Regular />}
+            value="1"
+          >
             {language === "ES" ? "Hoteles" : "Hotels"}
           </NavItem>
         </div>
-        <ul
-          style={{
-            listStyle: "none",
-            marginTop: "2em",
-            padding: "0 0 0 0.5em",
-          }}
+        
+        <div className={styles.adminMenuText}>
+          <span>{adminMenuText}</span>
+        </div>
+        <Button
+          appearance="secondary"
+          onClick={() =>
+            signOut({
+              callbackUrl: `/login?lang=${language === "ES" ? "es" : "en"}`,
+            })
+          }
+          icon={<SignOutRegular />}
+          className={styles.signOutButton}
         >
-          <li>
-            <Button
-              appearance="primary"
-              style={{ margin: "0 1em 0.5em 1em" }}
-              onClick={() => {
-                window.location.href = "/";
-              }}
-            >
-              {language === "ES" ? "Inicio" : "Home"}
-            </Button>
-          </li>
-          <li>
-            <Button
-              appearance="primary"
-              style={{ margin: "0 1em 0.5em 1em" }}
-              onClick={() => {
-                const langParam = language === "ES" ? "es" : "en";
-                window.location.href = `/hotels?lang=${langParam}`;
-              }}
-            >
-              {language === "ES" ? "Hoteles" : "Hotels"}
-            </Button>
-          </li>
-          <li>
-            <div className={styles.adminMenuText}>
-              <span>{adminMenuText}</span>
-            </div>
-          </li>
-          <li>
-            <Button
-              appearance="secondary"
-              onClick={() =>
-                signOut({
-                  callbackUrl: `/login?lang=${language === "ES" ? "es" : "en"}`,
-                })
-              }
-              icon={<SignOutRegular />}
-              className={styles.signOutButton}
-            >
-              {signOutText}
-            </Button>
-          </li>
-        </ul>
+          {signOutText}
+        </Button>
       </div>
     </>
   );
