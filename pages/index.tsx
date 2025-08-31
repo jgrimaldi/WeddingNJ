@@ -15,6 +15,7 @@ import BannerMessage from "@/components/BannerMessage";
 import BannerSubtitle from "@/components/BannerSubtitle";
 import Footer from "@/components/Footer";
 import RsvpForm from "@/components/RsvpForm";
+import BannerSubmessage from "@/components/BannerSubmessage";
 
 type HomePageProps = {
   // No session prop needed - we'll use client-side session
@@ -65,13 +66,20 @@ export default function HomePage({}: HomePageProps) {
       : hotelMessageEN;
 
   const rsvpMessageEN =
-    "Please help us by using the RSVP form to confirm your attendance before December 1st, 2025.";
+    "Please help us by using the RSVP form to confirm your attendance.";
   const rsvpMessageES =
-    "Por favor, ayúdanos utilizando el formulario de RSVP para confirmar tu asistencia antes del 1ero de Diciembre del 2025.";
+    "Por favor, ayúdanos utilizando el formulario de RSVP para confirmar tu asistencia.";
   const bannerMessageTextRsvp =
     clientSession?.user?.invitation?.Language === "ES"
       ? rsvpMessageES
       : rsvpMessageEN;
+  const rsvpDateTextEN = "Kindly respond by December 1st, 2025.";
+  const rsvpDateTextES =
+    "De ser posible, responde antes del 1ero de Diciembre del 2025.";
+  const bannerDateTextRsvp =
+    clientSession?.user?.invitation?.Language === "ES"
+      ? rsvpDateTextES
+      : rsvpDateTextEN;
 
   const pageTitle =
     clientSession?.user?.invitation?.Language === "ES"
@@ -222,7 +230,12 @@ export default function HomePage({}: HomePageProps) {
           />
           <HeroSection
             bgColor="light"
-            customComponent={<BannerMessage text={bannerMessageTextRsvp} />}
+            customComponent={
+              <div>
+                <BannerMessage text={bannerMessageTextRsvp} />
+                <BannerSubmessage text={bannerDateTextRsvp} />
+              </div>
+            }
           />
           <RsvpForm
             guests={clientSession?.user?.invitation?.Guests}
