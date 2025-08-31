@@ -16,6 +16,8 @@ import BannerSubtitle from "@/components/BannerSubtitle";
 import Footer from "@/components/Footer";
 import RsvpForm from "@/components/RsvpForm";
 import BannerSubmessage from "@/components/BannerSubmessage";
+import HotelList from "@/components/HotelList";
+import BannerSubmessageLink from "@/components/BannerSubmessageLink";
 
 type HomePageProps = {
   // No session prop needed - we'll use client-side session
@@ -64,6 +66,14 @@ export default function HomePage({}: HomePageProps) {
     clientSession?.user?.invitation?.Language === "ES"
       ? hotelMessageES
       : hotelMessageEN;
+const hotelMessageLinkEN =
+    "Click here for the list of hotels.";
+  const hotelMessageLinkES =
+    "Haga clic aquí para ver la lista de hoteles.";
+  const bannerMessageLinkTextHotel =
+    clientSession?.user?.invitation?.Language === "ES"
+      ? hotelMessageLinkES
+      : hotelMessageLinkEN;
 
   const rsvpMessageEN =
     "Please help us by using the RSVP form to confirm your attendance.";
@@ -211,7 +221,12 @@ export default function HomePage({}: HomePageProps) {
           />
           <HeroSection
             bgColor="light"
-            customComponent={<BannerMessage text={bannerMessageTextHotel} />}
+            customComponent={
+              <div>
+                <BannerMessage text={bannerMessageTextHotel} />
+                <BannerSubmessageLink text={bannerMessageLinkTextHotel} />
+              </div>
+            }
           />
 
           <HeroSection

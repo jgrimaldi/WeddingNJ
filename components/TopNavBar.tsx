@@ -1,12 +1,18 @@
-import { Body1, Button, makeStyles } from "@fluentui/react-components";
+import { Body1, Button, makeStyles, NavItem, Tab, TabList } from "@fluentui/react-components";
 import {
   Dismiss24Regular,
   SignOutRegular,
   NavigationRegular,
+  Board20Filled,
+  Board20Regular,
+  bundleIcon,
+  Bed16Regular
 } from "@fluentui/react-icons";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
+
+const Dashboard = bundleIcon(Board20Filled, Board20Regular);
 
 const useStyles = makeStyles({
   closeButton: {
@@ -25,11 +31,20 @@ const useStyles = makeStyles({
   adminMenuText: {
     padding: "0 1em",
     textAlign: "justify",
-    paddingBottom: "1em"
+    paddingBottom: "1em",
   },
   signOutButton: {
     margin: "0 1em",
-    height: "2em", 
+    height: "2em",
+  },
+  menuContentsContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+  },
+  navRow: {
+    display: "flex",
+    alignItems: "center",
   }
 });
 
@@ -42,6 +57,7 @@ const TopNavBar = ({ language = "EN" }: TopNavBarProps) => {
   const styles = useStyles();
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const signOutText = language === "ES" ? "Cerrar sesión" : "Sign Out";
+  const langParam = language === "ES" ? "es" : "en";
   const adminMenuText =
     language === "ES"
       ? "No hay más páginas por el momento, en ese menú solo puedes cerrar sesión, a menos que sepas donde esta el boton escondido para administrar la página.."
@@ -102,7 +118,7 @@ const TopNavBar = ({ language = "EN" }: TopNavBarProps) => {
       <div
         style={{
           position: "fixed",
-          top: open ? "40px" : "-200px",
+          top: "3.5em",//open ? "5em" : "-20em",
           left: 0,
           right: 0,
           backgroundColor: "#f9f9f9",
@@ -114,6 +130,14 @@ const TopNavBar = ({ language = "EN" }: TopNavBarProps) => {
         tabIndex={-1}
         onBlur={handleDrawerBlur}
       >
+        <div className={styles.menuContentsContainer}>
+          <NavItem className={styles.navRow} href="/" icon={<Dashboard />} value="1">
+            {language === "ES" ? "Inicio" : "Home"}
+          </NavItem>
+          <NavItem className={styles.navRow} href={`/hotels?lang=${langParam}`} icon={<Bed16Regular />} value="1">
+            {language === "ES" ? "Hoteles" : "Hotels"}
+          </NavItem>
+        </div>
         <ul
           style={{
             listStyle: "none",
@@ -121,6 +145,29 @@ const TopNavBar = ({ language = "EN" }: TopNavBarProps) => {
             padding: "0 0 0 0.5em",
           }}
         >
+          <li>
+            <Button
+              appearance="primary"
+              style={{ margin: "0 1em 0.5em 1em" }}
+              onClick={() => {
+                window.location.href = "/";
+              }}
+            >
+              {language === "ES" ? "Inicio" : "Home"}
+            </Button>
+          </li>
+          <li>
+            <Button
+              appearance="primary"
+              style={{ margin: "0 1em 0.5em 1em" }}
+              onClick={() => {
+                const langParam = language === "ES" ? "es" : "en";
+                window.location.href = `/hotels?lang=${langParam}`;
+              }}
+            >
+              {language === "ES" ? "Hoteles" : "Hotels"}
+            </Button>
+          </li>
           <li>
             <div className={styles.adminMenuText}>
               <span>{adminMenuText}</span>

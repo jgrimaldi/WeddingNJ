@@ -1,0 +1,38 @@
+[
+  {
+    "Name": "Hotel Marriott Hacienda Belén",
+    "Location": "La Ribera, Belén.",
+    "LocationUrl": "https://maps.app.goo.gl/6z5Cdz89dUyMp39v7",
+    "CeremonyCompare": "A 25 min de la iglesia de la ceremonia.",
+    "ReceptionCompare": "A 15 min del lugar de la recepción.",
+    "AirportCompare": "A 10 min del aeropuerto.",
+    "OfferShuttle": true,
+    "Website": "https://www.marriott.com/es/hotels/sjocr-costa-rica-marriott-hotel-hacienda-belen/overview/",
+    "PriceRangePerNight": "$200 - $300",
+    "Review": "La ubicación es muy conveniente para desplazarse a la ceremonia y desde el lugar de la recepción."
+  },
+  {
+    "Name": "AC Hotel San Jose Airport Belen",
+    "Location": "La Ribera, Belén.",
+    "LocationUrl": "https://maps.app.goo.gl/d6QdD2U2Km1G9EaPA",
+    "CeremonyCompare": "A 25 min de la iglesia de la ceremonia.",
+    "ReceptionCompare": "A 15 min del lugar de la recepción.",
+    "AirportCompare": "A 10 min del aeropuerto.",
+    "OfferShuttle": true,
+    "Website": "https://www.marriott.com/es/hotels/sjoaa-ac-hotel-heredia-belen/overview/",
+    "PriceRangePerNight": "$200 - $300",
+    "Review": "Ubicación conveniente cerca del aeropuerto y práctica para desplazarse a los lugares de la ceremonia y la recepción."
+  },
+  {
+    "Name": "Hyatt Centric San José Escazú",
+    "Location": "Plaza Tempo, Escazú.",
+    "LocationUrl": "https://maps.app.goo.gl/dNTPKvc18fy4yN3C9",
+    "CeremonyCompare": "A 45 min de la iglesia de la ceremonia.",
+    "ReceptionCompare": "A 5 min del lugar de la recepción.",
+    "AirportCompare": "A 30 min del aeropuerto.",
+    "OfferShuttle": true,
+    "Website": "https://www.hyatt.com/hyatt-centric/es-ES/sjoct-hyatt-centric-san-jose-escazu",
+    "PriceRangePerNight": "$200 - $300",
+    "Review": "Ubicación muy cercana al lugar de la recepción, pero un poco más alejada de la iglesia de la ceremonia. Muy cerca de restaurantes y tiendas a poca distancia a pie."
+  }
+]

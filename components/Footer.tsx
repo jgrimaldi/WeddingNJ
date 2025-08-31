@@ -1,4 +1,4 @@
-import { Body1, Caption1, Link, makeStyles } from "@fluentui/react-components";
+import { Body1, Caption1, Link, makeStyles, mergeClasses } from "@fluentui/react-components";
 import { Call16Regular } from "@fluentui/react-icons";
 import type { Language } from "@/types/invitations";
 
@@ -121,7 +121,7 @@ export default function Footer({ language = "EN" }: FooterProps) {
           <Caption1 className={styles.sectionTitle}>
             {labels.thanksTitle}
           </Caption1>
-          <Body1 className={`${styles.justified} ${styles.thanksText}`}>
+          <Body1 className={mergeClasses(styles.justified, styles.thanksText)}>
             {labels.thanksText}
           </Body1>
         </div>
