@@ -9,7 +9,12 @@ import HotelList from "@/components/HotelList";
 import Footer from "@/components/Footer";
 import { useSession } from "next-auth/react";
 
-export default function HotelsPage() {
+type HotelsPageProps = {
+  groomWa?: string | null;
+  brideWa?: string | null;
+};
+
+export default function HotelsPage({ groomWa, brideWa }: HotelsPageProps) {
   const { data: clientSession } = useSession();
   const lang = (clientSession?.user?.invitation?.Language as "EN" | "ES") || "EN";
 
@@ -44,7 +49,7 @@ export default function HotelsPage() {
           />
           <HeroSection bgColor="light" customComponent={<BannerMessage text={bannerMessageTextHotel} />} />
           <HeroSection bgColor="light" customComponent={<HotelList language={lang} />} />
-          <Footer language={lang} />
+          <Footer language={lang} groomWa={groomWa} brideWa={brideWa} />
         </div>
       </div>
     </>
@@ -61,5 +66,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
-  return { props: {} };
+  return {
+    props: {
+      groomWa: process.env.WHATSAPP_GROOM || process.env.NEXT_PUBLIC_WHATSAPP_GROOM || null,
+      brideWa: process.env.WHATSAPP_BRIDE || process.env.NEXT_PUBLIC_WHATSAPP_BRIDE || null,
+    },
+  };
 }

@@ -20,7 +20,8 @@ import HotelList from "@/components/HotelList";
 import BannerSubmessageLink from "@/components/BannerSubmessageLink";
 
 type HomePageProps = {
-  // No session prop needed - we'll use client-side session
+  groomWa?: string | null;
+  brideWa?: string | null;
 };
 
 const useStyles = makeStyles({
@@ -32,7 +33,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function HomePage({}: HomePageProps) {
+export default function HomePage({ groomWa, brideWa }: HomePageProps) {
   const { data: clientSession, status } = useSession();
   const styles = useStyles();
 
@@ -66,10 +67,8 @@ export default function HomePage({}: HomePageProps) {
     clientSession?.user?.invitation?.Language === "ES"
       ? hotelMessageES
       : hotelMessageEN;
-const hotelMessageLinkEN =
-    "Click here for the list of hotels.";
-  const hotelMessageLinkES =
-    "Haga clic aquí para ver la lista de hoteles.";
+  const hotelMessageLinkEN = "Click here for the list of hotels.";
+  const hotelMessageLinkES = "Haga clic aquí para ver la lista de hoteles.";
   const bannerMessageLinkTextHotel =
     clientSession?.user?.invitation?.Language === "ES"
       ? hotelMessageLinkES
@@ -257,7 +256,11 @@ const hotelMessageLinkEN =
             language={clientSession?.user?.invitation?.Language}
             residency={clientSession?.user?.invitation?.Residency}
           />
-          <Footer language={clientSession?.user?.invitation?.Language} />
+          <Footer
+            language={clientSession?.user?.invitation?.Language}
+            groomWa={groomWa}
+            brideWa={brideWa}
+          />
         </div>
       </div>
     </>
@@ -281,7 +284,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Don't pass complex session data through props - let client-side session handle it
   return {
     props: {
-      // We could pass simple data here if needed, but complex objects cause serialization issues
+      groomWa:
+        process.env.WHATSAPP_GROOM ||
+        process.env.NEXT_PUBLIC_WHATSAPP_GROOM ||
+        null,
+      brideWa:
+        process.env.WHATSAPP_BRIDE ||
+        process.env.NEXT_PUBLIC_WHATSAPP_BRIDE ||
+        null,
     },
   };
 }

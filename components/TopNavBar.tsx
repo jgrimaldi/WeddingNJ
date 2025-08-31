@@ -118,7 +118,7 @@ const TopNavBar = ({ language = "EN" }: TopNavBarProps) => {
       <div
         style={{
           position: "fixed",
-          top: "3.5em",//open ? "5em" : "-20em",
+          top: open ? "3.5em" : "-20em",
           left: 0,
           right: 0,
           backgroundColor: "#f9f9f9",

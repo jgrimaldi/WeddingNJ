@@ -57,14 +57,17 @@ const useStyles = makeStyles({
 
 type FooterProps = {
   language?: Language; // 'EN' | 'ES'
+  groomWa?: string | null;
+  brideWa?: string | null;
 };
 
-export default function Footer({ language = "EN" }: FooterProps) {
+export default function Footer({ language = "EN", groomWa: groomWaProp, brideWa: brideWaProp }: FooterProps) {
   const styles = useStyles();
 
   const isES = language === "ES";
-  const groomWa = process.env.NEXT_PUBLIC_WHATSAPP_GROOM;
-  const brideWa = process.env.NEXT_PUBLIC_WHATSAPP_BRIDE;
+  // Prefer values passed via props (SSR/runtime env), fallback to build-time env if not provided
+  const groomWa = groomWaProp ?? process.env.WHATSAPP_GROOM ?? process.env.NEXT_PUBLIC_WHATSAPP_GROOM ?? null;
+  const brideWa = brideWaProp ?? process.env.WHATSAPP_BRIDE ?? process.env.NEXT_PUBLIC_WHATSAPP_BRIDE ?? null;
   const labels = {
     questionsTitle: isES ? "Preguntas" : "Questions",
     contactLine: isES
