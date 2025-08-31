@@ -4,7 +4,7 @@ import type { Language } from "@/types/invitations";
 
 const useStyles = makeStyles({
   footer: {
-    width: "100%",
+    maxWidth: "100vw",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
