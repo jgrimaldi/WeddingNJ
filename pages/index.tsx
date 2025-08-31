@@ -227,6 +227,7 @@ export default function HomePage({}: HomePageProps) {
           <RsvpForm
             guests={clientSession?.user?.invitation?.Guests}
             language={clientSession?.user?.invitation?.Language}
+            residency={clientSession?.user?.invitation?.Residency}
           />
           <Footer language={clientSession?.user?.invitation?.Language} />
         </div>

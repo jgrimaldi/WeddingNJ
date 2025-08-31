@@ -1,25 +1,24 @@
 import * as React from "react";
 import {
-  Body1,
   Button,
   Caption1,
   Card,
   Field,
   Label,
   makeStyles,
-  Radio,
-  RadioGroup,
   Spinner,
   Input,
-  Textarea,
+  Checkbox,
 } from "@fluentui/react-components";
-import type { User, Language } from "@/types/invitations";
+import type { User, Language, Invitation } from "@/types/invitations";
+import timelineEn from "@/data/timeline.json";
+import timelineEs from "@/data/timeline.es.json";
 
-export type Attendance = "yes" | "no" | "maybe";
+export type Attendance = "yes" | "no" | "maybe"; // retained for compatibility
 
 export interface GuestResponse {
   name: string;
-  attending?: Attendance;
+  selectedEvents: string[];
   note?: string;
 }
 
@@ -27,6 +26,7 @@ type RsvpFormProps = {
   guests: User[];
   onSubmit?: (responses: GuestResponse[]) => void;
   language?: Language; // 'EN' | 'ES'
+  residency?: Invitation["Residency"]; // 'Local' | 'Remote'
 };
 
 const useStyles = makeStyles({
@@ -43,12 +43,6 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     gap: "1em",
-  },
-  card: {
-    borderRadius: "10px",
-    padding: "1em",
-    background: "#F8FAFC",
-    border: "1px solid #E5E7EB",
   },
   row: {
     display: "flex",
@@ -86,28 +80,21 @@ export default function RsvpForm({
   guests,
   onSubmit,
   language = "EN",
+  residency,
 }: RsvpFormProps) {
   const styles = useStyles();
 
   const isES = language === "ES";
   const labels = {
-    attendance: isES ? "Asistencia" : "Attendance",
-    email: isES
-      ? "Correo electrónico para confirmación"
-      : "Email for confirmation",
+    eventsFor: isES ? "Eventos —" : "Events —",
+    atLeastOne: isES ? "Selecciona al menos un evento" : "Please select at least one event",
+  selectAllAttending: isES ? "Selecciona todos los eventos que asistirás" : "Select all you'll be attending",
+  notAttending: isES ? "No podré asistir" : "Won't be able to attend",
+    email: isES ? "Correo electrónico para confirmación" : "Email for confirmation",
     emailPlaceholder: isES ? "tucorreo@ejemplo.com" : "you@example.com",
-    emailRequired: isES
-      ? "Ingresa un correo válido"
-      : "Please enter a valid email",
-    yes: isES ? "Sí" : "Yes",
-    no: isES ? "No" : "No",
-    maybe: isES ? "Tal vez" : "Maybe",
-    notes: isES
-      ? "Notas (restricciones alimentarias, alergias, etc.)"
-      : "Notes (dietary restrictions, allergies, etc.)",
+    emailRequired: isES ? "Ingresa un correo válido" : "Please enter a valid email",
     submit: isES ? "Enviar confirmación" : "Submit RSVP",
     empty: isES ? "No hay invitados para confirmar." : "No guests to RSVP.",
-    required: isES ? "Seleccione una opción" : "Please select an option",
     updateNote: isES
       ? "Puedes actualizar tu respuesta en cualquier momento reenviando este formulario."
       : "You can update your response anytime by resubmitting this form.",
@@ -119,33 +106,27 @@ export default function RsvpForm({
   } as const;
 
   const [responses, setResponses] = React.useState<
-    Record<number, GuestResponse>
-  >(() =>
-    (guests || []).reduce<Record<number, GuestResponse>>((acc, g, idx) => {
-      acc[idx] = { name: g.Name };
-      return acc;
-    }, {})
-  );
+    Record<number, Record<string, boolean>>
+  >(() => (guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: {} }), {}));
 
   React.useEffect(() => {
-    // Reset when guests change
-    setResponses(
-      (guests || []).reduce<Record<number, GuestResponse>>((acc, g, idx) => {
-        acc[idx] = { name: g.Name };
-        return acc;
-      }, {})
-    );
+    // Reset when guests or residency/language change
+  setResponses((guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: {} }), {}));
     setShowErrors(false);
     setSubmitted(false);
-  }, [guests]);
+  }, [guests, residency, language]);
 
   // Track if user attempted to submit to show validation messages
   const [showErrors, setShowErrors] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [submitted, setSubmitted] = React.useState(false);
-  const radioRefs = React.useRef<(HTMLDivElement | null)[]>([]);
+  // Refs per guest section for scroll-to-error
+  const guestRefs = React.useRef<(HTMLElement | null)[]>([]);
   const emailRef = React.useRef<HTMLDivElement | null>(null);
   const [email, setEmail] = React.useState("");
+  const [notAttending, setNotAttending] = React.useState<Record<number, boolean>>(
+    () => (guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: false }), {})
+  );
 
   const isEmailValid = (value: string) => {
     // Basic email validation
@@ -153,33 +134,56 @@ export default function RsvpForm({
     return re.test(value.trim());
   };
 
-  const updateAttendance = (index: number, attending: Attendance) => {
+  const toggleEvent = (guestIndex: number, eventKey: string) => {
     setSubmitted(false);
+    // If selecting any event, ensure notAttending is unset
+    setNotAttending((prev) => ({ ...prev, [guestIndex]: false }));
     setResponses((prev) => ({
       ...prev,
-      [index]: { ...prev[index], attending },
+      [guestIndex]: { ...prev[guestIndex], [eventKey]: !prev[guestIndex]?.[eventKey] },
     }));
   };
 
-  const updateNote = (index: number, note: string) => {
+  const toggleNotAttending = (guestIndex: number) => {
     setSubmitted(false);
-    setResponses((prev) => ({
-      ...prev,
-      [index]: { ...prev[index], note },
-    }));
+    setNotAttending((prev) => {
+      const next = !prev[guestIndex];
+      // If toggled on, clear all event selections for this guest
+      if (next) {
+        setResponses((rPrev) => ({ ...rPrev, [guestIndex]: {} }));
+      }
+      return { ...prev, [guestIndex]: next };
+    });
   };
+
+  // Notes omitted in this layout; can be reintroduced per guest or per event if needed
+
+  // Build event list based on language and residency (like Timeline.tsx)
+  type TimelineItem = { title: string; start: string; end?: string; guests?: string };
+  const src = (language === "ES" ? timelineEs : timelineEn) as Array<TimelineItem>;
+  const normalizedResidency = residency?.toLowerCase();
+  const events = src.filter((item) => {
+    const g = String(item.guests || "All").toLowerCase();
+    if (g === "all") return true;
+    return normalizedResidency ? g === normalizedResidency : g === "all";
+  });
+  const eventKey = (e: TimelineItem) => `${e.title}-${e.start}`;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Validate email first
     const emailOk = isEmailValid(email);
-    // Validate all guests have an attendance selection
-    const missingIndexes = (guests || []).reduce<number[]>((acc, _, idx) => {
-      if (!responses[idx]?.attending) acc.push(idx);
-      return acc;
-    }, []);
+    // Validate all guests have an attendance selection for every event
+    // Validate each guest has at least one selected event
+    const missingGuests: number[] = [];
+    (guests || []).forEach((_, gi) => {
+      const selections = responses[gi] || {};
+      const anySelected = Object.values(selections).some(Boolean);
+      const noneSelected = !anySelected && !notAttending[gi];
+      if (noneSelected) missingGuests.push(gi);
+    });
 
-    if (!emailOk || missingIndexes.length > 0) {
+    if (!emailOk || missingGuests.length > 0) {
       setShowErrors(true);
       // Scroll to email if invalid, otherwise to first missing group
       if (!emailOk) {
@@ -187,9 +191,9 @@ export default function RsvpForm({
         if (eEl && typeof eEl.scrollIntoView === "function") {
           eEl.scrollIntoView({ behavior: "smooth", block: "center" });
         }
-      } else if (missingIndexes.length > 0) {
-        const first = missingIndexes[0];
-        const el = radioRefs.current[first];
+      } else if (missingGuests.length > 0) {
+        const firstIdx = missingGuests[0];
+        const el = guestRefs.current[firstIdx];
         if (el && typeof el.scrollIntoView === "function") {
           el.scrollIntoView({ behavior: "smooth", block: "center" });
         }
@@ -197,10 +201,14 @@ export default function RsvpForm({
       return;
     }
 
-    const list = Object.keys(responses)
-      .map((k) => Number(k))
-      .sort((a, b) => a - b)
-      .map((i) => responses[i]);
+    // Build submission list per guest with selected events
+    const list: GuestResponse[] = (guests || []).map((g, gi) => {
+      const selections = responses[gi] || {};
+      return {
+        name: g.Name,
+        selectedEvents: Object.keys(selections).filter((k) => !!selections[k]),
+      };
+    });
     setLoading(true);
     try {
       onSubmit?.(list);
@@ -242,58 +250,56 @@ export default function RsvpForm({
             />
           </div>
         </Field>
-        {guests.map((g, idx) => (
-          <section key={`${g.Name}-${idx}`}>
+        {(guests || []).map((g, idx) => (
+          <section
+            key={`${g.Name}-${idx}`}
+            ref={(el) => {
+              guestRefs.current[idx] = el;
+            }}
+          >
             <div className={styles.row}>
-              <span className={`${styles.label} ${styles.nameLabel}`}>
-                {g.Name}
-              </span>
+              <span className={`${styles.label} ${styles.nameLabel}`}>{g.Name}</span>
             </div>
-
             <Field
-              label={
-                <Label className={styles.label}>{labels.attendance}</Label>
-              }
+              label={<Label className={styles.label}>{labels.selectAllAttending}</Label>}
               style={{ marginTop: "0.5em" }}
-              required
               validationState={
-                showErrors && !responses[idx]?.attending ? "error" : undefined
+                showErrors && !notAttending[idx] && Object.values(responses[idx] || {}).every((v) => !v)
+                  ? "error"
+                  : undefined
               }
               validationMessage={
-                showErrors && !responses[idx]?.attending
-                  ? labels.required
+                showErrors && !notAttending[idx] && Object.values(responses[idx] || {}).every((v) => !v)
+                  ? labels.atLeastOne
                   : undefined
               }
             >
-              <RadioGroup
-                layout="horizontal"
-                value={responses[idx]?.attending}
-                ref={(el) => {
-                  radioRefs.current[idx] = el;
-                }}
-                onChange={(_, data) =>
-                  updateAttendance(idx, data.value as Attendance)
-                }
-              >
-                <Radio value="yes" label={labels.yes} />
-                <Radio value="no" label={labels.no} />
-              </RadioGroup>
-            </Field>
-
-            <Field
-              label={<Label className={styles.label}>{labels.notes}</Label>}
-              style={{ marginTop: "0.5em" }}
-            >
-              <Textarea
-                resize="vertical"
-                value={responses[idx]?.note ?? ""}
-                onChange={(e) =>
-                  updateNote(idx, (e.target as HTMLTextAreaElement).value)
-                }
-              />
+              <div className={styles.row}>
+                <Checkbox
+                  checked={!!notAttending[idx]}
+                  label={labels.notAttending}
+                  onChange={() => toggleNotAttending(idx)}
+                />
+              </div>
+              <div className={styles.row}>
+                {events.map((ev) => {
+                  const key = eventKey(ev);
+                  const checked = !!responses[idx]?.[key];
+                  return (
+                    <Checkbox
+                      key={`${key}-${idx}`}
+                      checked={checked}
+                      disabled={!!notAttending[idx]}
+                      label={ev.title}
+                      onChange={() => toggleEvent(idx, key)}
+                    />
+                  );
+                })}
+              </div>
             </Field>
           </section>
         ))}
+        
       </Card>
       <Caption1 className={styles.hint} role="note">
         {labels.updateNote}
