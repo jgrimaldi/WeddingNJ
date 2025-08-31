@@ -37,6 +37,11 @@ const useStyles = makeStyles({
       paddingTop: "5vh",
     },
   },
+  picturesContainer: {
+    display: "flex",
+    maxWidth: "100vw",
+    padding: "1em 0"
+  }
 });
 
 export default function LoginPage() {
@@ -46,6 +51,7 @@ export default function LoginPage() {
   const [animationPhase, setAnimationPhase] = useState<
     "loading" | "logo" | "form"
   >("loading");
+  const [language, setLanguage] = useState<"EN" | "ES">("ES");
   const router = useRouter();
 
   // Handle entrance animation sequence - 2 distinct stages
@@ -66,6 +72,22 @@ export default function LoginPage() {
     };
   }, []);
 
+  // Initialize language from query param (?lang=es|en or ?l=es|en)
+  useEffect(() => {
+    if (!router.isReady) return;
+    const qp = (router.query.lang || router.query.l) as
+      | string
+      | string[]
+      | undefined;
+    const val = Array.isArray(qp) ? qp[0] : qp;
+    if (val) {
+      const v = val.toLowerCase();
+      if (v === "es" || v === "en") {
+        setLang(v.toUpperCase() as "EN" | "ES");
+      }
+    }
+  }, [router.isReady, router.query.lang, router.query.l]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -79,7 +101,7 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        setError("Invalid access code. Please try again.");
+        setError(labels.invalidCode);
         setLoading(false);
       } else if (result?.ok) {
         // Wait a moment for session to be established
@@ -89,22 +111,58 @@ export default function LoginPage() {
       }
     } catch (error) {
       console.error("SignIn error:", error);
-      setError("Something went wrong. Please try again.");
+      setError(labels.genericError);
       setLoading(false);
     }
   };
 
   const styles = useStyles();
 
+  const isES = language === "ES";
+  const labels = {
+    pageTitle: isES ? "Boda de Nathy y Jorge" : "Nathy & Jorge's Wedding",
+    welcomeTitle: isES
+      ? "¡Bienvenido(a) a la boda de Nathalia y Jorge!"
+      : "Welcome to Nathalia & Jorge's wedding!",
+    intro: isES
+      ? "¡Estamos muy felices de que estés aquí! Por favor, ingresa tu código para ver todos los detalles de la boda y un mensaje especial hecho para ti."
+      : "We're so happy you're here! Please enter your code below to unlock all the wedding details - and a heartfelt message made just for you.",
+    accessPlaceholder: isES
+      ? "Ingresa tu código"
+      : "Enter your code",
+    verifyingAria: isES
+      ? "Verificando código de acceso"
+      : "Verifying access code",
+    verifying: isES ? "Verificando..." : "Verifying...",
+    submit: isES ? "Únete a la celebración" : "Join the celebration",
+    invalidCode: isES
+      ? "Código de acceso inválido. Inténtalo de nuevo."
+      : "Invalid access code. Please try again.",
+    genericError: isES
+      ? "Algo salió mal. Inténtalo de nuevo."
+      : "Something went wrong. Please try again.",
+    esShort: "ES",
+    enShort: "EN",
+    weddingDateText: isES ? "28 . 02 . 26" : "02 . 28 . 26",
+  } as const;
+
+  const setLang = (lang: "EN" | "ES") => {
+    setLanguage(lang);
+    try {
+      // Persist preference for a year
+      document.cookie = `lang=${lang}; Path=/; Max-Age=31536000; SameSite=Lax`;
+    } catch {}
+  };
+  const weddingLogoSrc = "/images/SACCWatercolor.png";
+
   return (
     <>
       <Head>
-        <title>Nathy & Jorge's Wedding</title>
+        <title>{labels.pageTitle}</title>
         <meta
           name="description"
           content="Welcome to our wedding portal! Please enter your access code to unlock all the details."
         />
-        
       </Head>
 
       <div
@@ -186,7 +244,7 @@ export default function LoginPage() {
                   lineHeight: "1",
                 }}
               >
-                Welcome to Nathalia & Jorge's wedding!
+                {labels.welcomeTitle}
               </span>
             </Title2>
           </div>
@@ -207,13 +265,16 @@ export default function LoginPage() {
             }}
             appearance="strong"
           >
-            02 . 28 . 26
+            {
+              <span style={{ fontWeight: "bold", fontSize: "1.5em" }}>
+                {labels.weddingDateText}
+              </span>
+            }
           </Divider>
         </div>
 
         {/* Stage 2: Form Phase - Login form entrance (appears from bottom) */}
         <div
-          className="phase-container"
           style={{
             opacity: animationPhase === "form" ? 1 : 0,
             visibility: animationPhase === "form" ? "visible" : "hidden",
@@ -228,6 +289,7 @@ export default function LoginPage() {
             alignItems: "center",
             maxWidth: " 90vw",
             margin: "0 10vw",
+            textAlign: "center",
           }}
         >
           {/* <Body1 style={{ 
@@ -246,19 +308,15 @@ Please enter yours below to unlock all the wedding details - and a heartfelt mes
               color: "#6b7280",
               fontWeight: "400",
               lineHeight: "1.5",
-              textAlign: "center",
               //fontFamily: 'Segoe UI Light'
               //margin: '0 1em',
             }}
           >
-            We're so happy you're here! Please enter your code below to unlock
-            all the wedding details - and a heartfelt message made just for you.
+            {labels.intro}
           </Body1>
         </div>
         <div
-          className="phase-container"
           style={{
-            
             opacity: animationPhase === "form" ? 1 : 0,
             visibility: animationPhase === "form" ? "visible" : "hidden",
             transform:
@@ -270,21 +328,24 @@ Please enter yours below to unlock all the wedding details - and a heartfelt mes
             transitionDelay: animationPhase === "form" ? "0.5s" : "0s",
           }}
         >
-          <Body1
-            style={{
-              color: "#6b7280",
-              fontWeight: "400",
-              lineHeight: "1.5",
-              textAlign: "center",
-              fontSize: "clamp(2rem, 3vw, 4rem)",
-            }}
-          >
-            🖤
-          </Body1>
+          <div className={styles.picturesContainer}>
+             <Image
+              src="/logos/wedding-vector.svg"
+              alt="Wedding Logo"
+              width={240}
+              height={48}
+              style={{  
+                width: "8em",
+                height: "8em",              
+                filter:
+                  "brightness(0) saturate(100%) invert(22%) sepia(19%) saturate(0%) hue-rotate(140deg) brightness(104%) contrast(100%)",
+              }}
+              priority
+            />
+          </div>
         </div>
-            
+
         <div
-          className="phase-container"
           style={{
             opacity: animationPhase === "form" ? 1 : 0,
             visibility: animationPhase === "form" ? "visible" : "hidden",
@@ -317,7 +378,7 @@ Please enter yours below to unlock all the wedding details - and a heartfelt mes
                 className={styles.input}
                 type="text"
                 required
-                placeholder="Enter your access code"
+                placeholder={labels.accessPlaceholder}
                 value={accessCode}
                 onChange={(e) => setAccessCode(e.target.value)}
                 disabled={loading}
@@ -381,14 +442,14 @@ Please enter yours below to unlock all the wedding details - and a heartfelt mes
                     justifyContent: "center",
                   }}
                 >
-                  <Spinner size="tiny" aria-label="Verifying access code" />
+                  <Spinner size="tiny" aria-label={labels.verifyingAria} />
                   <span style={{ fontSize: "16px", fontWeight: "500" }}>
-                    Verifying...
+                    {labels.verifying}
                   </span>
                 </div>
               ) : (
                 <span style={{ fontSize: "16px", fontWeight: "500" }}>
-                  Join the celebration
+                  {labels.submit}
                 </span>
               )}
             </Button>

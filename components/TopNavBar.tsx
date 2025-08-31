@@ -129,7 +129,11 @@ const TopNavBar = ({ language = "EN" }: TopNavBarProps) => {
           <li>
             <Button
               appearance="secondary"
-              onClick={() => signOut({ callbackUrl: "/login" })}
+              onClick={() =>
+                signOut({
+                  callbackUrl: `/login?lang=${language === "ES" ? "es" : "en"}`,
+                })
+              }
               icon={<SignOutRegular />}
               className={styles.signOutButton}
             >
