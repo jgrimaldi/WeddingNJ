@@ -137,7 +137,10 @@ export default function HomePage({}: HomePageProps) {
           <HeroSection
             bgColor="light"
             customComponent={
-              <Timer targetDate={new Date("2026-02-28T14:00:00Z")} />
+              <Timer
+                targetDate={new Date("2026-02-28T14:00:00Z")}
+                language={clientSession?.user?.invitation?.Language}
+              />
             }
           />
           <HeroSection

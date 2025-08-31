@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 type TimerProps = {
   targetDate: Date;
+  language?: 'EN' | 'ES';
 };
 
 interface TimeLeft {
@@ -41,10 +42,14 @@ const useStyles = makeStyles({
   },
 });
 
-const Timer: React.FC<TimerProps> = ({ targetDate }) => {
+const Timer: React.FC<TimerProps> = ({ targetDate, language = 'EN' }) => {
   const styles = useStyles();
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
   const [isClient, setIsClient] = useState(false);
+
+  const labels = language === 'ES'
+    ? { days: 'Días', hours: 'Horas', minutes: 'Minutos', seconds: 'Segundos' }
+    : { days: 'Days', hours: 'Hours', minutes: 'Minutes', seconds: 'Seconds' };
 
   const calculateTimeLeft = (): TimeLeft | null => {
     const difference = +new Date(targetDate) - +new Date();
@@ -80,25 +85,25 @@ const Timer: React.FC<TimerProps> = ({ targetDate }) => {
             <Subtitle2 color="#3D3D3D" className={styles.timerDigit}>
               {timeLeft.days.toString().padStart(3, "0")}
             </Subtitle2>
-            <Body1 className={styles.timerValueLabel}>Days</Body1>
+            <Body1 className={styles.timerValueLabel}>{labels.days}</Body1>
           </div>
           <div className={styles.timerSubContainer}>
             <Subtitle2 className={styles.timerDigit}>
               {timeLeft.hours.toString().padStart(2, "0")}
             </Subtitle2>
-            <Body1 className={styles.timerValueLabel}>Hours</Body1>
+            <Body1 className={styles.timerValueLabel}>{labels.hours}</Body1>
           </div>
           <div className={styles.timerSubContainer}>
             <Subtitle2 className={styles.timerDigit}>
               {timeLeft.minutes.toString().padStart(2, "0")}
             </Subtitle2>
-            <Body1 className={styles.timerValueLabel}>Minutes</Body1>
+            <Body1 className={styles.timerValueLabel}>{labels.minutes}</Body1>
           </div>
           <div className={styles.timerSubContainer}>
             <Subtitle2 className={styles.timerDigit}>
               {timeLeft.seconds.toString().padStart(2, "0")}
             </Subtitle2>
-            <Body1 className={styles.timerValueLabel}>Seconds</Body1>
+            <Body1 className={styles.timerValueLabel}>{labels.seconds}</Body1>
           </div>
         </div>
       ) : (
