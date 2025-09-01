@@ -52,5 +52,23 @@
     "subTime2Label": "Cena",
     "subTime3": "12:00AM",
     "subTime3Label": "Fin"
+  },
+  {
+    "guests": "Remote",
+    "caption": "Post-Boda",
+    "title": "Parrillada y descanso",
+    "location": "Hacienda Los Reyes, La Guácima",
+    "url": "https://maps.app.goo.gl/6tXKPv5C5JtrmJw68",
+    "start": "2026-03-01T12:00:00",
+    "end": "2026-03-01T16:00:00",
+    "attire": "Casual",
+    "description": "Almuerzo y ambiente relajado, perfecto para compartir historias de la boda.",
+    "detailsBackgroundUrl": "/images/ParrilladaWC.png",
+    "subTime1": "12:00PM",
+    "subTime1Label": "Almuerzo",
+    "subTime2": "2:00PM",
+    "subTime2Label": "Plática",
+    "subTime3": "4:00PM",
+    "subTime3Label": "Fin"
   }
 ]

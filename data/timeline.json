@@ -2,7 +2,7 @@
   {
     "guests": "Remote",
     "caption": "Pre-Wedding",
-    "title": "Welcome lunch and tennis",
+    "title": "Welcome brunch and tennis",
     "location": "Santa Ana Country Club, Santa Ana",
     "url": "https://maps.app.goo.gl/7ovn3cyQzrQHtppz8",
     "start": "2026-02-27T09:00:00",
@@ -51,6 +51,24 @@
     "subTime2": "6:00PM",
     "subTime2Label": "Dinner",
     "subTime3": "12:00AM",
+    "subTime3Label": "End"
+  },
+  {
+    "guests": "Remote",
+    "caption": "Lunch & Recharge",
+    "title": "Post-Wedding",
+    "location": "Hacienda Los Reyes, La Guácima",
+    "url": "https://maps.app.goo.gl/6tXKPv5C5JtrmJw68",
+    "start": "2026-03-01T12:00:00",
+    "end": "2026-03-01T16:00:00",
+    "attire": "Formal Attire",
+    "description": "Lunch and chill vibes, perfect for sharing wedding stories.",
+    "detailsBackgroundUrl": "/images/ReceptionWC.png",
+    "subTime1": "12:00PM",
+    "subTime1Label": "Lunch",
+    "subTime2": "2:00PM",
+    "subTime2Label": "Chatting",
+    "subTime3": "4:00PM",
     "subTime3Label": "End"
   }
 ]
