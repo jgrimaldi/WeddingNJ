@@ -40,7 +40,7 @@ const useStyles = makeStyles({
     textAlign: "justify",
   },
   thanksText: {
-    fontSize: "0.5em",
+    fontSize: "0.8em",
   },
   icon: {
     marginRight: "0.4em",
@@ -77,8 +77,8 @@ export default function Footer({ language = "EN", groomWa: groomWaProp, brideWa:
     thanksText: isES
       ? "Nuestro agradecimiento especial a Raul y Yunita por su ayuda en la pagina, quienes indicaron se iba a enojar si no poniamos este mensaje."
       : "Special thanks to Raul and Yunita for their help with the website, who mentioned they would be upset if we didn't include this message.",
-    groom: isES ? "Novio" : "Groom",
-    bride: isES ? "Novia" : "Bride",
+    groom: isES ? "Jorge" : "Jorge",
+    bride: isES ? "Nathy" : "Nathy",
   };
 
   return (

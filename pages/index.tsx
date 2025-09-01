@@ -51,9 +51,9 @@ export default function HomePage({ groomWa, brideWa }: HomePageProps) {
   console.log("Final session found:", clientSession);
 
   const welcomeMessageEN =
-    "We're thrilled to invite you to our wedding. We've created this space to share everything you need to know about our big day.";
+    "We've created this space to share everything you need to know about our big day.";
   const welcomeMessageES =
-    "Estamos emocionados de invitarte a nuestra boda. Hemos creado este espacio para compartir todo lo que necesitas saber sobre nuestro gran día.";
+    "Hemos creado este espacio para compartir todo lo que necesitas saber sobre nuestro gran día.";
   const bannerMessageTextWelcome =
     clientSession?.user?.invitation?.Language === "ES"
       ? welcomeMessageES
@@ -207,13 +207,13 @@ export default function HomePage({ groomWa, brideWa }: HomePageProps) {
                   imageSrc="/images/HotelWatercolor.png"
                   topText={
                     clientSession?.user?.invitation?.Language == "ES"
-                      ? "Vuelos &"
+                      ? "Vuelos y"
                       : "Travel"
                   }
                   bottomText={
                     clientSession?.user?.invitation?.Language == "ES"
                       ? "Hoteles"
-                      : "& Stay"
+                      : "and Stay"
                   }
                   alt="Events preview"
                 />

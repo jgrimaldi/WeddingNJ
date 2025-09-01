@@ -122,10 +122,10 @@ export default function LoginPage() {
   const labels = {
     pageTitle: isES ? "Boda de Nathy y Jorge" : "Nathy & Jorge's Wedding",
     welcomeTitle: isES
-      ? "¡Bienvenido(a) a la boda de Nathalia y Jorge!"
+      ? "¡Bienvenidos a la boda de Nathalia y Jorge!"
       : "Welcome to Nathalia & Jorge's wedding!",
     intro: isES
-      ? "¡Estamos muy felices de que estés aquí! Por favor, ingresa tu código para ver todos los detalles de la boda y un mensaje especial hecho para ti."
+      ? "¡Estamos muy felices de que estén aquí! Por favor, ingresa tu código para ver todos los detalles de la boda y un mensaje especial hecho para ti."
       : "We're so happy you're here! Please enter your code below to unlock all the wedding details - and a heartfelt message made just for you.",
     accessPlaceholder: isES
       ? "Ingresa tu código"
@@ -213,12 +213,9 @@ export default function LoginPage() {
             <Image
               src="/logos/nj-logo-black.svg"
               alt="Wedding Logo"
-              width={240}
-              height={96}
+              width={300}
+              height={120}
               style={{
-                width: "clamp(100px, 40vw, 200px)",
-                height: "auto",
-                maxWidth: "100%",
                 filter:
                   "brightness(0) saturate(100%) invert(22%) sepia(19%) saturate(0%) hue-rotate(140deg) brightness(104%) contrast(100%)",
                 paddingBottom: "2vh",

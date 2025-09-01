@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     zIndex: 2,
   },
   text: {
-    fontFamily: "Segoe UI",
+    fontFamily: "Playfair Display",
     color: "#3D3D3D",
     fontWeight: 600,
     lineHeight: 1,
