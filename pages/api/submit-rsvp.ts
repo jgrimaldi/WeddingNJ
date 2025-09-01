@@ -48,7 +48,6 @@ export default async function handler(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Secret-Key': GOOGLE_APPS_SCRIPT_SECRET,
       },
       body: JSON.stringify({
         timestamp: new Date().toISOString(),
@@ -60,7 +59,9 @@ export default async function handler(
           dietaryNotes: guest.note || ''
         })),
         // Add request origin for additional verification
-        origin: req.headers.origin || 'unknown'
+        origin: req.headers.origin || 'unknown',
+        // Send secret key in the body instead of headers
+        secretKey: GOOGLE_APPS_SCRIPT_SECRET
       }),
     });
 
