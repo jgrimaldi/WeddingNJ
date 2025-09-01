@@ -255,6 +255,13 @@ export default function RsvpForm({
         note: (dietaryNotes[gi] || "").trim() || undefined,
       };
     });
+
+    const submissionData = {
+      guestResponses: list,
+      extras: { requireTransportation, email },
+    };
+    console.log("RSVP Form Submission:", submissionData);
+
     setLoading(true);
     try {
       onSubmit?.(list, { requireTransportation, email });
@@ -308,51 +315,44 @@ export default function RsvpForm({
                 {g.Name}
               </span>
             </div>
-            <Field
-              label={
-                <Label className={styles.label}>
-                  {labels.selectAllAttending}
-                </Label>
-              }
-              style={{ marginTop: "0.5em" }}
-              validationState={
-                showErrors &&
-                !notAttending[idx] &&
-                Object.values(responses[idx] || {}).every((v) => !v)
-                  ? "error"
-                  : undefined
-              }
-              validationMessage={
-                showErrors &&
-                !notAttending[idx] &&
-                Object.values(responses[idx] || {}).every((v) => !v)
-                  ? labels.atLeastOne
-                  : undefined
-              }
-            >
-              <div className={styles.row}>
+            <div style={{ marginTop: "0.5em" }}>
+              <Field>
                 <Checkbox
                   checked={!!notAttending[idx]}
                   label={labels.notAttending}
                   onChange={() => toggleNotAttending(idx)}
                 />
-              </div>
+              </Field>
+            </div>
+            
+            <div style={{ marginTop: "0.75em" }}>
+              <Label className={styles.label} style={{ marginBottom: "0.5em", display: "block" }}>
+                {labels.selectAllAttending}
+              </Label>
+              {showErrors &&
+                !notAttending[idx] &&
+                Object.values(responses[idx] || {}).every((v) => !v) && (
+                <div style={{ color: "#D13438", fontSize: "12px", marginBottom: "0.5em" }}>
+                  {labels.atLeastOne}
+                </div>
+              )}
               <div className={styles.row}>
                 {events.map((ev) => {
                   const key = eventKey(ev);
                   const checked = !!responses[idx]?.[key];
                   return (
-                    <Checkbox
-                      key={`${key}-${idx}`}
-                      checked={checked}
-                      disabled={!!notAttending[idx]}
-                      label={ev.title}
-                      onChange={() => toggleEvent(idx, key)}
-                    />
+                    <Field key={`${key}-${idx}`}>
+                      <Checkbox
+                        checked={checked}
+                        disabled={!!notAttending[idx]}
+                        label={ev.title}
+                        onChange={() => toggleEvent(idx, key)}
+                      />
+                    </Field>
                   );
                 })}
               </div>
-            </Field>
+            </div>
             <Field
               label={
                 <Label className={styles.label}>{labels.dietaryLabel}</Label>
