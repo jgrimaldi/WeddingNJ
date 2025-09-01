@@ -123,8 +123,11 @@ const HotelList = ({ residency, language = "EN" }: HotelListProps) => {
       : "There are 2 international airports in Costa Rica, SJO and LIR. The closest one to the wedding is SJO, and getting from there to hotels in Alajuela, San Jose, or Heredia is very easy with a taxi, Uber, or shuttle. LIR is located in Guanacaste and it's perfect for those who want to tour the country's beaches, but it requires coordinating transportation to the capital. Car rentals or domestic flights are options to consider.",
     domesticFlight: isES
       ? "Los vuelos nacionales en Costa Rica son operados principalmente por Sansa."
-      : "Domestic flights in Costa Rica are mainly operated by Sansa and Skyway. These flights connect San José with destinations like Liberia, Tamarindo, and Quepos, making it easy to reach various beaches and tourist attractions."
-    } as const;
+      : "Domestic flights in Costa Rica are mainly operated by Sansa.",
+    domesticFlightLink: isES
+      ? "Has click aqui para ir a la página de Sansa."
+      : "Click here to go to Sansa's website.",
+  } as const;
 
   return (
     <>
@@ -232,8 +235,15 @@ const HotelList = ({ residency, language = "EN" }: HotelListProps) => {
             </div>
           </div>
         </div>
-        <Body1>{labels.flightsText}</Body1>
-
+        <Body1>{labels.domesticFlight}</Body1>
+        <Link
+          className={styles.locationText}
+          href={`https://flysansa.com/`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {labels.domesticFlightLink}
+        </Link>
       </div>
     </>
   );
