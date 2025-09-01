@@ -214,7 +214,7 @@ export default function RsvpForm({
   });
   const eventKey = (e: TimelineItem) => `${e.title}-${e.start}`;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Validate email first
     const emailOk = isEmailValid(email);
@@ -263,14 +263,34 @@ export default function RsvpForm({
     console.log("RSVP Form Submission:", submissionData);
 
     setLoading(true);
+    
     try {
+      // Call the parent onSubmit if provided (for custom handling)
       onSubmit?.(list, { requireTransportation, email });
+      
+      // Submit to our API
+      const response = await fetch('/api/submit-rsvp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submissionData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Submission failed');
+      }
+
+      console.log('RSVP submitted successfully');
+      setSubmitted(true);
+    } catch (error) {
+      console.error('RSVP submission error:', error);
+      // You might want to show an error state here
+      alert('Failed to submit RSVP. Please try again or contact us directly.');
     } finally {
-      // Simulate 4s loading, then show success
-      setTimeout(() => {
-        setLoading(false);
-        setSubmitted(true);
-      }, 4000);
+      setLoading(false);
     }
   };
 
