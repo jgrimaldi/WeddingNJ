@@ -84,7 +84,7 @@ export default function HomePage({ groomWa, brideWa }: HomePageProps) {
       : rsvpMessageEN;
   const rsvpDateTextEN = "Kindly respond by December 1st, 2025.";
   const rsvpDateTextES =
-    "De ser posible, responde antes del 1ero de Diciembre del 2025.";
+    "Agradecemos confirmar asistencia antes del 1ero de Diciembre del 2025.";
   const bannerDateTextRsvp =
     clientSession?.user?.invitation?.Language === "ES"
       ? rsvpDateTextES

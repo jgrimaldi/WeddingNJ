@@ -157,9 +157,9 @@ const HotelListItem = ({
             </Link>
           </div>
           <Body1 className={styles.rowPadding}>
-            <strong>{labels.ceremony}:</strong> {ceremonyCompare} ·{" "}
-            <strong>{labels.reception}:</strong> {receptionCompare} ·{" "}
-            <strong>{labels.airport}:</strong> {airportCompare}
+            • <strong>{labels.ceremony}:</strong> {ceremonyCompare}
+            {<br></br>}• <strong>{labels.reception}:</strong> {receptionCompare}
+            {<br></br>}• <strong>{labels.airport}:</strong> {airportCompare}
           </Body1>
           <div
             className={mergeClasses(
@@ -168,20 +168,40 @@ const HotelListItem = ({
             )}
           >
             <Body1>
-              <strong>{labels.shuttle}:</strong>{" "}
-              {offerShuttle ? labels.yes : labels.no} •{" "}
-              <strong>{labels.price}:</strong> {priceRangePerNight} •{" "}
-              <strong>{labels.website}:</strong>{" "}
-              {(() => {
-                try {
-                  const url = new URL(
-                    website.startsWith("http") ? website : `https://${website}`
-                  );
-                  return url.hostname.replace("www.", "");
-                } catch {
-                  return website;
-                }
-              })()}
+              • <strong>{labels.shuttle}:</strong>{" "}
+              {offerShuttle ? labels.yes : labels.no}
+              {<br></br>}• <strong>{labels.price}:</strong> {priceRangePerNight}
+              {<br></br>}• <strong>{labels.website}:</strong>{" "}
+              <Link
+                className={styles.locationText}
+                href={(() => {
+                  try {
+                    const url = new URL(
+                      website.startsWith("http")
+                        ? website
+                        : `https://${website}`
+                    );
+                    return url.hostname.replace("www.", "");
+                  } catch {
+                    return website;
+                  }
+                })()}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {(() => {
+                  try {
+                    const url = new URL(
+                      website.startsWith("http")
+                        ? website
+                        : `https://${website}`
+                    );
+                    return url.hostname.replace("www.", "");
+                  } catch {
+                    return website;
+                  }
+                })()}
+              </Link>
             </Body1>
           </div>
           {review && (
