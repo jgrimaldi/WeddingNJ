@@ -73,7 +73,22 @@ export default function HomePage({ groomWa, brideWa }: HomePageProps) {
     clientSession?.user?.invitation?.Language === "ES"
       ? hotelMessageLinkES
       : hotelMessageLinkEN;
-
+  const dressCodeMessageEN =
+    "Our dress code for the wedding is formal attire—think suits, tuxedos, gowns, or cocktail dresses. We only ask for women to avoid wearing either black or white. Guys, feel free to use any color.";
+  const dressCodeMessageES =
+    "Nuestro código de vestimenta para la boda es formal: piensa en trajes, esmoquin, vestidos de gala o vestidos de cóctel. Solo pedimos a las mujeres que eviten usar negro o blanco. Hombres, siéntanse libres de usar cualquier color.";
+  const dressCodeMessageText =
+    clientSession?.user?.invitation?.Language === "ES"
+      ? dressCodeMessageES
+      : dressCodeMessageEN;
+  const giftsMessageEN =
+    "We know that attending a wedding isn’t always easy. Many of you have traveled great distances, taken time from your busy lives, and gone the extra mile to look your best and be here with us. That effort, that love, and that intention to celebrate alongside us—that is truly priceless and the best gift we can receive.";
+  const giftsMessageES =
+    "Sabemos que asistir a una boda no siempre es fácil. Muchos de ustedes han viajado grandes distancias, han tomado tiempo de sus vidas ocupadas y han hecho un esfuerzo adicional para lucir lo mejor posible y estar aquí con nosotros. Ese esfuerzo, ese amor y esa intención de celebrar junto a nosotros son verdaderamente invaluables y el mejor regalo que podemos recibir.";
+  const giftsMessageText =
+    clientSession?.user?.invitation?.Language === "ES"
+      ? giftsMessageES
+      : giftsMessageEN;
   const rsvpMessageEN =
     "Please help us by using the RSVP form to confirm your attendance.";
   const rsvpMessageES =
@@ -231,6 +246,62 @@ export default function HomePage({ groomWa, brideWa }: HomePageProps) {
               }
             />
           )}
+
+          <HeroSection
+            bgColor="light"
+            customComponent={
+              <BannerSubtitle
+                imageSrc="/images/WeddingAttireWC.png"
+                topText={
+                  clientSession?.user?.invitation?.Language == "ES"
+                    ? "Código de"
+                    : "Dress Code"
+                }
+                bottomText={
+                  clientSession?.user?.invitation?.Language == "ES"
+                    ? "Vestimenta"
+                    : ""
+                }
+                alt="Events preview"
+              />
+            }
+          />
+          <HeroSection
+            bgColor="light"
+            customComponent={
+              <div>
+                <BannerMessage text={dressCodeMessageText} />
+              </div>
+            }
+          />
+
+          <HeroSection
+            bgColor="light"
+            customComponent={
+              <BannerSubtitle
+                imageSrc="/images/WeddingGiftWC.png"
+                topText={
+                  clientSession?.user?.invitation?.Language == "ES"
+                    ? "Regalos"
+                    : "Wedding"
+                }
+                bottomText={
+                  clientSession?.user?.invitation?.Language == "ES"
+                    ? ""
+                    : "Gifts"
+                }
+                alt="Events preview"
+              />
+            }
+          />
+          <HeroSection
+            bgColor="light"
+            customComponent={
+              <div>
+                <BannerMessage text={giftsMessageText} />
+              </div>
+            }
+          />
 
           <HeroSection
             bgColor="light"

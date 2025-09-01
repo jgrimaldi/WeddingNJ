@@ -21,14 +21,14 @@ const useStyles = makeStyles({
     color: "#3D3D3D",
     fontWeight: 600,
     lineHeight: 1,
-    fontSize: "3.5em",
+    fontSize: "3.3em",
     letterSpacing: "0.1em",
     textTransform: "uppercase",
     textAlign: "center",
   },
   bottomTextWrapper: {
     transform: "translate(2%, -40%)",
-    zIndex: 2,
+    zIndex: 2,    
   },
 });
 

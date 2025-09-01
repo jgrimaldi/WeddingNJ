@@ -97,7 +97,7 @@ const useStyles = makeStyles({
     backgroundSize: "cover",
     borderTopRightRadius: "10em",
     borderBottomRightRadius: "10em",
-    filter: "grayscale(80%)",
+    filter: "grayscale(90%)",
     height: "6em",
     marginLeft: "-4em",
     gap: "1em",
