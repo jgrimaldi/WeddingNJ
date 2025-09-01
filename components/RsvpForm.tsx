@@ -26,7 +26,10 @@ export interface GuestResponse {
 
 type RsvpFormProps = {
   guests: User[];
-  onSubmit?: (responses: GuestResponse[]) => void;
+  onSubmit?: (
+    responses: GuestResponse[],
+    extras?: { requireTransportation?: boolean; email: string }
+  ) => void;
   language?: Language; // 'EN' | 'ES'
   residency?: Invitation["Residency"]; // 'Local' | 'Remote'
 };
@@ -89,12 +92,20 @@ export default function RsvpForm({
   const isES = language === "ES";
   const labels = {
     eventsFor: isES ? "Eventos —" : "Events —",
-    atLeastOne: isES ? "Selecciona al menos un evento" : "Please select at least one event",
-  selectAllAttending: isES ? "Selecciona todos los eventos que asistirás" : "Select all you'll be attending",
-  notAttending: isES ? "No podré asistir" : "Won't be able to attend",
-    email: isES ? "Correo electrónico para confirmación" : "Email for confirmation",
+    atLeastOne: isES
+      ? "Selecciona al menos un evento"
+      : "Please select at least one event",
+    selectAllAttending: isES
+      ? "Selecciona todos los eventos que asistirás"
+      : "Select all you'll be attending",
+    notAttending: isES ? "No podré asistir" : "Won't be able to attend",
+    email: isES
+      ? "Correo electrónico para confirmación"
+      : "Email for confirmation",
     emailPlaceholder: isES ? "tucorreo@ejemplo.com" : "you@example.com",
-    emailRequired: isES ? "Ingresa un correo válido" : "Please enter a valid email",
+    emailRequired: isES
+      ? "Ingresa un correo válido"
+      : "Please enter a valid email",
     submit: isES ? "Enviar confirmación" : "Submit RSVP",
     empty: isES ? "No hay invitados para confirmar." : "No guests to RSVP.",
     updateNote: isES
@@ -111,6 +122,9 @@ export default function RsvpForm({
     dietaryPlaceholder: isES
       ? "Ej.: vegetariano, sin gluten, alergia a nueces"
       : "E.g., vegetarian, gluten-free, nut allergy",
+    transportation: isES
+      ? "Necesitan transporte el día de la boda?"
+      : "Will you need transportation on the wedding day?",
   } as const;
 
   const [responses, setResponses] = React.useState<
@@ -119,10 +133,15 @@ export default function RsvpForm({
 
   React.useEffect(() => {
     // Reset when guests or residency/language change
-  setResponses((guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: {} }), {}));
+    setResponses(
+      (guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: {} }), {})
+    );
     setShowErrors(false);
     setSubmitted(false);
-  setDietaryNotes((guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: "" }), {}));
+    setDietaryNotes(
+      (guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: "" }), {})
+    );
+    setRequireTransportation(false);
   }, [guests, residency, language]);
 
   // Track if user attempted to submit to show validation messages
@@ -133,12 +152,16 @@ export default function RsvpForm({
   const guestRefs = React.useRef<(HTMLElement | null)[]>([]);
   const emailRef = React.useRef<HTMLDivElement | null>(null);
   const [email, setEmail] = React.useState("");
-  const [notAttending, setNotAttending] = React.useState<Record<number, boolean>>(
-    () => (guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: false }), {})
+  const [requireTransportation, setRequireTransportation] =
+    React.useState<boolean>(false);
+  const [notAttending, setNotAttending] = React.useState<
+    Record<number, boolean>
+  >(() =>
+    (guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: false }), {})
   );
-  const [dietaryNotes, setDietaryNotes] = React.useState<Record<number, string>>(
-    () => (guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: "" }), {})
-  );
+  const [dietaryNotes, setDietaryNotes] = React.useState<
+    Record<number, string>
+  >(() => (guests || []).reduce((acc, _g, idx) => ({ ...acc, [idx]: "" }), {}));
 
   const isEmailValid = (value: string) => {
     // Basic email validation
@@ -152,7 +175,10 @@ export default function RsvpForm({
     setNotAttending((prev) => ({ ...prev, [guestIndex]: false }));
     setResponses((prev) => ({
       ...prev,
-      [guestIndex]: { ...prev[guestIndex], [eventKey]: !prev[guestIndex]?.[eventKey] },
+      [guestIndex]: {
+        ...prev[guestIndex],
+        [eventKey]: !prev[guestIndex]?.[eventKey],
+      },
     }));
   };
 
@@ -171,8 +197,15 @@ export default function RsvpForm({
   // Notes omitted in this layout; can be reintroduced per guest or per event if needed
 
   // Build event list based on language and residency (like Timeline.tsx)
-  type TimelineItem = { title: string; start: string; end?: string; guests?: string };
-  const src = (language === "ES" ? timelineEs : timelineEn) as Array<TimelineItem>;
+  type TimelineItem = {
+    title: string;
+    start: string;
+    end?: string;
+    guests?: string;
+  };
+  const src = (
+    language === "ES" ? timelineEs : timelineEn
+  ) as Array<TimelineItem>;
   const normalizedResidency = residency?.toLowerCase();
   const events = src.filter((item) => {
     const g = String(item.guests || "All").toLowerCase();
@@ -214,17 +247,17 @@ export default function RsvpForm({
     }
 
     // Build submission list per guest with selected events
-  const list: GuestResponse[] = (guests || []).map((g, gi) => {
+    const list: GuestResponse[] = (guests || []).map((g, gi) => {
       const selections = responses[gi] || {};
       return {
         name: g.Name,
         selectedEvents: Object.keys(selections).filter((k) => !!selections[k]),
-    note: (dietaryNotes[gi] || "").trim() || undefined,
+        note: (dietaryNotes[gi] || "").trim() || undefined,
       };
     });
     setLoading(true);
     try {
-      onSubmit?.(list);
+      onSubmit?.(list, { requireTransportation, email });
     } finally {
       // Simulate 4s loading, then show success
       setTimeout(() => {
@@ -271,18 +304,28 @@ export default function RsvpForm({
             }}
           >
             <div className={styles.row}>
-              <span className={mergeClasses(styles.label, styles.nameLabel)}>{g.Name}</span>
+              <span className={mergeClasses(styles.label, styles.nameLabel)}>
+                {g.Name}
+              </span>
             </div>
             <Field
-              label={<Label className={styles.label}>{labels.selectAllAttending}</Label>}
+              label={
+                <Label className={styles.label}>
+                  {labels.selectAllAttending}
+                </Label>
+              }
               style={{ marginTop: "0.5em" }}
               validationState={
-                showErrors && !notAttending[idx] && Object.values(responses[idx] || {}).every((v) => !v)
+                showErrors &&
+                !notAttending[idx] &&
+                Object.values(responses[idx] || {}).every((v) => !v)
                   ? "error"
                   : undefined
               }
               validationMessage={
-                showErrors && !notAttending[idx] && Object.values(responses[idx] || {}).every((v) => !v)
+                showErrors &&
+                !notAttending[idx] &&
+                Object.values(responses[idx] || {}).every((v) => !v)
                   ? labels.atLeastOne
                   : undefined
               }
@@ -311,7 +354,9 @@ export default function RsvpForm({
               </div>
             </Field>
             <Field
-              label={<Label className={styles.label}>{labels.dietaryLabel}</Label>}
+              label={
+                <Label className={styles.label}>{labels.dietaryLabel}</Label>
+              }
               style={{ marginTop: "0.5em" }}
             >
               <Textarea
@@ -325,7 +370,15 @@ export default function RsvpForm({
             </Field>
           </section>
         ))}
-        
+        {residency === "Remote" && (
+          <div style={{ marginTop: "0.75em" }}>
+            <Checkbox
+              checked={requireTransportation}
+              onChange={(_, data) => setRequireTransportation(!!data.checked)}
+              label={labels.transportation}
+            />
+          </div>
+        )}
       </Card>
       <Caption1 className={styles.hint} role="note">
         {labels.updateNote}

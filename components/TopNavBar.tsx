@@ -3,8 +3,6 @@ import {
   Button,
   makeStyles,
   NavItem,
-  Tab,
-  TabList,
 } from "@fluentui/react-components";
 import {
   Dismiss24Regular,
