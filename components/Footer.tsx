@@ -71,8 +71,8 @@ export default function Footer({ language = "EN", groomWa: groomWaProp, brideWa:
   const labels = {
     questionsTitle: isES ? "Preguntas" : "Questions",
     contactLine: isES
-      ? "Para cualquier consulta, por favor contacta a la familia del novio o de la novia:"
-      : "For any questions, please reach out to the groom or bride's family:",
+      ? "Para cualquier consulta o problema, no dudes en contactarnos:"
+      : "For any questions or issues, please do not hesitate to reach out:",
     thanksTitle: isES ? "Agradecimientos" : "Special thanks",
     thanksText: isES
       ? "Nuestro agradecimiento especial a Raul y Yunita por su ayuda en la pagina, quienes indicaron se iba a enojar si no poniamos este mensaje."
