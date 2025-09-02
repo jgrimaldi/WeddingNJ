@@ -23,7 +23,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Manolo", "Gender": "male"},
       {"Name": "Luz Mery", "Gender": "female"}
     ],
-    "CustomGreet": "A una familia sumamente especial, La Familia Merino, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A una familia sumamente especial con quienes hemos compartido tanto, la Familia Merino, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "AMI235": {
     "Language": "ES",
