@@ -33,9 +33,21 @@ export default function HotelsPage({ groomWa, brideWa }: HotelsPageProps) {
         <title>{pageTitle}</title>
         <meta name="description" content="Recommended hotels and travel information." />
       </Head>
-      <div style={{ minHeight: "100vh", backgroundColor: "var(--fluent-grey-10)" }}>
+      <div style={{ backgroundColor: "var(--fluent-grey-10)" }}>
         <TopNavBar language={lang} />
-        <div style={{ marginTop: "3em", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        
+        {/* Main Content Area */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            maxWidth: "500px",
+            width: "100%",
+            margin: "0 auto",
+            marginTop: "3em", // Add back the top margin for fixed navbar
+          }}
+        >
           <HeroSection
             bgColor="light"
             customComponent={
