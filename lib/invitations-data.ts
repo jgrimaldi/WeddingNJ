@@ -295,6 +295,26 @@ export const INVITATIONS_DATA: InvitationsByCode = {
     ],
     "CustomGreet": "A una queridisima prima, Maria Jose, nos da mucha alegría poder invitarte a nuestra boda. Esperamos puedas acompañarnos en este nuevo capítulo de nuestras vidas."
   },
+  "FZN734": {
+    "Language": "EN",
+    "Residency": "Remote",
+    "Guests": [
+      {"Name": "Tio Mario", "Gender": "male"},
+      {"Name": "Tia Vanessa", "Gender": "female"},
+      {"Name": "Mario", "Gender": "male"},
+      {"Name": "Vanessa", "Gender": "female"}
+    ],
+    "CustomGreet": "To 4 wonderful people we love dearly, Tio Mario, Tia Vanessa, Mario, and Vanessa, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
+  },
+  "FNH268": {
+    "Language": "EN",
+    "Residency": "Remote",
+    "Guests": [
+      {"Name": "Tio Carlo", "Gender": "male"},
+      {"Name": "Tia Astrid", "Gender": "female"},
+    ],
+    "CustomGreet": "To 2 wonderful people we love dearly, Tio Carlo and Tia Astrid, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
+  },
   "FHO283": {
     "Language": "ES",
     "Residency": "Local",
