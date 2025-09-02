@@ -75,7 +75,7 @@ export default function Footer({ language = "EN", groomWa: groomWaProp, brideWa:
       : "For any questions or issues, please do not hesitate to reach out:",
     thanksTitle: isES ? "Agradecimientos" : "Special thanks",
     thanksText: isES
-      ? "Nuestro agradecimiento especial a Raul y Yunita por su ayuda en la pagina, quienes indicaron se iba a enojar si no poniamos este mensaje."
+      ? "Nuestro agradecimiento especial a Raul y Yunita por su ayuda en la pagina, quienes indicaron se iban a enojar si no poniamos este mensaje."
       : "Special thanks to Raul and Yunita for their help with the website, who mentioned they would be upset if we didn't include this message.",
     groom: isES ? "Jorge" : "Jorge",
     bride: isES ? "Nathy" : "Nathy",
