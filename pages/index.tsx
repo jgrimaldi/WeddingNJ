@@ -28,9 +28,6 @@ const useStyles = makeStyles({
   nav: {
     display: "flex",
   },
-  mainContent: {
-    marginTop: "3em", // Navbar height is ~3em, so add some margin to avoid overlap
-  },
 });
 
 export default function HomePage({ groomWa, brideWa }: HomePageProps) {
@@ -135,21 +132,23 @@ export default function HomePage({ groomWa, brideWa }: HomePageProps) {
 
       <div
         style={{
-          minHeight: "100vh",
           backgroundColor: "var(--fluent-grey-10)",
         }}
       >
         <TopNavBar
           language={clientSession?.user?.invitation?.Language as "EN" | "ES"}
         />
-
+        
         {/* Main Content Area */}
         <div
-          className={styles.mainContent}
           style={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            maxWidth: "500px",
+            width: "100%",
+            margin: "0 auto",
+            marginTop: "3em", // Add back the top margin for fixed navbar
           }}
         >
           <HeroSection bgColor="light" customComponent={<BannerImage />} />

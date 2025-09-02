@@ -99,7 +99,6 @@ const TopNavBar = ({ language = "EN" }: TopNavBarProps) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          maxWidth: "100vw",
         }}
       >
         <Image
