@@ -14,19 +14,27 @@ const useStyles = makeStyles({
     lineHeight: "1.3em",
     fontWeight: 700,
   },
+  boldText: {
+    fontFamily: "Segoe UI Light",
+    fontSize: "1.2em",
+    textAlign: "center",
+    fontWeight: 600,
+  },
 });
 
 type BannerMessageProps = {
-  text: string;
+  text?: string;
+  boldText?: string;
 };
 
-const BannerSubmessage = ({ text }: BannerMessageProps) => {
+const BannerSubmessage = ({ text, boldText }: BannerMessageProps) => {
   const styles = useStyles();
 
   return (
     <>
       <div className={styles.mainContainer}>
         <Body1 className={styles.sophisticatedText}>{text}</Body1>
+        <Body1 className={styles.boldText}>{boldText}</Body1>
       </div>
     </>
   );

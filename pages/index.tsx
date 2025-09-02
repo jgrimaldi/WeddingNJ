@@ -74,17 +74,33 @@ export default function HomePage({ groomWa, brideWa }: HomePageProps) {
       ? hotelMessageLinkES
       : hotelMessageLinkEN;
   const dressCodeMessageEN =
-    "Our dress code for the wedding is formal attire—think suits, tuxedos, gowns, or cocktail dresses. We only ask for women to avoid wearing either black or white. Guys, feel free to use any color.";
+    "Our dress code for the wedding is formal attire—think suits, tuxedos, gowns, or cocktail dresses.";
   const dressCodeMessageES =
-    "Nuestro código de vestimenta para la boda es formal: piensa en trajes, esmoquin, vestidos de gala o vestidos de cóctel. Solo pedimos a las mujeres que eviten usar negro o blanco. Hombres, siéntanse libres de usar cualquier color.";
+    "Nuestro código de vestimenta para la boda es formal: piensa en trajes, esmoquin, vestidos de gala o vestidos de cóctel.";
   const dressCodeMessageText =
     clientSession?.user?.invitation?.Language === "ES"
       ? dressCodeMessageES
       : dressCodeMessageEN;
+  const dressCodeMessageBoldEN =
+    "We only ask for women to avoid wearing either black or white.";
+  const dressCodeMessageBoldES =
+    "Solo pedimos a las mujeres que eviten usar negro o blanco.";
+  const dressCodeMessageBoldText =
+    clientSession?.user?.invitation?.Language === "ES"
+      ? dressCodeMessageBoldES
+      : dressCodeMessageBoldEN;
+  const dressCodeMessageMenEN =
+    "Guys, feel free to use any color.";
+  const dressCodeMessageMenES =
+    "Hombres, siéntanse libres de usar cualquier color.";
+  const dressCodeMessageMenText =
+    clientSession?.user?.invitation?.Language === "ES"
+      ? dressCodeMessageMenES
+      : dressCodeMessageMenEN;
   const giftsMessageEN =
-    "We know that attending a wedding isn’t always easy. Many of you have traveled great distances, taken time from your busy lives, and gone the extra mile to look your best and be here with us. That effort, that love, and that intention to celebrate alongside us—that is truly priceless and the best gift we can receive.";
+    "Your presence is the greatest gift we could ask for. For those who still want to contribute, we have set up a cash fund for our honeymoon. A small box will be available at the reception to receive any contributions.";
   const giftsMessageES =
-    "Sabemos que asistir a una boda no siempre es fácil. Muchos de ustedes han viajado grandes distancias, han tomado tiempo de sus vidas ocupadas y han hecho un esfuerzo adicional para lucir lo mejor posible y estar aquí con nosotros. Ese esfuerzo, ese amor y esa intención de celebrar junto a nosotros son verdaderamente invaluables y el mejor regalo que podemos recibir.";
+    "Tu presencia es el mejor regalo que podríamos pedir. Para quienes aún deseen contribuir, hemos establecido un fondo en efectivo para nuestra luna de miel. Se dispondrá de una pequeña caja en la recepción para recibir cualquier contribución.";
   const giftsMessageText =
     clientSession?.user?.invitation?.Language === "ES"
       ? giftsMessageES
@@ -271,6 +287,8 @@ export default function HomePage({ groomWa, brideWa }: HomePageProps) {
             customComponent={
               <div>
                 <BannerMessage text={dressCodeMessageText} />
+                <BannerSubmessage boldText={dressCodeMessageBoldText} />
+                <BannerSubmessage boldText={dressCodeMessageMenText} />
               </div>
             }
           />

@@ -50,8 +50,8 @@ const Timeline = ({ residency, language = "EN" }: TimelineProps) => {
     : "Wedding Day";
   const dateText = isRemote
     ? language === "ES"
-      ? "Vie 27 Feb - Dom 1 Mar"
-      : "Fri Feb 27 - Sun Mar 1"
+      ? "Vie 27 Feb - Sab 28 Feb"
+      : "Fri Feb 27 - Sat Feb 28"
     : language === "ES"
       ? "Sab 28 Feb"
       : "Sat Feb 28";

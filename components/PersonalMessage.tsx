@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   },
   sophisticatedText: {
     fontFamily: "Segoe UI Light",
-    fontSize: "1.4em",
+    fontSize: "1.2em",
     textAlign: "center",
     lineHeight: "1.3em",
   },
