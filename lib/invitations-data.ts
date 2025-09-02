@@ -551,15 +551,15 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Gaby", "Gender": "female"},
       {"Name": "Vincent", "Gender": "male"},
     ],
-    "CustomGreet": "A unos amigos muy especiales, Gaby y Vincent, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A mi muchachón favorito y a su futura esposa, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FAC439": {
     "Language": "ES",
     "Residency": "Local",
     "Guests": [
-      {"Name": "Fabian", "Gender": "male"},
+      {"Name": "Luis Fabian", "Gender": "male"},
     ],
-    "CustomGreet": "A un amigo muy especial, Fabian, nos da mucha alegría poder invitarte a nuestra boda. Esperamos puedas acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A un amigo muy especial, Luis Fabian, nos da mucha alegría poder invitarte a nuestra boda. Esperamos puedas acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FAC791": {
     "Language": "ES",
@@ -573,10 +573,10 @@ export const INVITATIONS_DATA: InvitationsByCode = {
     "Language": "ES",
     "Residency": "Local",
     "Guests": [
-      {"Name": "Nati", "Gender": "female"},
+      {"Name": "Naty", "Gender": "female"},
       {"Name": "Jose", "Gender": "male"},
     ],
-    "CustomGreet": "A unos amigos muy especiales, Nati y Jose, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A mi tocalla favorita y a su futuro esposo, Naty y Jose, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FAC648": {
     "Language": "ES",
@@ -584,7 +584,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
     "Guests": [
       {"Name": "Shar", "Gender": "female"},
     ],
-    "CustomGreet": "A una amiga muy especial, Shar, nos da mucha alegría poder invitarte a nuestra boda. Esperamos puedas acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A mi macha favorita, Shar, nos da mucha alegría poder invitarte a nuestra boda. Esperamos puedas acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FAC975": {
     "Language": "ES",
@@ -600,7 +600,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
     "Guests": [
       {"Name": "Marisela", "Gender": "female"},
     ],
-    "CustomGreet": "A una amiga y jefa muy especial, Marisela, nos da mucha alegría poder invitarte a nuestra boda. Esperamos puedas acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A la mejor jefa y una gran amiga, Marisela, nos da mucha alegría poder invitarte a nuestra boda. Esperamos puedas acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FAC384": {
     "Language": "ES",
