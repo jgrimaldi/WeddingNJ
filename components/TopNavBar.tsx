@@ -158,9 +158,9 @@ const TopNavBar = ({ language = "EN" }: TopNavBarProps) => {
           </NavItem>
         </div>
         
-        <div className={styles.adminMenuText}>
+        {/* <div className={styles.adminMenuText}>
           <span>{adminMenuText}</span>
-        </div>
+        </div> */}
         <Button
           appearance="secondary"
           onClick={() =>

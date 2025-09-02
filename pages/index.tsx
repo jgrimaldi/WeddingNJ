@@ -145,7 +145,7 @@ export default function HomePage({ groomWa, brideWa }: HomePageProps) {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            maxWidth: "500px",
+            maxWidth: "400px",
             width: "100%",
             margin: "0 auto",
             marginTop: "3em", // Add back the top margin for fixed navbar
