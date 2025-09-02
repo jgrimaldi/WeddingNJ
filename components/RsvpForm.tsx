@@ -115,7 +115,7 @@ export default function RsvpForm({
     submittingAria: isES ? "Enviando confirmación" : "Submitting RSVP",
     success: isES
       ? "¡Gracias! Tu confirmación fue enviada. Recibirás un correo de confirmación pronto en aprox 1-2h."
-      : "Thanks! Your RSVP was sent. You'll receive a confirmation email aprox shortly after 1-2h.",
+      : "Thanks! Your RSVP was sent. You'll receive a confirmation email shortly after aprox 1-2h.",
     dietaryLabel: isES
       ? "Restricciones alimenticias o alergias"
       : "Dietary restrictions or allergies",
