@@ -137,6 +137,7 @@ export default function HomePage({ groomWa, brideWa }: HomePageProps) {
       >
         <TopNavBar
           language={clientSession?.user?.invitation?.Language as "EN" | "ES"}
+          residency={clientSession?.user?.invitation?.Residency as "Local" | "Remote"}
         />
         
         {/* Main Content Area */}

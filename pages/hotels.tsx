@@ -34,7 +34,10 @@ export default function HotelsPage({ groomWa, brideWa }: HotelsPageProps) {
         <meta name="description" content="Recommended hotels and travel information." />
       </Head>
       <div style={{ backgroundColor: "var(--fluent-grey-10)" }}>
-        <TopNavBar language={lang} />
+        <TopNavBar 
+          language={lang} 
+          residency={clientSession?.user?.invitation?.Residency as "Local" | "Remote"}
+        />
         
         {/* Main Content Area */}
         <div

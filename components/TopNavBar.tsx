@@ -60,9 +60,10 @@ const useStyles = makeStyles({
 
 type TopNavBarProps = {
   language?: "EN" | "ES";
+  residency?: "Local" | "Remote";
 };
 
-const TopNavBar = ({ language = "EN" }: TopNavBarProps) => {
+const TopNavBar = ({ language = "EN", residency }: TopNavBarProps) => {
   const [open, setOpen] = useState(false);
   const styles = useStyles();
   const drawerRef = useRef<HTMLDivElement | null>(null);
@@ -148,14 +149,16 @@ const TopNavBar = ({ language = "EN" }: TopNavBarProps) => {
           >
             {language === "ES" ? "Inicio" : "Home"}
           </NavItem>
-          <NavItem
-            className={styles.navRow}
-            href={`/hotels?lang=${langParam}`}
-            icon={<Bed16Regular />}
-            value="1"
-          >
-            {language === "ES" ? "Hoteles" : "Hotels"}
-          </NavItem>
+          {residency === "Remote" && (
+            <NavItem
+              className={styles.navRow}
+              href={`/hotels?lang=${langParam}`}
+              icon={<Bed16Regular />}
+              value="2"
+            >
+              {language === "ES" ? "Hoteles" : "Hotels"}
+            </NavItem>
+          )}
         </div>
         
         {/* <div className={styles.adminMenuText}>
