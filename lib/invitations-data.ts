@@ -317,7 +317,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
   },
   "FHO283": {
     "Language": "ES",
-    "Residency": "Local",
+    "Residency": "Remote",
     "Guests": [
       {"Name": "Mami", "Gender": "female"},
       {"Name": "Papi", "Gender": "male"},
@@ -328,7 +328,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
   },
   "FHO517": {
     "Language": "ES",
-    "Residency": "Local",
+    "Residency": "Remote",
     "Guests": [
       {"Name": "Génesis", "Gender": "female"},
       {"Name": "Chuz", "Gender": "male"},
