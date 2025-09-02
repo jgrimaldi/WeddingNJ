@@ -618,5 +618,21 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Alex", "Gender": "male"},
     ],
     "CustomGreet": "A un amigo muy especial, Alex, nos da mucha alegría poder invitarte a nuestra boda. Esperamos puedas acompañarnos en este nuevo capítulo de nuestras vidas."
+  },
+  "FLP239": {
+    "Language": "EN",
+    "Residency": "Remote",
+    "Guests": [
+      {"Name": "Fer", "Gender": "female"},
+    ],
+    "CustomGreet": "Holis Fer, este código es para ti. Esta invitación esta en inglés."
+  },
+  "FLP641": {
+    "Language": "ES",
+    "Residency": "Local",
+    "Guests": [
+      {"Name": "Fer", "Gender": "female"},
+    ],
+    "CustomGreet": "Holis Fer, este código es para ti. Esta invitación esta en español."
   }
 };
