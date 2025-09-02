@@ -84,7 +84,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Lucia", "Gender": "female"},
       {"Name": "Moises", "Gender": "male"}
     ],
-    "CustomGreet": "A un cholazo con full estilo y a su maravillosa novia, Moises y Lucia, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A un cholazo con súper elegante y a su maravillosa novia, Moises y Lucia, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "AMI951": {
     "Language": "ES",
