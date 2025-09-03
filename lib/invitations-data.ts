@@ -168,7 +168,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Abuilla", "Gender": "female"},
       {"Name": "Tia Letty", "Gender": "female"}
     ],
-    "CustomGreet": "A 2 personas maravillosas quienes amamos montones, La Abuilla y Tia Letty, nos da mucha alegría poder invitarlas a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A 2 personas maravillosas, ejemplares y sabias, a quienes amamos montones, La Abuilla y Tia Letty, nos da mucha alegría poder invitarlas a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FBB916": {
     "Language": "EN",
