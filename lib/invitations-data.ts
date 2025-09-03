@@ -10,7 +10,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Raul", "Gender": "male"},
       {"Name": "Yunita", "Gender": "female"}
     ],
-    "CustomGreet": "La mera familia, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "La mera familia, mis papas y mis hermanos que lloran cuando no estoy, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FMB409": {
     "Language": "ES",
