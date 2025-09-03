@@ -5,22 +5,22 @@
     "LocationUrl": "https://maps.app.goo.gl/6z5Cdz89dUyMp39v7",
     "CeremonyCompare": "25min away from the ceremony church.",
     "ReceptionCompare": "15min away from the reception venue.",
-    "AirportCompare": "10min away from the airport.",
+    "AirportCompare": "15min away from the airport.",
     "OfferShuttle": true,
     "Website": "https://www.marriott.com/es/hotels/sjocr-costa-rica-marriott-hotel-hacienda-belen/overview/",
-    "PriceRangePerNight": "$200 - $300",
+    "PriceRangePerNight": "$$220 - $320",
     "Review": "Location is very convenient for moving to ceremony and from reception venues."
   },
   {
     "Name": "AC Hotel San Jose Airport Belen",
     "Location": "La Ribera, Belén.",
     "LocationUrl": "https://maps.app.goo.gl/d6QdD2U2Km1G9EaPA",
-    "CeremonyCompare": "25min away from the ceremony church.",
+    "CeremonyCompare": "30min away from the ceremony church.",
     "ReceptionCompare": "15min away from the reception venue.",
     "AirportCompare": "10min away from the airport.",
     "OfferShuttle": true,
     "Website": "https://www.marriott.com/es/hotels/sjoaa-ac-hotel-heredia-belen/overview/",
-    "PriceRangePerNight": "$200 - $300",
+    "PriceRangePerNight": "$230 - $300",
     "Review": "Convenient location close to airport, and moving to ceremony and reception venues."
   },
   {
@@ -32,7 +32,19 @@
     "AirportCompare": "30min away from the airport.",
     "OfferShuttle": true,
     "Website": "https://www.hyatt.com/hyatt-centric/es-ES/sjoct-hyatt-centric-san-jose-escazu",
-    "PriceRangePerNight": "$200 - $300",
+    "PriceRangePerNight": "$160 - $260",
     "Review": "Location is very close to reception venue, but a bit further from the ceremony church. Very close to restaurants and shopping at a walking distance."
+  },
+  {
+    "Name": "Hilton Garden Inn Santa Ana",
+    "Location": "City Place, Santa Ana.",
+    "LocationUrl": "https://maps.app.goo.gl/XKMtmcAVnqBCP6mQ7",
+    "CeremonyCompare": "A 35 min away from the ceremony church.",
+    "ReceptionCompare": "A 5 min away from the reception venue.",
+    "AirportCompare": "A 30 min away from the airport.",
+    "OfferShuttle": true,
+    "Website": "https://www.hilton.com/en/hotels/sjogsgi-hilton-garden-inn-santa-ana-san-jose/",
+    "PriceRangePerNight": "$140 - $180",
+    "Review": "Location is very close to the reception venue and the Grimaldi family, but a bit further from the ceremony church. Very close to restaurants and shopping at a walking distance."
   }
 ]
