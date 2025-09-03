@@ -188,7 +188,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Andrea", "Gender": "female"},
       {"Name": "Monica", "Gender": "female"}
     ],
-    "CustomGreet": "To 4 wonderful people we love dearly, Tio Jack, Tia Elena, and las primitas Andrea and Monica, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
+    "CustomGreet": "To 4 wonderful people we love dearly, Tio Jack, Tia Elena, and las primitas Andrea and Monica (and also Maggie su, Jake-ee, Quincy y la Macy), we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
   },
   "FCP749": {
     "Language": "ES",
