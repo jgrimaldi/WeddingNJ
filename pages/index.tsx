@@ -366,9 +366,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   // If user is not authenticated, redirect to login
   if (!session) {
+  // Preserve language parameter if provided (supports ?lang=es|en or ?l=es|en)
+  const q = context.query || {};
+  const rawLang = (Array.isArray(q.lang) ? q.lang[0] : q.lang) || (Array.isArray(q.l) ? q.l[0] : q.l);
+  const lang = typeof rawLang === "string" ? rawLang.toLowerCase() : undefined;
+  const isValid = lang === "es" || lang === "en";
+  const destination = isValid ? `/login?lang=${lang}` : "/login";
     return {
       redirect: {
-        destination: "/login",
+    destination,
         permanent: false,
       },
     };

@@ -16,29 +16,38 @@ type HotelsPageProps = {
 
 export default function HotelsPage({ groomWa, brideWa }: HotelsPageProps) {
   const { data: clientSession } = useSession();
-  const lang = (clientSession?.user?.invitation?.Language as "EN" | "ES") || "EN";
+  const lang =
+    (clientSession?.user?.invitation?.Language as "EN" | "ES") || "EN";
 
   const pageTitle =
-    lang === "ES" ? "Hoteles | Boda de Nathy y Jorge" : "Hotels | Nathy & Jorge's Wedding";
+    lang === "ES"
+      ? "Hoteles | Boda de Nathy y Jorge"
+      : "Hotels | Nathy & Jorge's Wedding";
 
   const hotelMessageEN =
     "We’ve handpicked a list of hotel options and travel tips to help make your trip as smooth and enjoyable as possible.";
   const hotelMessageES =
     "Hemos seleccionado una lista de opciones de hoteles y vuelos para ayudar a que su viaje sea lo más fluido y agradable posible.";
-  const bannerMessageTextHotel = lang === "ES" ? hotelMessageES : hotelMessageEN;
+  const bannerMessageTextHotel =
+    lang === "ES" ? hotelMessageES : hotelMessageEN;
 
   return (
     <>
       <Head>
         <title>{pageTitle}</title>
-        <meta name="description" content="Recommended hotels and travel information." />
+        <meta
+          name="description"
+          content="Recommended hotels and travel information."
+        />
       </Head>
       <div style={{ backgroundColor: "var(--fluent-grey-10)" }}>
-        <TopNavBar 
-          language={lang} 
-          residency={clientSession?.user?.invitation?.Residency as "Local" | "Remote"}
+        <TopNavBar
+          language={lang}
+          residency={
+            clientSession?.user?.invitation?.Residency as "Local" | "Remote"
+          }
         />
-        
+
         {/* Main Content Area */}
         <div
           style={{
@@ -62,8 +71,14 @@ export default function HotelsPage({ groomWa, brideWa }: HotelsPageProps) {
               />
             }
           />
-          <HeroSection bgColor="light" customComponent={<BannerMessage text={bannerMessageTextHotel} />} />
-          <HeroSection bgColor="light" customComponent={<HotelList language={lang} />} />
+          <HeroSection
+            bgColor="light"
+            customComponent={<BannerMessage text={bannerMessageTextHotel} />}
+          />
+          <HeroSection
+            bgColor="light"
+            customComponent={<HotelList language={lang} />}
+          />
           <Footer language={lang} groomWa={groomWa} brideWa={brideWa} />
         </div>
       </div>
@@ -74,17 +89,31 @@ export default function HotelsPage({ groomWa, brideWa }: HotelsPageProps) {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerAuthSession(context);
   if (!session) {
+    const q = context.query || {};
+    const rawLang =
+      (Array.isArray(q.lang) ? q.lang[0] : q.lang) ||
+      (Array.isArray(q.l) ? q.l[0] : q.l);
+    const lang =
+      typeof rawLang === "string" ? rawLang.toLowerCase() : undefined;
+    const isValid = lang === "es" || lang === "en";
+    const destination = isValid ? `/login?lang=${lang}` : "/login";
     return {
       redirect: {
-        destination: "/login",
+        destination,
         permanent: false,
       },
     };
   }
   return {
     props: {
-      groomWa: process.env.WHATSAPP_GROOM || process.env.NEXT_PUBLIC_WHATSAPP_GROOM || null,
-      brideWa: process.env.WHATSAPP_BRIDE || process.env.NEXT_PUBLIC_WHATSAPP_BRIDE || null,
+      groomWa:
+        process.env.WHATSAPP_GROOM ||
+        process.env.NEXT_PUBLIC_WHATSAPP_GROOM ||
+        null,
+      brideWa:
+        process.env.WHATSAPP_BRIDE ||
+        process.env.NEXT_PUBLIC_WHATSAPP_BRIDE ||
+        null,
     },
   };
 }
