@@ -4,3 +4,37 @@
 body {
   margin: 0 !important;
 }
+
+/* Improve iOS Safari text sizing/zoom behavior */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Prevent iOS input zoom by ensuring minimum 16px font size */
+input,
+select,
+textarea,
+button {
+  font-size: 16px;
+}
+
+/* Fluent UI v9 inputs/textareas internal text classnames often render smaller; enforce min */
+.fui-Input,
+.fui-Textarea,
+.fui-Checkbox,
+.fui-Field,
+.fui-Button {
+  font-size: 16px;
+}
+
+/* Guard against horizontal overflow which can trigger odd scaling on iOS */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Images should not overflow the container */
+img, svg {
+  max-width: 100%;
+  height: auto;
+}

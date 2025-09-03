@@ -383,7 +383,8 @@ Please enter yours below to unlock all the wedding details - and a heartfelt mes
                 appearance="outline"
                 style={{
                   width: "100%",
-                  fontSize: "clamp(0.875rem, 3vw, 1rem)",
+                  /* Ensure >=16px to prevent iOS auto-zoom */
+                  fontSize: "clamp(1rem, 3vw, 1.125rem)",
                   borderRadius: "4px",
                   border: "2px solid #e5e7eb",
                   backgroundColor: "#fafafa",
