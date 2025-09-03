@@ -72,10 +72,10 @@ export const INVITATIONS_DATA: InvitationsByCode = {
     "Language": "ES",
     "Residency": "Local",
     "Guests": [
-      {"Name": "Maria del Carmen", "Gender": "female"},
+      {"Name": "Tia la Nana", "Gender": "female"},
       {"Name": "Christopher", "Gender": "male"}
     ],
-    "CustomGreet": "A una tia y un primo maravillosos, La Nana y Chris, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A una tia y un primo maravillosos con quienes hemos compartido mucho, La Nana y Chris, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "AMI483": {
     "Language": "ES",
