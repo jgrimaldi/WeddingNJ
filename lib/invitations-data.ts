@@ -267,7 +267,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Tio Mario", "Gender": "male"},
       {"Name": "Tia Rosita", "Gender": "female"}
     ],
-    "CustomGreet": "A unos tios muy queridos, maravillosos, Tio Mario y Tia Rosita, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A unos tios muy queridos y maravillosos, Tio Mario y Tia Rosita, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FCO461": {
     "Language": "ES",
