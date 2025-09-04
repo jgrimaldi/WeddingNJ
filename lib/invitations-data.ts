@@ -315,6 +315,14 @@ export const INVITATIONS_DATA: InvitationsByCode = {
     ],
     "CustomGreet": "To 2 wonderful and exemplary people we love dearly, Tio Carlo and Tia Astrid, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
   },
+  "FNH557": {
+    "Language": "EN",
+    "Residency": "Remote",
+    "Guests": [
+      {"Name": "Celina", "Gender": "female"},
+    ],
+    "CustomGreet": "To a wonderful cousin, Celina, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
+  },
   "FHO283": {
     "Language": "ES",
     "Residency": "Remote",
