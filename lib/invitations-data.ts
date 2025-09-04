@@ -293,7 +293,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
     "Guests": [
       {"Name": "Maria Jose", "Gender": "female"}
     ],
-    "CustomGreet": "A una queridisima prima, Maria Jose, nos da mucha alegría poder invitarte a nuestra boda. Esperamos puedas acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A una queridisima prima quien nos puede dar clases de tenis, Maria Jose, nos da mucha alegría poder invitarte a nuestra boda. Esperamos puedas acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FZN734": {
     "Language": "EN",
