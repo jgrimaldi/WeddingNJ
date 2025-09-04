@@ -200,7 +200,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Gabriel", "Gender": "male"},
       {"Name": "Fiorella", "Gender": "female"}
     ],
-    "CustomGreet": "A un querido primo, Dani, y a su hermosa familia, Melania, Julián, Gabriel y Fiorella, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A 5 personas maravillosas, Dani, Melania, Julián, Gabriel y Fiorella, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FCP956": {
     "Language": "ES",
@@ -211,7 +211,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Olivia", "Gender": "female"},
       {"Name": "Elena", "Gender": "female"}
     ],
-    "CustomGreet": "A un querido primo, Ricky, y a su hermosa familia, Roselyn, Olivia y Elena, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A 4 personas maravillosas, Ricky, Roselyn, Olivia y Elena, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FRR546": {
     "Language": "EN",
