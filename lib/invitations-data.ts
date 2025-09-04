@@ -267,7 +267,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Tio Mario", "Gender": "male"},
       {"Name": "Tia Rosita", "Gender": "female"}
     ],
-    "CustomGreet": "A unos tios muy queridos, maravillosos y conocedores del tenis, y más importante de Dios, Tio Mario y Tia Rosita, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A unos tios muy queridos, maravillosos, Tio Mario y Tia Rosita, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FCO461": {
     "Language": "ES",
@@ -276,16 +276,17 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Sebastian", "Gender": "male"},
       {"Name": "Pilar", "Gender": "female"}
     ],
-    "CustomGreet": "A 2 personas maravillosas quienes queremos mucho, Pilar y Sebastian, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "Für zwei wundervolle Menschen, die wir von Herzen lieben, Pilar y Sebastian, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FCO548": {
-    "Language": "EN",
+    "Language": "ES",
     "Residency": "Remote",
     "Guests": [
-      {"Name": "Andrey", "Gender": "male"},
-      {"Name": "Gabriela", "Gender": "female"}
+      {"Name": "Andrei", "Gender": "male"},
+      {"Name": "Gabriela", "Gender": "female"},
+      {"Name": "Alina", "Gender": "female"}
     ],
-    "CustomGreet": "To 2 wonderful people we love dearly, Gabriela and Andrey, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
+    "CustomGreet": "A 3 personas maravillosas quienes queremos mucho, Gabriela, Andrei y Alina, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FCO664": {
     "Language": "ES",
