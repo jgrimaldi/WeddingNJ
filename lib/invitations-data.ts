@@ -304,7 +304,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Mario", "Gender": "male"},
       {"Name": "Vanessa", "Gender": "female"}
     ],
-    "CustomGreet": "To 4 wonderful people we love dearly, Tio Mario, Tia Vanessa, Mario, and Vanessa, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
+    "CustomGreet": "To 4 wonderful people we love dearly and have been lucky to share many memories with, Tio Mario, Tia Vanessa, Mario, and Vanessa, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
   },
   "FNH268": {
     "Language": "EN",
@@ -313,7 +313,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Tio Carlo", "Gender": "male"},
       {"Name": "Tia Astrid", "Gender": "female"},
     ],
-    "CustomGreet": "To 2 wonderful people we love dearly, Tio Carlo and Tia Astrid, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
+    "CustomGreet": "To 2 wonderful and exemplary people we love dearly, Tio Carlo and Tia Astrid, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
   },
   "FHO283": {
     "Language": "ES",
