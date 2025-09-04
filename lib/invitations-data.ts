@@ -218,11 +218,11 @@ export const INVITATIONS_DATA: InvitationsByCode = {
     "Residency": "Remote",
     "Guests": [
       {"Name": "Adriana", "Gender": "female"},
-      {"Name": "Jessie", "Gender": "male"},
+      {"Name": "Jesse", "Gender": "male"},
       {"Name": "Mateo", "Gender": "male"},
       {"Name": "Alba", "Gender": "female"}
     ],
-    "CustomGreet": "To 4 wonderful people we love dearly, Adri, Jessie, Mateo, and Alba, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
+    "CustomGreet": "To 4 wonderful people we love dearly, Adri, Jesse, Mateo, and Alba, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
   },
   "FRR686": {
     "Language": "EN",
