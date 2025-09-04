@@ -60,7 +60,7 @@ const useStyles = makeStyles({
 
 type TopNavBarProps = {
   language?: "EN" | "ES";
-  residency?: "Local" | "Remote";
+  residency?: "Local" | "Remote" | "RemoteLocal";
 };
 
 const TopNavBar = ({ language = "EN", residency }: TopNavBarProps) => {
@@ -149,7 +149,7 @@ const TopNavBar = ({ language = "EN", residency }: TopNavBarProps) => {
           >
             {language === "ES" ? "Inicio" : "Home"}
           </NavItem>
-          {residency === "Remote" && (
+          {(residency === "Remote" || residency === "RemoteLocal") && (
             <NavItem
               className={styles.navRow}
               href={`/hotels?lang=${langParam}`}

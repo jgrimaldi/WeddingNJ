@@ -8,7 +8,7 @@ export interface User {
 
 export interface Invitation {
   Language: Language;
-  Residency: 'Local' | 'Remote';
+  Residency: 'Local' | 'Remote' | 'RemoteLocal';
   Guests: User[];
   CustomGreet: string;
 }

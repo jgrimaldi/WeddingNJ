@@ -215,7 +215,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
   },
   "FRR546": {
     "Language": "EN",
-    "Residency": "Remote",
+    "Residency": "RemoteLocal",
     "Guests": [
       {"Name": "Adriana", "Gender": "female"},
       {"Name": "Jesse", "Gender": "male"},
@@ -226,7 +226,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
   },
   "FRR686": {
     "Language": "EN",
-    "Residency": "Remote",
+    "Residency": "RemoteLocal",
     "Guests": [
       {"Name": "Collin", "Gender": "male"},
       {"Name": "Andrea", "Gender": "female"}

@@ -230,7 +230,7 @@ export default function HomePage({ groomWa, brideWa }: HomePageProps) {
             }
           />
 
-          {clientSession.user.invitation.Residency === "Remote" && (
+          {(clientSession.user.invitation.Residency === "Remote" || clientSession.user.invitation.Residency === "RemoteLocal") && (
             <HeroSection
               bgColor="light"
               customComponent={
@@ -251,7 +251,7 @@ export default function HomePage({ groomWa, brideWa }: HomePageProps) {
               }
             />
           )}
-          {clientSession.user.invitation.Residency === "Remote" && (
+          {(clientSession.user.invitation.Residency === "Remote" || clientSession.user.invitation.Residency === "RemoteLocal") && (
             <HeroSection
               bgColor="light"
               customComponent={

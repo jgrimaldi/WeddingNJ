@@ -86,7 +86,7 @@ export default function RsvpForm({
   onSubmit,
   language = "EN",
   residency,
-}: RsvpFormProps) {
+}: RsvpFormProps & { requireTransportation?: boolean }) {
   const styles = useStyles();
 
   const isES = language === "ES";
@@ -211,7 +211,9 @@ export default function RsvpForm({
     const g = String(item.guests || "All").toLowerCase();
     if (g === "all") return true;
     return normalizedResidency ? g === normalizedResidency : g === "all";
-  });
+    }).concat(residency === "Remote" || residency === "RemoteLocal" ? [
+      { title: "Transportation", start: "", guests: "Remote" }
+    ] : []);
   const eventKey = (e: TimelineItem) => `${e.title}-${e.start}`;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -228,7 +230,7 @@ export default function RsvpForm({
       if (noneSelected) missingGuests.push(gi);
     });
 
-    if (!emailOk || missingGuests.length > 0) {
+  if (!emailOk || missingGuests.length > 0) {
       setShowErrors(true);
       // Scroll to email if invalid, otherwise to first missing group
       if (!emailOk) {
@@ -390,7 +392,7 @@ export default function RsvpForm({
             </Field>
           </section>
         ))}
-        {residency === "Remote" && (
+  {(residency === "Remote" || residency === "RemoteLocal") && (
           <div style={{ marginTop: "0.75em" }}>
             <Checkbox
               checked={requireTransportation}
