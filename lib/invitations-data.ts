@@ -222,7 +222,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Mateo", "Gender": "male"},
       {"Name": "Alba", "Gender": "female"}
     ],
-    "CustomGreet": "To 4 wonderful people we love dearly, Adriana, Jessie, Mateo, and Alba, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
+    "CustomGreet": "To 4 wonderful people we love dearly, Adri, Jessie, Mateo, and Alba, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
   },
   "FRR686": {
     "Language": "EN",
@@ -231,7 +231,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Collin", "Gender": "male"},
       {"Name": "Andrea", "Gender": "female"}
     ],
-    "CustomGreet": "To 2 wonderful people we love dearly, Bebeta and Collin, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
+    "CustomGreet": "To 2 wonderful people we love and miss dearly, Bebeta and Collin, we are thrilled to invite you to our wedding. We hope you can join us in this new chapter of our lives."
   },
   "FPO416": {
     "Language": "EN",
