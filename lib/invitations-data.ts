@@ -192,7 +192,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
   },
   "FCP749": {
     "Language": "ES",
-    "Residency": "Remote",
+    "Residency": "RemoteLocal",
     "Guests": [
       {"Name": "Daniel", "Gender": "male"},
       {"Name": "Melania", "Gender": "female"},
@@ -204,7 +204,7 @@ export const INVITATIONS_DATA: InvitationsByCode = {
   },
   "FCP956": {
     "Language": "ES",
-    "Residency": "Remote",
+    "Residency": "RemoteLocal",
     "Guests": [
       {"Name": "Ricky", "Gender": "male"},
       {"Name": "Roselyn", "Gender": "female"},
