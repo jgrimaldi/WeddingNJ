@@ -27,7 +27,7 @@ export default function HotelsPage({ groomWa, brideWa }: HotelsPageProps) {
   const hotelMessageEN =
     "We’ve handpicked a list of hotel options and travel tips to help make your trip as smooth and enjoyable as possible.";
   const hotelMessageES =
-    "Hemos seleccionado una lista de opciones de hoteles y vuelos para ayudar a que su viaje sea lo más fluido y agradable posible.";
+    "Hemos creado una lista de opciones de hoteles y vuelos para ayudar a que su viaje sea lo más fluido y agradable posible.";
   const bannerMessageTextHotel =
     lang === "ES" ? hotelMessageES : hotelMessageEN;
 
