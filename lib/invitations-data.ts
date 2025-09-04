@@ -198,9 +198,9 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Melania", "Gender": "female"},
       {"Name": "Julian", "Gender": "male"},
       {"Name": "Gabriel", "Gender": "male"},
-      {"Name": "Fiorella", "Gender": "female"}
+      {"Name": "Fio", "Gender": "female"}
     ],
-    "CustomGreet": "A 5 personas maravillosas, Dani, Melania, Julián, Gabriel y Fiorella, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A 5 personas maravillosas, Dani, Melania, Julián, Gabriel y Fio, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FCP956": {
     "Language": "ES",
