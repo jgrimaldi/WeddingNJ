@@ -125,6 +125,7 @@ export default function RsvpForm({
     transportation: isES
       ? "Necesitan transporte el día de la boda?"
       : "Will you need transportation on the wedding day?",
+  yes: isES ? "Sí" : "Yes",
   } as const;
 
   const [responses, setResponses] = React.useState<
@@ -211,9 +212,7 @@ export default function RsvpForm({
     const g = String(item.guests || "All").toLowerCase();
     if (g === "all") return true;
     return normalizedResidency ? g === normalizedResidency : g === "all";
-    }).concat(residency === "Remote" || residency === "RemoteLocal" ? [
-      { title: "Transportation", start: "", guests: "Remote" }
-    ] : []);
+  });
   const eventKey = (e: TimelineItem) => `${e.title}-${e.start}`;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -394,11 +393,13 @@ export default function RsvpForm({
         ))}
   {(residency === "Remote" || residency === "RemoteLocal") && (
           <div style={{ marginTop: "0.75em" }}>
-            <Checkbox
-              checked={requireTransportation}
-              onChange={(_, data) => setRequireTransportation(!!data.checked)}
-              label={labels.transportation}
-            />
+            <Field label={<Label className={styles.label}>{labels.transportation}</Label>}>
+              <Checkbox
+                checked={requireTransportation}
+                onChange={(_, data) => setRequireTransportation(!!data.checked)}
+                label={labels.yes}
+              />
+            </Field>
           </div>
         )}
       </Card>
