@@ -460,6 +460,15 @@ export const INVITATIONS_DATA: InvitationsByCode = {
     ],
     "CustomGreet": "A 2 personas maravillosas, Tia Nidia y Tio Nelson, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
+  "FPE311": {
+    "Language": "ES",
+    "Residency": "Local",
+    "Guests": [
+      {"Name": "Kathy", "Gender": "female"},
+      {"Name": "Augusto", "Gender": "male"},
+    ],
+    "CustomGreet": "A 2 personas maravillosas, Augusto y Kathy, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+  },
   "FVT378": {
     "Language": "ES",
     "Residency": "Local",
