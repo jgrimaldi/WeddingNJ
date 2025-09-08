@@ -481,10 +481,10 @@ export const INVITATIONS_DATA: InvitationsByCode = {
     "Language": "ES",
     "Residency": "Local",
     "Guests": [
-      {"Name": "Kathy", "Gender": "female"},
+      {"Name": "Melanie", "Gender": "female"},
       {"Name": "Augusto", "Gender": "male"},
     ],
-    "CustomGreet": "A 2 personas maravillosas, Augusto y Kathy, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A 2 personas maravillosas, Augusto y Melanie, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FVT378": {
     "Language": "ES",
