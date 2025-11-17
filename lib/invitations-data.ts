@@ -64,9 +64,10 @@ export const INVITATIONS_DATA: InvitationsByCode = {
     "Language": "ES",
     "Residency": "Local",
     "Guests": [
-      {"Name": "Alvaro", "Gender": "male"}
+      {"Name": "Alvaro", "Gender": "male"},
+      {"Name": "Fiorella", "Gender": "female"}
     ],
-    "CustomGreet": "A un primo querido, Pilo, nos da mucha alegría poder invitarte a nuestra boda. Esperamos puedas acompañarnos en este nuevo capítulo de nuestras vidas."
+    "CustomGreet": "A un primo querido y su maravillosa novia, Pilo y Fiorella, nos da mucha alegría poder invitarlos a nuestra boda. Esperamos puedan acompañarnos en este nuevo capítulo de nuestras vidas."
   },
   "FCP262": {
     "Language": "ES",
