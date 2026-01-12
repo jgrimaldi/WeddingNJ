@@ -28,11 +28,11 @@
     "attire": "Formal",
     "description": "Nuestra ceremonia íntima en la iglesia de La Trinidad, donde creció la novia.",
     "detailsBackgroundUrl": "/images/WeddingChurchWC.png",
-    "subTime1": "2:30PM",
+    "subTime1": "2:00PM",
     "subTime1Label": "Llegada",
-    "subTime2": "3:00PM",
+    "subTime2": "2:30PM",
     "subTime2Label": "Ceremonia",
-    "subTime3": "4:30PM",
+    "subTime3": "4:00PM",
     "subTime3Label": "Salida"
   },
   {
@@ -46,11 +46,11 @@
     "attire": "Formal",
     "description": "Cena, baile y celebración para que todos disfruten hasta la media noche.",
     "detailsBackgroundUrl": "/images/ReceptionWC.png",
-    "subTime1": "5:30PM",
+    "subTime1": "5:00PM",
     "subTime1Label": "Coctel",
     "subTime2": "6:30PM",
     "subTime2Label": "Cena",
-    "subTime3": "11:30PM",
+    "subTime3": "11:00PM",
     "subTime3Label": "Fin"
   }
 ]

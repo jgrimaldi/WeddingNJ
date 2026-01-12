@@ -28,11 +28,11 @@
     "attire": "Formal Attire",
     "description": "Our intimate ceremony in the town where the bride grew up in.",
     "detailsBackgroundUrl": "/images/WeddingChurchWC.png",
-    "subTime1": "2:30PM",
+    "subTime1": "2:00PM",
     "subTime1Label": "Arrival",
-    "subTime2": "3:00PM",
+    "subTime2": "2:30PM",
     "subTime2Label": "Ceremony",
-    "subTime3": "4:30PM",
+    "subTime3": "4:00PM",
     "subTime3Label": "Departure"
   },
   {
@@ -46,11 +46,11 @@
     "attire": "Formal Attire",
     "description": "Dinner, dancing and celebration for everyone to enjoy until midnight.",
     "detailsBackgroundUrl": "/images/ReceptionWC.png",
-    "subTime1": "5:30PM",
+    "subTime1": "5:00PM",
     "subTime1Label": "Cocktail",
     "subTime2": "6:30PM",
     "subTime2Label": "Dinner",
-    "subTime3": "11:30PM",
+    "subTime3": "11:00PM",
     "subTime3Label": "End"
   }
 ]
