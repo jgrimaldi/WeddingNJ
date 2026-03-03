@@ -12,6 +12,8 @@ import {
   Board20Regular,
   bundleIcon,
   Bed16Regular,
+  Image16Regular,
+  ArrowUpload16Regular,
 } from "@fluentui/react-icons";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
@@ -159,6 +161,22 @@ const TopNavBar = ({ language = "EN", residency }: TopNavBarProps) => {
               {language === "ES" ? "Hoteles" : "Hotels"}
             </NavItem>
           )}
+          <NavItem
+            className={styles.navRow}
+            href={`/photos?lang=${langParam}`}
+            icon={<Image16Regular />}
+            value="3"
+          >
+            {language === "ES" ? "Fotos" : "Photos"}
+          </NavItem>
+          <NavItem
+            className={styles.navRow}
+            href={`/upload?lang=${langParam}`}
+            icon={<ArrowUpload16Regular />}
+            value="4"
+          >
+            {language === "ES" ? "Subir Fotos" : "Upload Photos"}
+          </NavItem>
         </div>
         
         {/* <div className={styles.adminMenuText}>
