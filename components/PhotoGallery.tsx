@@ -10,6 +10,7 @@ import {
   Dismiss24Regular,
   ChevronLeft24Regular,
   ChevronRight24Regular,
+  Play24Filled,
 } from "@fluentui/react-icons";
 import type { Language } from "@/types/invitations";
 
@@ -47,6 +48,26 @@ const useStyles = makeStyles({
       transform: "scale(1.05)",
     },
   },
+  gridVideo: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover" as const,
+  },
+  playOverlay: {
+    position: "absolute" as const,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    borderRadius: "50%",
+    width: "36px",
+    height: "36px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "white",
+    pointerEvents: "none" as const,
+  },
   overlay: {
     position: "fixed" as const,
     top: "0",
@@ -64,6 +85,10 @@ const useStyles = makeStyles({
     maxWidth: "95vw",
     maxHeight: "80vh",
     objectFit: "contain" as const,
+  },
+  overlayVideo: {
+    maxWidth: "95vw",
+    maxHeight: "80vh",
   },
   overlayClose: {
     position: "absolute" as const,
@@ -110,9 +135,15 @@ interface PhotoMeta {
   thumbnailFilename?: string;
   originalName: string;
   uploaderName: string;
+  description?: string;
+  tags?: string[];
   mimeType: string;
   size: number;
   uploadedAt: string;
+}
+
+function isVideoFile(photo: PhotoMeta): boolean {
+  return photo.mimeType?.startsWith("video/") || false;
 }
 
 type PhotoGalleryProps = {
@@ -258,12 +289,27 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
               className={styles.gridItem}
               onClick={() => setSelectedIndex(index)}
             >
-              <img
-                src={`/api/photos/${photo.thumbnailFilename || photo.filename}`}
-                alt={`${labels.by} ${photo.uploaderName}`}
-                className={styles.gridImage}
-                loading="lazy"
-              />
+              {isVideoFile(photo) ? (
+                <>
+                  <video
+                    src={`/api/photos/${photo.filename}#t=0.1`}
+                    className={styles.gridVideo}
+                    muted
+                    playsInline
+                    preload="metadata"
+                  />
+                  <div className={styles.playOverlay}>
+                    <Play24Filled style={{ width: "20px", height: "20px" }} />
+                  </div>
+                </>
+              ) : (
+                <img
+                  src={`/api/photos/${photo.thumbnailFilename || photo.filename}`}
+                  alt={`${labels.by} ${photo.uploaderName}`}
+                  className={styles.gridImage}
+                  loading="lazy"
+                />
+              )}
             </div>
           ))}
         </div>
@@ -303,12 +349,23 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
             </button>
           )}
 
-          <img
-            src={`/api/photos/${selectedPhoto.filename}`}
-            alt={`${labels.by} ${selectedPhoto.uploaderName}`}
-            className={styles.overlayImage}
-            onClick={(e) => e.stopPropagation()}
-          />
+          {isVideoFile(selectedPhoto) ? (
+            <video
+              src={`/api/photos/${selectedPhoto.filename}`}
+              className={styles.overlayVideo}
+              controls
+              autoPlay
+              playsInline
+              onClick={(e) => e.stopPropagation()}
+            />
+          ) : (
+            <img
+              src={`/api/photos/${selectedPhoto.filename}`}
+              alt={`${labels.by} ${selectedPhoto.uploaderName}`}
+              className={styles.overlayImage}
+              onClick={(e) => e.stopPropagation()}
+            />
+          )}
 
           {selectedIndex !== null && selectedIndex < photos.length - 1 && (
             <button
@@ -324,6 +381,16 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
             <Body1 style={{ color: "white" }}>
               {labels.by} {selectedPhoto.uploaderName}
             </Body1>
+            {selectedPhoto.description && (
+              <Body1 style={{ color: "#d1d5db", fontStyle: "italic" }}>
+                {selectedPhoto.description}
+              </Body1>
+            )}
+            {selectedPhoto.tags && selectedPhoto.tags.length > 0 && (
+              <Caption1 style={{ color: "#93c5fd" }}>
+                {selectedPhoto.tags.join(", ")}
+              </Caption1>
+            )}
             <Caption1 style={{ color: "#9ca3af" }}>
               {formatDate(selectedPhoto.uploadedAt)}
               {" • "}

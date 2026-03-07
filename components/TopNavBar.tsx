@@ -14,6 +14,7 @@ import {
   Bed16Regular,
   Image16Regular,
   ArrowUpload16Regular,
+  Video16Regular,
 } from "@fluentui/react-icons";
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
@@ -176,6 +177,14 @@ const TopNavBar = ({ language = "EN", residency }: TopNavBarProps) => {
             value="4"
           >
             {language === "ES" ? "Subir Fotos" : "Upload Photos"}
+          </NavItem>
+          <NavItem
+            className={styles.navRow}
+            href={`/upload-videos?lang=${langParam}`}
+            icon={<Video16Regular />}
+            value="5"
+          >
+            {language === "ES" ? "Subir Videos" : "Upload Videos"}
           </NavItem>
         </div>
         

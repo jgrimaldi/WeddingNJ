@@ -5,17 +5,13 @@ import formidable from 'formidable';
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
-import sharp from 'sharp';
 import {
   isAzureConfigured,
   ensureContainer,
-  uploadBlob,
+  uploadBlobFromFile,
   appendMetadata as appendAzureMetadata,
   type PhotoMeta,
 } from '@/lib/azure-storage';
-
-const THUMB_MAX_DIM = 400;
-const THUMB_QUALITY = 70;
 
 export const config = {
   api: {
@@ -25,10 +21,9 @@ export const config = {
 
 const UPLOADS_DIR = path.join(process.cwd(), 'uploads');
 const METADATA_FILE = path.join(UPLOADS_DIR, 'photos.json');
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
-const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
+const MAX_FILE_SIZE = 500 * 1024 * 1024; // 500MB
+const ALLOWED_TYPES = ['video/mp4', 'video/quicktime', 'video/webm'];
 
-// Local filesystem fallback for development without Azure
 function readLocalMetadata(): PhotoMeta[] {
   try {
     if (fs.existsSync(METADATA_FILE)) {
@@ -97,9 +92,9 @@ export default async function handler(
       ? rawTags.split(',').map((t: string) => t.trim()).filter(Boolean)
       : [];
 
-    const uploadedFiles = files.photo;
+    const uploadedFiles = files.video;
     if (!uploadedFiles || uploadedFiles.length === 0) {
-      return res.status(400).json({ error: 'No photo file provided' });
+      return res.status(400).json({ error: 'No video file provided' });
     }
 
     const results: PhotoMeta[] = [];
@@ -109,37 +104,24 @@ export default async function handler(
         continue;
       }
 
-      const ext = path.extname(file.originalFilename || '.jpg');
+      const ext = path.extname(file.originalFilename || '.mp4');
       const uniqueName = `${Date.now()}-${crypto.randomBytes(6).toString('hex')}${ext}`;
-      const thumbName = `thumb_${uniqueName.replace(/\.[^.]+$/, '.jpg')}`;
-
-      const fileBuffer = fs.readFileSync(file.filepath);
-
-      // Generate thumbnail
-      const thumbBuffer = await sharp(fileBuffer)
-        .resize(THUMB_MAX_DIM, THUMB_MAX_DIM, { fit: 'inside', withoutEnlargement: true })
-        .jpeg({ quality: THUMB_QUALITY })
-        .toBuffer();
 
       if (useAzure) {
-        await uploadBlob(uniqueName, fileBuffer, file.mimetype, {
+        // Stream from temp file to Azure (avoids loading into memory)
+        await uploadBlobFromFile(uniqueName, file.filepath, file.mimetype, {
           uploadername: uploaderName.trim(),
           originalname: file.originalFilename || 'unknown',
         });
-        await uploadBlob(thumbName, thumbBuffer, 'image/jpeg', {
-          uploadername: uploaderName.trim(),
-          originalname: `thumb_${file.originalFilename || 'unknown'}`,
-        });
       } else {
-        fs.writeFileSync(path.join(UPLOADS_DIR, uniqueName), fileBuffer);
-        fs.writeFileSync(path.join(UPLOADS_DIR, thumbName), thumbBuffer);
+        fs.copyFileSync(file.filepath, path.join(UPLOADS_DIR, uniqueName));
       }
 
-      fs.unlinkSync(file.filepath); // clean up temp file
+      fs.unlinkSync(file.filepath);
 
       const meta: PhotoMeta = {
         filename: uniqueName,
-        thumbnailFilename: thumbName,
+        thumbnailFilename: undefined,
         originalName: file.originalFilename || 'unknown',
         uploaderName: uploaderName.trim(),
         description: description?.trim() || undefined,
@@ -153,7 +135,7 @@ export default async function handler(
     }
 
     if (results.length === 0) {
-      return res.status(400).json({ error: 'No valid image files were uploaded' });
+      return res.status(400).json({ error: 'No valid video files were uploaded' });
     }
 
     if (useAzure) {
@@ -162,11 +144,11 @@ export default async function handler(
       appendLocalMetadata(results);
     }
 
-    return res.status(200).json({ success: true, photos: results });
+    return res.status(200).json({ success: true, videos: results });
   } catch (error: any) {
-    console.error('Upload error:', error);
+    console.error('Video upload error:', error);
     if (error.code === 1009 || error.message?.includes('maxFileSize')) {
-      return res.status(413).json({ error: 'File too large. Maximum size is 10MB.' });
+      return res.status(413).json({ error: 'File too large. Maximum size is 500MB.' });
     }
     return res.status(500).json({ error: 'Upload failed. Please try again.' });
   }

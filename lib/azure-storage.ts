@@ -45,6 +45,21 @@ export async function uploadBlob(
   });
 }
 
+/** Upload a file from disk to Azure Blob Storage using streaming (for large files). */
+export async function uploadBlobFromFile(
+  blobName: string,
+  filePath: string,
+  contentType: string,
+  metadata: Record<string, string>
+): Promise<void> {
+  const client = getContainerClient();
+  const blockBlobClient = client.getBlockBlobClient(blobName);
+  await blockBlobClient.uploadFile(filePath, {
+    blobHTTPHeaders: { blobContentType: contentType },
+    metadata,
+  });
+}
+
 /** Download a blob as a readable stream. Returns null if not found. */
 export async function downloadBlob(
   blobName: string
@@ -70,6 +85,8 @@ export interface PhotoMeta {
   thumbnailFilename?: string;
   originalName: string;
   uploaderName: string;
+  description?: string;
+  tags?: string[];
   mimeType: string;
   size: number;
   uploadedAt: string;

@@ -14,6 +14,9 @@ const MIME_TYPES: Record<string, string> = {
   '.webp': 'image/webp',
   '.heic': 'image/heic',
   '.heif': 'image/heif',
+  '.mp4': 'video/mp4',
+  '.mov': 'video/quicktime',
+  '.webm': 'video/webm',
 };
 
 export default async function handler(

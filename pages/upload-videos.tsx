@@ -5,37 +5,33 @@ import TopNavBar from "@/components/TopNavBar";
 import HeroSection from "@/components/HeroSection";
 import BannerSubtitle from "@/components/BannerSubtitle";
 import BannerMessage from "@/components/BannerMessage";
-import PhotoGallery from "@/components/PhotoGallery";
+import VideoUpload from "@/components/VideoUpload";
 import Footer from "@/components/Footer";
 import { useSession } from "next-auth/react";
-import { Button } from "@fluentui/react-components";
-import { ArrowUpload24Regular, Video24Regular } from "@fluentui/react-icons";
-import { useRouter } from "next/router";
 
-type PhotosPageProps = {
+type UploadVideosPageProps = {
   groomWa?: string | null;
   brideWa?: string | null;
 };
 
-export default function PhotosPage({ groomWa, brideWa }: PhotosPageProps) {
+export default function UploadVideosPage({ groomWa, brideWa }: UploadVideosPageProps) {
   const { data: clientSession } = useSession();
-  const router = useRouter();
   const lang =
     (clientSession?.user?.invitation?.Language as "EN" | "ES") || "EN";
 
   const isES = lang === "ES";
   const pageTitle = isES
-    ? "Fotos y Videos | Boda de Nathy y Jorge"
-    : "Photos & Videos | Nathy & Jorge's Wedding";
+    ? "Subir Videos | Boda de Nathy y Jorge"
+    : "Upload Videos | Nathy & Jorge's Wedding";
   const bannerMessage = isES
-    ? "Revive los mejores momentos de nuestra celebración a través de las fotos y videos compartidos por nuestros invitados."
-    : "Relive the best moments of our celebration through photos and videos shared by our guests.";
+    ? "¡Comparte tus videos favoritos de la boda con todos los invitados!"
+    : "Share your favorite wedding videos with all the guests!";
 
   return (
     <>
       <Head>
         <title>{pageTitle}</title>
-        <meta name="description" content="Wedding photo and video gallery" />
+        <meta name="description" content="Upload your wedding videos" />
       </Head>
       <div style={{ backgroundColor: "var(--fluent-grey-10)" }}>
         <TopNavBar
@@ -62,9 +58,9 @@ export default function PhotosPage({ groomWa, brideWa }: PhotosPageProps) {
             customComponent={
               <BannerSubtitle
                 imageSrc="/images/WeddingEnvelopeWC.png"
-                topText={isES ? "Galería de" : "Photo & Video"}
-                bottomText={isES ? "Fotos y Videos" : "Gallery"}
-                alt="Photo & Video Gallery"
+                topText={isES ? "Subir" : "Upload"}
+                bottomText="Videos"
+                alt="Upload Videos"
               />
             }
           />
@@ -74,42 +70,7 @@ export default function PhotosPage({ groomWa, brideWa }: PhotosPageProps) {
           />
           <HeroSection
             bgColor="light"
-            customComponent={
-              <div style={{ padding: "0 1em", width: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "8px" }}>
-                <Button
-                  appearance="primary"
-                  icon={<ArrowUpload24Regular />}
-                  onClick={() => router.push(`/upload?lang=${isES ? "es" : "en"}`)}
-                  style={{
-                    width: "100%",
-                    backgroundColor: "#4C4C4C",
-                    border: "2px solid #323232",
-                    borderRadius: "4px",
-                    fontWeight: "500",
-                  }}
-                >
-                  {isES ? "Subir fotos" : "Upload photos"}
-                </Button>
-                <Button
-                  appearance="primary"
-                  icon={<Video24Regular />}
-                  onClick={() => router.push(`/upload-videos?lang=${isES ? "es" : "en"}`)}
-                  style={{
-                    width: "100%",
-                    backgroundColor: "#4C4C4C",
-                    border: "2px solid #323232",
-                    borderRadius: "4px",
-                    fontWeight: "500",
-                  }}
-                >
-                  {isES ? "Subir videos" : "Upload videos"}
-                </Button>
-              </div>
-            }
-          />
-          <HeroSection
-            bgColor="light"
-            customComponent={<PhotoGallery language={lang} />}
+            customComponent={<VideoUpload language={lang} />}
           />
           <Footer language={lang} groomWa={groomWa} brideWa={brideWa} />
         </div>

@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef } from "react";
 import {
   Button,
   Input,
@@ -11,73 +11,13 @@ import {
 } from "@fluentui/react-components";
 import {
   ArrowUpload24Regular,
-  Image24Regular,
+  Video24Regular,
   Dismiss24Regular,
   Image24Filled,
 } from "@fluentui/react-icons";
 import type { Language } from "@/types/invitations";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-
-const MAX_DIMENSION = 2048;
-const JPEG_QUALITY = 0.8;
-
-/** Compress an image file using Canvas: resizes to MAX_DIMENSION and re-encodes as JPEG */
-function compressImage(file: File): Promise<File> {
-  return new Promise((resolve, reject) => {
-    // Skip non-raster formats (e.g. SVG) or already-small files
-    if (!file.type.startsWith("image/") || file.size < 200_000) {
-      resolve(file);
-      return;
-    }
-
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-
-    img.onload = () => {
-      URL.revokeObjectURL(url);
-
-      let { width, height } = img;
-      // Only resize if larger than max dimension
-      if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
-        const scale = MAX_DIMENSION / Math.max(width, height);
-        width = Math.round(width * scale);
-        height = Math.round(height * scale);
-      }
-
-      const canvas = document.createElement("canvas");
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext("2d");
-      if (!ctx) {
-        resolve(file); // fallback to original
-        return;
-      }
-      ctx.drawImage(img, 0, 0, width, height);
-
-      canvas.toBlob(
-        (blob) => {
-          if (!blob || blob.size >= file.size) {
-            // Compressed is larger — keep original
-            resolve(file);
-            return;
-          }
-          const baseName = file.name.replace(/\.[^.]+$/, "");
-          resolve(new File([blob], `${baseName}.jpg`, { type: "image/jpeg" }));
-        },
-        "image/jpeg",
-        JPEG_QUALITY
-      );
-    };
-
-    img.onerror = () => {
-      URL.revokeObjectURL(url);
-      reject(new Error(`Failed to load image: ${file.name}`));
-    };
-
-    img.src = url;
-  });
-}
 
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -129,7 +69,7 @@ const useStyles = makeStyles({
     overflow: "hidden",
     aspectRatio: "1",
   },
-  previewImage: {
+  previewVideo: {
     width: "100%",
     height: "100%",
     objectFit: "cover" as const,
@@ -174,18 +114,17 @@ const useStyles = makeStyles({
   },
 });
 
-type PhotoUploadProps = {
+type VideoUploadProps = {
   language?: Language;
 };
 
-export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
+export default function VideoUpload({ language = "EN" }: VideoUploadProps) {
   const { data: clientSession } = useSession();
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
   const [loading, setLoading] = useState(false);
-  const [compressing, setCompressing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -202,39 +141,35 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
     tagsPlaceholder: isES ? "Ej: Jorge, Nathalia" : "E.g. Jorge, Nathalia",
     tagsLabel: isES ? "Etiquetar personas" : "Tag people",
     dropText: isES
-      ? "Toca para seleccionar fotos"
-      : "Tap to select photos",
+      ? "Toca para seleccionar un video"
+      : "Tap to select a video",
     dropSubtext: isES
-      ? "JPEG, PNG, WebP • máx. 10MB • hasta 20 fotos"
-      : "JPEG, PNG, WebP • max 10MB • up to 20 photos",
+      ? "MP4, MOV, WebM • máx. 500MB • 1 video a la vez"
+      : "MP4, MOV, WebM • max 500MB • 1 video at a time",
     uploading: isES ? "Subiendo..." : "Uploading...",
-    upload: isES ? "Subir fotos" : "Upload photos",
+    upload: isES ? "Subir videos" : "Upload videos",
     successMsg: isES
-      ? "¡Fotos subidas exitosamente!"
-      : "Photos uploaded successfully!",
+      ? "¡Videos subidos exitosamente!"
+      : "Videos uploaded successfully!",
     errorGeneric: isES
       ? "Error al subir. Intenta de nuevo."
       : "Upload failed. Please try again.",
     noFiles: isES
-      ? "Selecciona al menos una foto"
-      : "Please select at least one photo",
-    compressing: isES ? "Comprimiendo fotos..." : "Compressing photos...",
+      ? "Selecciona al menos un video"
+      : "Please select at least one video",
   };
 
   const handleFiles = (newFiles: FileList | null) => {
     if (!newFiles) return;
-    const imageFiles = Array.from(newFiles).filter((f) =>
-      f.type.startsWith("image/")
+    const videoFiles = Array.from(newFiles).filter((f) =>
+      f.type.startsWith("video/")
     );
-    const combined = [...files, ...imageFiles];
-    if (combined.length > 20) {
-      setError(isES ? "Máximo 20 fotos a la vez" : "Maximum 20 photos at a time");
-      return;
-    }
-    setFiles(combined);
-
-    const newPreviews = imageFiles.map((f) => URL.createObjectURL(f));
-    setPreviews((prev) => [...prev, ...newPreviews]);
+    if (videoFiles.length === 0) return;
+    // Only allow one video at a time — replace any existing selection
+    previews.forEach((p) => URL.revokeObjectURL(p));
+    const selected = videoFiles[0];
+    setFiles([selected]);
+    setPreviews([URL.createObjectURL(selected)]);
     setError("");
     setSuccess("");
   };
@@ -258,18 +193,12 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
     setProgress(0);
 
     try {
-      // Compress images before uploading
-      setCompressing(true);
-      const compressed = await Promise.all(files.map(compressImage));
-      setCompressing(false);
-
       const formData = new FormData();
       formData.append("uploaderName", uploaderName);
       if (description.trim()) formData.append("description", description.trim());
       if (tags.trim()) formData.append("tags", tags.trim());
-      compressed.forEach((file) => formData.append("photo", file));
+      files.forEach((file) => formData.append("video", file));
 
-      // Use XHR for upload progress tracking
       const { ok, data } = await new Promise<{ ok: boolean; data: any }>((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.upload.addEventListener("progress", (e) => {
@@ -287,7 +216,7 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
         });
         xhr.addEventListener("error", () => reject(new Error(labels.errorGeneric)));
         xhr.addEventListener("abort", () => reject(new Error(labels.errorGeneric)));
-        xhr.open("POST", "/api/photos/upload");
+        xhr.open("POST", "/api/videos/upload");
         xhr.send(formData);
       });
 
@@ -296,7 +225,6 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
       }
 
       setSuccess(labels.successMsg);
-      // Clean up previews
       previews.forEach((p) => URL.revokeObjectURL(p));
       setFiles([]);
       setPreviews([]);
@@ -367,8 +295,7 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
-        multiple
+        accept="video/mp4,video/quicktime,video/webm"
         onChange={(e) => handleFiles(e.target.files)}
         style={{ display: "none" }}
       />
@@ -381,7 +308,7 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
         onDragLeave={handleDrag}
         onDrop={handleDrop}
       >
-        <Image24Regular style={{ fontSize: "2em", color: "#9ca3af", width: "2em", height: "2em" }} />
+        <Video24Regular style={{ fontSize: "2em", color: "#9ca3af", width: "2em", height: "2em" }} />
         <Body1 style={{ color: "#6b7280", marginTop: "0.5em", textAlign: "center" }}>
           {labels.dropText}
         </Body1>
@@ -395,7 +322,7 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
           <div className={styles.previewGrid}>
             {previews.map((src, i) => (
               <div key={i} className={styles.previewItem}>
-                <img src={src} alt={`Preview ${i + 1}`} className={styles.previewImage} />
+                <video src={src} className={styles.previewVideo} muted playsInline preload="metadata" />
                 <button
                   type="button"
                   className={styles.removeButton}
@@ -410,12 +337,8 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
             ))}
           </div>
           <Caption1 style={{ color: "#9ca3af", alignSelf: "flex-start" }}>
-            {files.length} {isES ? "foto(s)" : "photo(s)"} •{" "}
+            {files.length} video(s) •{" "}
             {formatBytes(files.reduce((sum, f) => sum + f.size, 0))}
-            {" — "}
-            {isES
-              ? "se comprimirán automáticamente"
-              : "will be auto-compressed"}
           </Caption1>
         </>
       )}
@@ -432,7 +355,7 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
         </MessageBar>
       )}
 
-      {loading && !compressing && (
+      {loading && (
         <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "4px" }}>
           <div className={styles.progressBar}>
             <div className={styles.progressFill} style={{ width: `${progress}%` }} />
@@ -468,7 +391,7 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
         {loading ? (
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <Spinner size="tiny" />
-            <span>{compressing ? labels.compressing : labels.uploading}</span>
+            <span>{labels.uploading}</span>
           </div>
         ) : (
           labels.upload
