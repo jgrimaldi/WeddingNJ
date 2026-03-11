@@ -11,8 +11,11 @@ import {
   ChevronLeft24Regular,
   ChevronRight24Regular,
   Play24Filled,
+  Delete24Regular,
 } from "@fluentui/react-icons";
 import type { Language } from "@/types/invitations";
+import type { MediaCategory } from "@/lib/azure-storage";
+import { useSession } from "next-auth/react";
 
 const PAGE_SIZE = 20;
 
@@ -128,6 +131,92 @@ const useStyles = makeStyles({
     borderRadius: "4px",
     fontWeight: "500",
   },
+  tabBar: {
+    display: "flex",
+    width: "100%",
+    gap: "0",
+    borderBottom: "1px solid #e5e7eb",
+    marginBottom: "0.5em",
+  },
+  tab: {
+    flex: "1",
+    padding: "8px 4px",
+    textAlign: "center" as const,
+    cursor: "pointer",
+    fontSize: "0.85em",
+    fontWeight: "500",
+    color: "#6b7280",
+    backgroundColor: "transparent",
+    border: "none",
+    borderBottom: "2px solid transparent",
+    transition: "all 0.2s ease",
+  },
+  tabActive: {
+    color: "#242424",
+    borderBottomColor: "#4C4C4C",
+  },
+  deleteButton: {
+    position: "absolute" as const,
+    top: "4px",
+    right: "4px",
+    minWidth: "24px",
+    width: "24px",
+    height: "24px",
+    padding: "0",
+    borderRadius: "50%",
+    backgroundColor: "rgba(220,38,38,0.85)",
+    color: "white",
+    border: "none",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 10,
+  },
+  overlayDeleteButton: {
+    position: "absolute" as const,
+    bottom: "1em",
+    right: "1em",
+    backgroundColor: "rgba(220,38,38,0.85)",
+    border: "none",
+    color: "white",
+    cursor: "pointer",
+    padding: "8px 16px",
+    borderRadius: "6px",
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
+    fontSize: "0.9em",
+    fontWeight: "500",
+  },
+  confirmOverlay: {
+    position: "fixed" as const,
+    top: "0",
+    left: "0",
+    right: "0",
+    bottom: "0",
+    backgroundColor: "rgba(0,0,0,0.7)",
+    zIndex: 3000,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  confirmDialog: {
+    backgroundColor: "white",
+    borderRadius: "8px",
+    padding: "1.5em",
+    maxWidth: "300px",
+    width: "90%",
+    textAlign: "center" as const,
+    display: "flex",
+    flexDirection: "column" as const,
+    gap: "1em",
+  },
+  confirmActions: {
+    display: "flex",
+    gap: "8px",
+    justifyContent: "center",
+  },
 });
 
 interface PhotoMeta {
@@ -135,6 +224,8 @@ interface PhotoMeta {
   thumbnailFilename?: string;
   originalName: string;
   uploaderName: string;
+  uploaderCode?: string;
+  category?: MediaCategory;
   description?: string;
   tags?: string[];
   mimeType: string;
@@ -150,31 +241,53 @@ type PhotoGalleryProps = {
   language?: Language;
 };
 
+type CategoryTab = "all" | MediaCategory;
+
 export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
+  const { data: clientSession } = useSession();
   const [photos, setPhotos] = useState<PhotoMeta[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [activeTab, setActiveTab] = useState<CategoryTab>("all");
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
   const touchStartX = useRef(0);
   const styles = useStyles();
 
+  const accessCode = clientSession?.user?.accessCode;
   const isES = language === "ES";
   const labels = {
     loading: isES ? "Cargando fotos..." : "Loading photos...",
     empty: isES
       ? "Aún no hay fotos. ¡Sé el primero en subir una!"
       : "No photos yet. Be the first to upload one!",
+    emptyCategory: isES
+      ? "No hay fotos en esta categoría aún."
+      : "No photos in this category yet.",
     by: isES ? "Por" : "By",
     error: isES
       ? "Error al cargar las fotos"
       : "Failed to load photos",
     loadMore: isES ? "Cargar más" : "Load more",
+    all: isES ? "Todos" : "All",
+    ceremony: isES ? "Ceremonia" : "Ceremony",
+    cocktail: "Cocktail",
+    party: isES ? "Fiesta" : "Party",
+    deleteConfirm: isES ? "¿Eliminar este archivo?" : "Delete this file?",
+    deleteYes: isES ? "Eliminar" : "Delete",
+    deleteNo: isES ? "Cancelar" : "Cancel",
+    deleteError: isES ? "Error al eliminar" : "Failed to delete",
   };
 
-  const fetchPhotos = useCallback(async (offset = 0, append = false) => {
+  const fetchPhotos = useCallback(async (offset = 0, append = false, category?: CategoryTab) => {
     try {
-      const res = await fetch(`/api/photos?limit=${PAGE_SIZE}&offset=${offset}`);
+      let url = `/api/photos?limit=${PAGE_SIZE}&offset=${offset}`;
+      if (category && category !== "all") {
+        url += `&category=${category}`;
+      }
+      const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
         setPhotos((prev) => append ? [...prev, ...(data.photos || [])] : (data.photos || []));
@@ -190,28 +303,62 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
 
   // Initial load
   useEffect(() => {
-    fetchPhotos();
-  }, [fetchPhotos]);
+    fetchPhotos(0, false, activeTab);
+  }, [fetchPhotos, activeTab]);
 
   // Re-fetch when page becomes visible (cache invalidation after upload)
   useEffect(() => {
     const handleVisibility = () => {
       if (document.visibilityState === "visible") {
-        fetchPhotos();
+        fetchPhotos(0, false, activeTab);
       }
     };
     document.addEventListener("visibilitychange", handleVisibility);
-    // Also re-fetch on window focus (covers tab switches and mobile app switching)
     window.addEventListener("focus", handleVisibility);
     return () => {
       document.removeEventListener("visibilitychange", handleVisibility);
       window.removeEventListener("focus", handleVisibility);
     };
-  }, [fetchPhotos]);
+  }, [fetchPhotos, activeTab]);
 
   const loadMore = () => {
     setLoadingMore(true);
-    fetchPhotos(photos.length, true);
+    fetchPhotos(photos.length, true, activeTab);
+  };
+
+  const handleTabChange = (tab: CategoryTab) => {
+    if (tab === activeTab) return;
+    setActiveTab(tab);
+    setPhotos([]);
+    setTotal(0);
+    setLoading(true);
+    setSelectedIndex(null);
+  };
+
+  const handleDelete = async (filename: string) => {
+    setDeleting(true);
+    try {
+      const res = await fetch("/api/photos/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ filename }),
+      });
+      if (res.ok) {
+        setPhotos((prev) => prev.filter((p) => p.filename !== filename));
+        setTotal((prev) => prev - 1);
+        setSelectedIndex(null);
+        setConfirmDelete(null);
+      } else {
+        const data = await res.json();
+        alert(data.error || labels.deleteError);
+        setConfirmDelete(null);
+      }
+    } catch {
+      alert(labels.deleteError);
+      setConfirmDelete(null);
+    } finally {
+      setDeleting(false);
+    }
   };
 
   const hasMore = photos.length < total;
@@ -271,17 +418,43 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
     );
   }
 
-  if (photos.length === 0) {
+  if (photos.length === 0 && !loading) {
     return (
-      <div className={styles.emptyState}>
-        <Body1>{labels.empty}</Body1>
-      </div>
+      <>
+        <div className={styles.container}>
+          <div className={styles.tabBar}>
+            {(["all", "ceremony", "cocktail", "party"] as CategoryTab[]).map((tab) => (
+              <button
+                key={tab}
+                className={`${styles.tab} ${activeTab === tab ? styles.tabActive : ""}`}
+                onClick={() => handleTabChange(tab)}
+              >
+                {labels[tab as keyof typeof labels]}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className={styles.emptyState}>
+          <Body1>{activeTab === "all" ? labels.empty : labels.emptyCategory}</Body1>
+        </div>
+      </>
     );
   }
 
   return (
     <>
       <div className={styles.container}>
+        <div className={styles.tabBar}>
+          {(["all", "ceremony", "cocktail", "party"] as CategoryTab[]).map((tab) => (
+            <button
+              key={tab}
+              className={`${styles.tab} ${activeTab === tab ? styles.tabActive : ""}`}
+              onClick={() => handleTabChange(tab)}
+            >
+              {labels[tab as keyof typeof labels]}
+            </button>
+          ))}
+        </div>
         <div className={styles.grid}>
           {photos.map((photo, index) => (
             <div
@@ -309,6 +482,15 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
                   className={styles.gridImage}
                   loading="lazy"
                 />
+              )}
+              {accessCode && photo.uploaderCode === accessCode && (
+                <button
+                  className={styles.deleteButton}
+                  onClick={(e) => { e.stopPropagation(); setConfirmDelete(photo.filename); }}
+                  title={labels.deleteYes}
+                >
+                  <Delete24Regular style={{ width: "14px", height: "14px" }} />
+                </button>
               )}
             </div>
           ))}
@@ -396,6 +578,41 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
               {" • "}
               {selectedIndex !== null ? selectedIndex + 1 : 0}/{photos.length}
             </Caption1>
+          </div>
+
+          {accessCode && selectedPhoto.uploaderCode === accessCode && (
+            <button
+              className={styles.overlayDeleteButton}
+              onClick={(e) => { e.stopPropagation(); setConfirmDelete(selectedPhoto.filename); }}
+            >
+              <Delete24Regular style={{ width: "18px", height: "18px" }} />
+              {labels.deleteYes}
+            </button>
+          )}
+        </div>
+      )}
+
+      {confirmDelete && (
+        <div className={styles.confirmOverlay} onClick={() => !deleting && setConfirmDelete(null)}>
+          <div className={styles.confirmDialog} onClick={(e) => e.stopPropagation()}>
+            <Body1>{labels.deleteConfirm}</Body1>
+            <div className={styles.confirmActions}>
+              <Button
+                appearance="secondary"
+                onClick={() => setConfirmDelete(null)}
+                disabled={deleting}
+              >
+                {labels.deleteNo}
+              </Button>
+              <Button
+                appearance="primary"
+                onClick={() => handleDelete(confirmDelete)}
+                disabled={deleting}
+                style={{ backgroundColor: "#dc2626", border: "1px solid #dc2626" }}
+              >
+                {deleting ? <Spinner size="tiny" /> : labels.deleteYes}
+              </Button>
+            </div>
           </div>
         </div>
       )}

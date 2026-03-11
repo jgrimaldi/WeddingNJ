@@ -30,6 +30,7 @@ export default async function handler(
     100
   );
   const offset = Math.max(parseInt(req.query.offset as string) || 0, 0);
+  const categoryFilter = req.query.category as string | undefined;
 
   try {
     let photos: PhotoMeta[] = [];
@@ -38,6 +39,11 @@ export default async function handler(
       photos = await readAzureMetadata();
     } else if (fs.existsSync(METADATA_FILE)) {
       photos = JSON.parse(fs.readFileSync(METADATA_FILE, 'utf-8'));
+    }
+
+    // Filter by category if provided
+    if (categoryFilter) {
+      photos = photos.filter((p) => p.category === categoryFilter);
     }
 
     // Sort newest first

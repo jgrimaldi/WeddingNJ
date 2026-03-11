@@ -80,11 +80,17 @@ export async function downloadBlob(
   }
 }
 
+export type MediaCategory = 'ceremony' | 'cocktail' | 'party';
+
+export const MEDIA_CATEGORIES: MediaCategory[] = ['ceremony', 'cocktail', 'party'];
+
 export interface PhotoMeta {
   filename: string;
   thumbnailFilename?: string;
   originalName: string;
   uploaderName: string;
+  uploaderCode?: string;
+  category?: MediaCategory;
   description?: string;
   tags?: string[];
   mimeType: string;
@@ -164,6 +170,65 @@ export async function appendMetadata(newEntries: PhotoMeta[]): Promise<void> {
 /** Check if Azure storage is configured. */
 export function isAzureConfigured(): boolean {
   return !!connectionString;
+}
+
+/** Delete a blob from Azure Blob Storage. Returns true if deleted, false if not found. */
+export async function deleteBlob(blobName: string): Promise<boolean> {
+  const client = getContainerClient();
+  const blockBlobClient = client.getBlockBlobClient(blobName);
+  try {
+    await blockBlobClient.delete();
+    return true;
+  } catch (err: any) {
+    if (err.statusCode === 404) return false;
+    throw err;
+  }
+}
+
+/**
+ * Atomically remove a metadata entry by filename using a lease.
+ * Returns the removed entry if found, or null.
+ */
+export async function removeMetadataEntry(filename: string): Promise<PhotoMeta | null> {
+  const client = getContainerClient();
+  const blobClient = client.getBlockBlobClient(METADATA_BLOB);
+  const leaseClient = blobClient.getBlobLeaseClient();
+
+  try {
+    await blobClient.getProperties();
+  } catch (err: any) {
+    if (err.statusCode === 404) return null;
+    throw err;
+  }
+
+  const lease = await leaseClient.acquireLease(30);
+  const leaseId = lease.leaseId!;
+
+  try {
+    const response = await blobClient.download(0, undefined, {
+      conditions: { leaseId },
+    });
+    const body = await streamToString(response.readableStreamBody!);
+    const existing: PhotoMeta[] = JSON.parse(body);
+
+    const index = existing.findIndex((p) => p.filename === filename);
+    if (index === -1) return null;
+
+    const [removed] = existing.splice(index, 1);
+    const content = JSON.stringify(existing, null, 2);
+    await blobClient.upload(content, content.length, {
+      blobHTTPHeaders: { blobContentType: 'application/json' },
+      conditions: { leaseId },
+    });
+
+    return removed;
+  } finally {
+    try {
+      await leaseClient.releaseLease();
+    } catch {
+      // Lease will expire automatically
+    }
+  }
 }
 
 // Helper: convert a readable stream to a string

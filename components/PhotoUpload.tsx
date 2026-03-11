@@ -16,6 +16,7 @@ import {
   Image24Filled,
 } from "@fluentui/react-icons";
 import type { Language } from "@/types/invitations";
+import type { MediaCategory } from "@/lib/azure-storage";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
@@ -184,6 +185,7 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
   const [previews, setPreviews] = useState<string[]>([]);
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
+  const [category, setCategory] = useState<MediaCategory | "">("");
   const [loading, setLoading] = useState(false);
   const [compressing, setCompressing] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -219,6 +221,12 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
       ? "Selecciona al menos una foto"
       : "Please select at least one photo",
     compressing: isES ? "Comprimiendo fotos..." : "Compressing photos...",
+    categoryLabel: isES ? "Categoría" : "Category",
+    categoryPlaceholder: isES ? "Selecciona una categoría" : "Select a category",
+    categoryCeremony: isES ? "Ceremonia" : "Ceremony",
+    categoryCocktail: "Cocktail",
+    categoryParty: isES ? "Fiesta" : "Party",
+    noCategory: isES ? "Selecciona una categoría" : "Please select a category",
   };
 
   const handleFiles = (newFiles: FileList | null) => {
@@ -251,6 +259,10 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
       setError(labels.noFiles);
       return;
     }
+    if (!category) {
+      setError(labels.noCategory);
+      return;
+    }
 
     setLoading(true);
     setError("");
@@ -265,6 +277,7 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
 
       const formData = new FormData();
       formData.append("uploaderName", uploaderName);
+      formData.append("category", category);
       if (description.trim()) formData.append("description", description.trim());
       if (tags.trim()) formData.append("tags", tags.trim());
       compressed.forEach((file) => formData.append("photo", file));
@@ -302,6 +315,7 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
       setPreviews([]);
       setDescription("");
       setTags("");
+      setCategory("");
     } catch (err: any) {
       setError(err.message || labels.errorGeneric);
     } finally {
@@ -328,6 +342,33 @@ export default function PhotoUpload({ language = "EN" }: PhotoUploadProps) {
 
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
+      <Field label={labels.categoryLabel} required style={{ width: "100%" }}>
+        <select
+          value={category}
+          onChange={(e) => { setCategory(e.target.value as MediaCategory | ""); setError(""); }}
+          disabled={loading}
+          style={{
+            width: "100%",
+            fontSize: "16px",
+            padding: "8px 12px",
+            borderRadius: "4px",
+            border: "2px solid #e5e7eb",
+            backgroundColor: "#fafafa",
+            color: category ? "#242424" : "#9ca3af",
+            appearance: "none",
+            WebkitAppearance: "none",
+            backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E\")",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "right 12px center",
+          }}
+        >
+          <option value="" disabled>{labels.categoryPlaceholder}</option>
+          <option value="ceremony">{labels.categoryCeremony}</option>
+          <option value="cocktail">{labels.categoryCocktail}</option>
+          <option value="party">{labels.categoryParty}</option>
+        </select>
+      </Field>
+
       <Field label={labels.descriptionLabel} style={{ width: "100%" }}>
         <Input
           value={description}

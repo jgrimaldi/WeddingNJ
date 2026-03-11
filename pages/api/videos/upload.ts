@@ -11,6 +11,8 @@ import {
   uploadBlobFromFile,
   appendMetadata as appendAzureMetadata,
   type PhotoMeta,
+  type MediaCategory,
+  MEDIA_CATEGORIES,
 } from '@/lib/azure-storage';
 
 export const config = {
@@ -92,6 +94,15 @@ export default async function handler(
       ? rawTags.split(',').map((t: string) => t.trim()).filter(Boolean)
       : [];
 
+    const rawCategory = Array.isArray(fields.category)
+      ? fields.category[0]
+      : fields.category;
+    const category = (rawCategory && MEDIA_CATEGORIES.includes(rawCategory as MediaCategory))
+      ? (rawCategory as MediaCategory)
+      : undefined;
+
+    const uploaderCode = session.user?.accessCode || undefined;
+
     const uploadedFiles = files.video;
     if (!uploadedFiles || uploadedFiles.length === 0) {
       return res.status(400).json({ error: 'No video file provided' });
@@ -124,6 +135,8 @@ export default async function handler(
         thumbnailFilename: undefined,
         originalName: file.originalFilename || 'unknown',
         uploaderName: uploaderName.trim(),
+        uploaderCode,
+        category,
         description: description?.trim() || undefined,
         tags: tagsList.length > 0 ? tagsList : undefined,
         mimeType: file.mimetype,
