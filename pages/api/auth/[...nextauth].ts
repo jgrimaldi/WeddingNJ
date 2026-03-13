@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { validateAccessCode } from '@/lib/auth'
+import { validateAccessCode, isAdminCode } from '@/lib/auth'
 import { INVITATIONS_DATA } from '@/lib/invitations-data'
 import type { Invitation } from '@/types/invitations';
 
@@ -28,14 +28,16 @@ export const authOptions: NextAuthOptions = {
         
         if (isValid) {
           const invitation = getInvitation(credentials.accessCode)
+          const admin = isAdminCode(credentials.accessCode)
           // Return user object - this will be saved in the session
           return {
             id: '1',
-            name: 'Authorized User',
+            name: admin ? 'Nathalia & Jorge' : 'Authorized User',
             email: null,
             image: null, // Explicitly set to null instead of undefined
             accessCode: credentials.accessCode,
-            invitation: invitation || null
+            invitation: invitation || null,
+            isAdmin: admin
           }
         } else {
           // Return null if authentication fails
@@ -46,11 +48,12 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      // Persist the access code and invitation in the token
+      // Persist the access code, invitation, and admin flag in the token
       if (user) {
         token.accessCode = (user as any).accessCode
         token.invitation = (user as any).invitation || null
         token.name = user.name
+        token.isAdmin = (user as any).isAdmin || false
       }
       return token
     },
@@ -61,7 +64,8 @@ export const authOptions: NextAuthOptions = {
         email: null,
         image: null,
         accessCode: token.accessCode as string,
-        invitation: token.invitation as Invitation | null
+        invitation: token.invitation as Invitation | null,
+        isAdmin: token.isAdmin as boolean || false
       }
       return session
     }

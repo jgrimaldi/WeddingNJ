@@ -7,13 +7,15 @@ declare module 'next-auth' {
   interface Session {
     user: {
       accessCode?: string,
-      invitation?: Invitation | null
+      invitation?: Invitation | null,
+      isAdmin?: boolean
     } & DefaultSession['user']
   }
 
   interface User {
     accessCode?: string
     invitation?: Invitation | null
+    isAdmin?: boolean
   }
 }
 
@@ -21,5 +23,6 @@ declare module 'next-auth/jwt' {
   /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
   interface JWT {
     accessCode?: string
+    isAdmin?: boolean
   }
 }

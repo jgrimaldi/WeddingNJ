@@ -11,6 +11,7 @@ export interface Invitation {
   Residency: 'Local' | 'Remote' | 'RemoteLocal';
   Guests: User[];
   CustomGreet: string;
+  isAdmin?: boolean;
 }
 
 // Root object keyed by code

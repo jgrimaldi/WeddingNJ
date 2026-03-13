@@ -53,6 +53,7 @@ export default async function handler(
 
   const safeName = path.basename(filename);
   const accessCode = session.user?.accessCode;
+  const isAdmin = session.user?.isAdmin === true;
 
   if (!accessCode) {
     return res.status(403).json({ error: 'Forbidden' });
@@ -71,7 +72,7 @@ export default async function handler(
       if (!entry) {
         return res.status(404).json({ error: 'Media not found' });
       }
-      if (entry.uploaderCode !== accessCode) {
+      if (!isAdmin && entry.uploaderCode !== accessCode) {
         return res.status(403).json({ error: 'You can only delete your own media' });
       }
 
@@ -89,7 +90,7 @@ export default async function handler(
       if (!entry) {
         return res.status(404).json({ error: 'Media not found' });
       }
-      if (entry.uploaderCode !== accessCode) {
+      if (!isAdmin && entry.uploaderCode !== accessCode) {
         return res.status(403).json({ error: 'You can only delete your own media' });
       }
 

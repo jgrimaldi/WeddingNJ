@@ -681,5 +681,15 @@ export const INVITATIONS_DATA: InvitationsByCode = {
       {"Name": "Fer", "Gender": "female"},
     ],
     "CustomGreet": "Holis Fer, este código es para ti. Esta invitación esta en español."
+  },
+  "NJW001": {
+    "Language": "ES",
+    "Residency": "Local",
+    "Guests": [
+      {"Name": "Nathalia", "Gender": "female"},
+      {"Name": "Jorge", "Gender": "male"}
+    ],
+    "CustomGreet": "¡Nuestra propia boda! Este es nuestro acceso especial de novios con permisos de administrador. 💍",
+    "isAdmin": true
   }
 };
