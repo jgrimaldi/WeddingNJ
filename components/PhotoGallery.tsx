@@ -251,7 +251,10 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
   const [activeTab, setActiveTab] = useState<CategoryTab>("all");
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [lightboxLoading, setLightboxLoading] = useState(false);
   const touchStartX = useRef(0);
+  const pageCacheRef = useRef<Map<number, PhotoMeta[]>>(new Map());
+  const skipNextFetchRef = useRef(false);
   const styles = useStyles();
 
   const accessCode = clientSession?.user?.accessCode;
@@ -303,8 +306,36 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
     }
   }, []);
 
-  // Initial load
+  // Fetch a single page with caching (used for lightbox cross-page nav)
+  const fetchPage = useCallback(async (page: number, category: CategoryTab): Promise<PhotoMeta[]> => {
+    const cached = pageCacheRef.current.get(page);
+    if (cached) return cached;
+
+    const offset = (page - 1) * PAGE_SIZE;
+    let url = `/api/photos?limit=${PAGE_SIZE}&offset=${offset}`;
+    if (category && category !== "all") url += `&category=${category}`;
+
+    try {
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        const pagePhotos: PhotoMeta[] = data.photos || [];
+        pageCacheRef.current.set(page, pagePhotos);
+        if (data.total != null) setTotal(data.total);
+        return pagePhotos;
+      }
+    } catch (err) {
+      console.error("Failed to fetch page:", err);
+    }
+    return [];
+  }, []);
+
+  // Initial load (skipped when lightbox navigation already updated the page)
   useEffect(() => {
+    if (skipNextFetchRef.current) {
+      skipNextFetchRef.current = false;
+      return;
+    }
     fetchPhotos(currentPage, activeTab);
   }, [fetchPhotos, activeTab, currentPage]);
 
@@ -312,6 +343,7 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
   useEffect(() => {
     const handleVisibility = () => {
       if (document.visibilityState === "visible") {
+        pageCacheRef.current.clear();
         fetchPhotos(currentPage, activeTab);
       }
     };
@@ -334,6 +366,7 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
 
   const handleTabChange = (tab: CategoryTab) => {
     if (tab === activeTab) return;
+    pageCacheRef.current.clear();
     setActiveTab(tab);
     setPhotos([]);
     setTotal(0);
@@ -377,16 +410,71 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
     });
   };
 
-  // Lightbox navigation
-  const goNext = useCallback(() => {
-    setSelectedIndex((i) => (i !== null && i < photos.length - 1 ? i + 1 : i));
-  }, [photos.length]);
+  // Lightbox navigation (seamless cross-page)
+  const goNext = useCallback(async () => {
+    if (selectedIndex === null) return;
 
-  const goPrev = useCallback(() => {
-    setSelectedIndex((i) => (i !== null && i > 0 ? i - 1 : i));
-  }, []);
+    if (selectedIndex < photos.length - 1) {
+      setSelectedIndex(selectedIndex + 1);
+      return;
+    }
+
+    // At last photo on page — load next page
+    if (currentPage >= totalPages) return;
+
+    setLightboxLoading(true);
+    try {
+      const nextPhotos = await fetchPage(currentPage + 1, activeTab);
+      if (nextPhotos.length > 0) {
+        pageCacheRef.current.set(currentPage, photos);
+        skipNextFetchRef.current = true;
+        setPhotos(nextPhotos);
+        setCurrentPage(currentPage + 1);
+        setSelectedIndex(0);
+      }
+    } finally {
+      setLightboxLoading(false);
+    }
+  }, [selectedIndex, photos, currentPage, totalPages, activeTab, fetchPage]);
+
+  const goPrev = useCallback(async () => {
+    if (selectedIndex === null) return;
+
+    if (selectedIndex > 0) {
+      setSelectedIndex(selectedIndex - 1);
+      return;
+    }
+
+    // At first photo on page — load previous page
+    if (currentPage <= 1) return;
+
+    setLightboxLoading(true);
+    try {
+      const prevPhotos = await fetchPage(currentPage - 1, activeTab);
+      if (prevPhotos.length > 0) {
+        pageCacheRef.current.set(currentPage, photos);
+        skipNextFetchRef.current = true;
+        setPhotos(prevPhotos);
+        setCurrentPage(currentPage - 1);
+        setSelectedIndex(prevPhotos.length - 1);
+      }
+    } finally {
+      setLightboxLoading(false);
+    }
+  }, [selectedIndex, photos, currentPage, activeTab, fetchPage]);
 
   const closeLightbox = useCallback(() => setSelectedIndex(null), []);
+
+  // Prefetch adjacent pages when browsing near page boundaries in lightbox
+  useEffect(() => {
+    if (selectedIndex === null) return;
+    if (selectedIndex >= photos.length - 3 && currentPage < totalPages) {
+      fetchPage(currentPage + 1, activeTab);
+    }
+    if (selectedIndex <= 2 && currentPage > 1) {
+      fetchPage(currentPage - 1, activeTab);
+    }
+  }, [selectedIndex, photos.length, currentPage, totalPages, activeTab, fetchPage]);
 
   // Keyboard navigation: Escape, ArrowLeft, ArrowRight
   useEffect(() => {
@@ -577,7 +665,7 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
             <Dismiss24Regular style={{ width: "28px", height: "28px" }} />
           </button>
 
-          {selectedIndex !== null && selectedIndex > 0 && (
+          {selectedIndex !== null && (selectedIndex > 0 || currentPage > 1) && (
             <button
               className={styles.overlayNav}
               style={{ left: "8px" }}
@@ -585,6 +673,18 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
             >
               <ChevronLeft24Regular />
             </button>
+          )}
+
+          {lightboxLoading && (
+            <div style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 10,
+            }}>
+              <Spinner size="medium" />
+            </div>
           )}
 
           {isVideoFile(selectedPhoto) ? (
@@ -605,7 +705,7 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
             />
           )}
 
-          {selectedIndex !== null && selectedIndex < photos.length - 1 && (
+          {selectedIndex !== null && (selectedIndex < photos.length - 1 || currentPage < totalPages) && (
             <button
               className={styles.overlayNav}
               style={{ right: "8px" }}
