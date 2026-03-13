@@ -226,8 +226,6 @@ interface PhotoMeta {
   uploaderName: string;
   uploaderCode?: string;
   category?: MediaCategory;
-  description?: string;
-  tags?: string[];
   mimeType: string;
   size: number;
   uploadedAt: string;
@@ -248,7 +246,7 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
   const [photos, setPhotos] = useState<PhotoMeta[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<CategoryTab>("all");
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
@@ -271,6 +269,10 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
       ? "Error al cargar las fotos"
       : "Failed to load photos",
     loadMore: isES ? "Cargar más" : "Load more",
+    page: isES ? "Página" : "Page",
+    of: isES ? "de" : "of",
+    prev: isES ? "Anterior" : "Previous",
+    next: isES ? "Siguiente" : "Next",
     all: isES ? "Todos" : "All",
     ceremony: isES ? "Ceremonia" : "Ceremony",
     cocktail: "Cocktail",
@@ -281,8 +283,9 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
     deleteError: isES ? "Error al eliminar" : "Failed to delete",
   };
 
-  const fetchPhotos = useCallback(async (offset = 0, append = false, category?: CategoryTab) => {
+  const fetchPhotos = useCallback(async (page = 1, category?: CategoryTab) => {
     try {
+      const offset = (page - 1) * PAGE_SIZE;
       let url = `/api/photos?limit=${PAGE_SIZE}&offset=${offset}`;
       if (category && category !== "all") {
         url += `&category=${category}`;
@@ -290,27 +293,26 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
-        setPhotos((prev) => append ? [...prev, ...(data.photos || [])] : (data.photos || []));
+        setPhotos(data.photos || []);
         setTotal(data.total || 0);
       }
     } catch (err) {
       console.error("Failed to fetch photos:", err);
     } finally {
       setLoading(false);
-      setLoadingMore(false);
     }
   }, []);
 
   // Initial load
   useEffect(() => {
-    fetchPhotos(0, false, activeTab);
-  }, [fetchPhotos, activeTab]);
+    fetchPhotos(currentPage, activeTab);
+  }, [fetchPhotos, activeTab, currentPage]);
 
   // Re-fetch when page becomes visible (cache invalidation after upload)
   useEffect(() => {
     const handleVisibility = () => {
       if (document.visibilityState === "visible") {
-        fetchPhotos(0, false, activeTab);
+        fetchPhotos(currentPage, activeTab);
       }
     };
     document.addEventListener("visibilitychange", handleVisibility);
@@ -319,11 +321,15 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
       document.removeEventListener("visibilitychange", handleVisibility);
       window.removeEventListener("focus", handleVisibility);
     };
-  }, [fetchPhotos, activeTab]);
+  }, [fetchPhotos, activeTab, currentPage]);
 
-  const loadMore = () => {
-    setLoadingMore(true);
-    fetchPhotos(photos.length, true, activeTab);
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+  const goToPage = (page: number) => {
+    if (page < 1 || page > totalPages || page === currentPage) return;
+    setLoading(true);
+    setSelectedIndex(null);
+    setCurrentPage(page);
   };
 
   const handleTabChange = (tab: CategoryTab) => {
@@ -333,6 +339,7 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
     setTotal(0);
     setLoading(true);
     setSelectedIndex(null);
+    setCurrentPage(1);
   };
 
   const handleDelete = async (filename: string) => {
@@ -360,8 +367,6 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
       setDeleting(false);
     }
   };
-
-  const hasMore = photos.length < total;
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -495,15 +500,66 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
             </div>
           ))}
         </div>
-        {hasMore && (
-          <Button
-            appearance="outline"
-            className={styles.loadMoreButton}
-            onClick={loadMore}
-            disabled={loadingMore}
-          >
-            {loadingMore ? <Spinner size="tiny" /> : labels.loadMore}
-          </Button>
+        {totalPages > 1 && (
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "4px",
+            flexWrap: "wrap",
+            width: "100%",
+          }}>
+            <Button
+              appearance="subtle"
+              size="small"
+              disabled={currentPage <= 1}
+              onClick={() => goToPage(currentPage - 1)}
+              icon={<ChevronLeft24Regular style={{ width: "16px", height: "16px" }} />}
+            >
+              {labels.prev}
+            </Button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1)
+              .filter((page) => {
+                if (totalPages <= 7) return true;
+                if (page === 1 || page === totalPages) return true;
+                return Math.abs(page - currentPage) <= 1;
+              })
+              .reduce<(number | "ellipsis")[]>((acc, page, idx, arr) => {
+                if (idx > 0 && page - (arr[idx - 1] as number) > 1) acc.push("ellipsis");
+                acc.push(page);
+                return acc;
+              }, [])
+              .map((item, idx) =>
+                item === "ellipsis" ? (
+                  <span key={`e${idx}`} style={{ padding: "0 4px", color: "#9ca3af" }}>…</span>
+                ) : (
+                  <Button
+                    key={item}
+                    size="small"
+                    appearance={item === currentPage ? "primary" : "subtle"}
+                    onClick={() => goToPage(item)}
+                    style={{
+                      minWidth: "32px",
+                      ...(item === currentPage
+                        ? { backgroundColor: "#4C4C4C", borderColor: "#323232", color: "white" }
+                        : {}),
+                    }}
+                  >
+                    {item}
+                  </Button>
+                )
+              )}
+            <Button
+              appearance="subtle"
+              size="small"
+              disabled={currentPage >= totalPages}
+              onClick={() => goToPage(currentPage + 1)}
+              icon={<ChevronRight24Regular style={{ width: "16px", height: "16px" }} />}
+              iconPosition="after"
+            >
+              {labels.next}
+            </Button>
+          </div>
         )}
       </div>
 
@@ -563,20 +619,10 @@ export default function PhotoGallery({ language = "EN" }: PhotoGalleryProps) {
             <Body1 style={{ color: "white" }}>
               {labels.by} {selectedPhoto.uploaderName}
             </Body1>
-            {selectedPhoto.description && (
-              <Body1 style={{ color: "#d1d5db", fontStyle: "italic" }}>
-                {selectedPhoto.description}
-              </Body1>
-            )}
-            {selectedPhoto.tags && selectedPhoto.tags.length > 0 && (
-              <Caption1 style={{ color: "#93c5fd" }}>
-                {selectedPhoto.tags.join(", ")}
-              </Caption1>
-            )}
             <Caption1 style={{ color: "#9ca3af" }}>
               {formatDate(selectedPhoto.uploadedAt)}
               {" • "}
-              {selectedIndex !== null ? selectedIndex + 1 : 0}/{photos.length}
+              {selectedIndex !== null ? (currentPage - 1) * PAGE_SIZE + selectedIndex + 1 : 0}/{total}
             </Caption1>
           </div>
 

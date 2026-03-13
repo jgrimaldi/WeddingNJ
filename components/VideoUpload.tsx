@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import {
   Button,
-  Input,
   Field,
   MessageBar,
   Spinner,
@@ -123,8 +122,7 @@ export default function VideoUpload({ language = "EN" }: VideoUploadProps) {
   const { data: clientSession } = useSession();
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
-  const [description, setDescription] = useState("");
-  const [tags, setTags] = useState("");
+
   const [category, setCategory] = useState<MediaCategory | "">("");
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -138,10 +136,7 @@ export default function VideoUpload({ language = "EN" }: VideoUploadProps) {
 
   const isES = language === "ES";
   const labels = {
-    descriptionPlaceholder: isES ? "Añade una descripción..." : "Add a description...",
-    descriptionLabel: isES ? "Descripción" : "Description",
-    tagsPlaceholder: isES ? "Ej: Jorge, Nathalia" : "E.g. Jorge, Nathalia",
-    tagsLabel: isES ? "Etiquetar personas" : "Tag people",
+
     dropText: isES
       ? "Toca para seleccionar un video"
       : "Tap to select a video",
@@ -208,8 +203,7 @@ export default function VideoUpload({ language = "EN" }: VideoUploadProps) {
       const formData = new FormData();
       formData.append("uploaderName", uploaderName);
       formData.append("category", category);
-      if (description.trim()) formData.append("description", description.trim());
-      if (tags.trim()) formData.append("tags", tags.trim());
+
       files.forEach((file) => formData.append("video", file));
 
       const { ok, data } = await new Promise<{ ok: boolean; data: any }>((resolve, reject) => {
@@ -241,8 +235,7 @@ export default function VideoUpload({ language = "EN" }: VideoUploadProps) {
       previews.forEach((p) => URL.revokeObjectURL(p));
       setFiles([]);
       setPreviews([]);
-      setDescription("");
-      setTags("");
+
       setCategory("");
     } catch (err: any) {
       setError(err.message || labels.errorGeneric);
@@ -295,42 +288,6 @@ export default function VideoUpload({ language = "EN" }: VideoUploadProps) {
           <option value="cocktail">{labels.categoryCocktail}</option>
           <option value="party">{labels.categoryParty}</option>
         </select>
-      </Field>
-
-      <Field label={labels.descriptionLabel} style={{ width: "100%" }}>
-        <Input
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder={labels.descriptionPlaceholder}
-          disabled={loading}
-          size="large"
-          appearance="outline"
-          style={{
-            width: "100%",
-            fontSize: "16px",
-            borderRadius: "4px",
-            border: "2px solid #e5e7eb",
-            backgroundColor: "#fafafa",
-          }}
-        />
-      </Field>
-
-      <Field label={labels.tagsLabel} style={{ width: "100%" }}>
-        <Input
-          value={tags}
-          onChange={(e) => setTags(e.target.value)}
-          placeholder={labels.tagsPlaceholder}
-          disabled={loading}
-          size="large"
-          appearance="outline"
-          style={{
-            width: "100%",
-            fontSize: "16px",
-            borderRadius: "4px",
-            border: "2px solid #e5e7eb",
-            backgroundColor: "#fafafa",
-          }}
-        />
       </Field>
 
       <input

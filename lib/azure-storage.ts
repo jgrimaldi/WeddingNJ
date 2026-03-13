@@ -91,8 +91,7 @@ export interface PhotoMeta {
   uploaderName: string;
   uploaderCode?: string;
   category?: MediaCategory;
-  description?: string;
-  tags?: string[];
+
   mimeType: string;
   size: number;
   uploadedAt: string;

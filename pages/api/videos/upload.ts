@@ -84,17 +84,7 @@ export default async function handler(
       return res.status(400).json({ error: 'Uploader name is required' });
     }
 
-    const description = Array.isArray(fields.description)
-      ? fields.description[0]
-      : fields.description;
-    const rawTags = Array.isArray(fields.tags)
-      ? fields.tags[0]
-      : fields.tags;
-    const tagsList = rawTags
-      ? rawTags.split(',').map((t: string) => t.trim()).filter(Boolean)
-      : [];
-
-    const rawCategory = Array.isArray(fields.category)
+    const rawCategory= Array.isArray(fields.category)
       ? fields.category[0]
       : fields.category;
     const category = (rawCategory && MEDIA_CATEGORIES.includes(rawCategory as MediaCategory))
@@ -137,8 +127,7 @@ export default async function handler(
         uploaderName: uploaderName.trim(),
         uploaderCode,
         category,
-        description: description?.trim() || undefined,
-        tags: tagsList.length > 0 ? tagsList : undefined,
+
         mimeType: file.mimetype,
         size: file.size || 0,
         uploadedAt: new Date().toISOString(),
